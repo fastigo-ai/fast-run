@@ -69,7 +69,7 @@ const PillarCard = ({
       />
 
       {/* Top 3D Abstract Artwork Container with large rounded corners */}
-      <div className="relative w-full h-[270px] sm:h-[300px] lg:h-[320px] rounded-[20px] overflow-hidden bg-slate-900 shadow-inner">
+      <div className="relative w-full h-[230px] sm:h-[290px] lg:h-[320px] rounded-[20px] overflow-hidden bg-slate-900 shadow-inner">
         <img
           src={pillar.image}
           alt={pillar.title}
@@ -83,8 +83,8 @@ const PillarCard = ({
         <div className="absolute inset-0 pointer-events-none bg-gradient-to-tr from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
         {/* Badge / Code */}
-        <div className="absolute top-3.5 left-3.5 z-10">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold backdrop-blur-md bg-white/90 text-slate-800 border border-white/60 shadow-sm transition-transform duration-300 group-hover:scale-105">
+        <div className="absolute top-3 left-3 sm:top-3.5 sm:left-3.5 z-10">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 sm:py-1.5 rounded-full text-xs font-semibold backdrop-blur-md bg-white/90 text-slate-800 border border-white/60 shadow-sm transition-transform duration-300 group-hover:scale-105">
             <span
               className="w-2 h-2 rounded-full animate-pulse"
               style={{ backgroundColor: pillar.accent }}
@@ -95,30 +95,30 @@ const PillarCard = ({
       </div>
 
       {/* Nested / Docked White Content Box (Overlapping Bottom) */}
-      <div className="relative -mt-16 sm:-mt-20 mx-1.5 sm:mx-2 z-20 rounded-[20px] bg-white p-6 sm:p-7 shadow-[0_12px_32px_rgba(0,0,0,0.06)] border border-slate-100/90 transition-all duration-300 group-hover:shadow-[0_18px_40px_rgba(0,112,173,0.12)] group-hover:border-slate-200/90 flex flex-col justify-between flex-1">
+      <div className="relative -mt-12 sm:-mt-18 mx-1 sm:mx-2 z-20 rounded-[20px] bg-white p-5 sm:p-7 shadow-[0_12px_32px_rgba(0,0,0,0.06)] border border-slate-100/90 transition-all duration-300 group-hover:shadow-[0_18px_40px_rgba(0,112,173,0.12)] group-hover:border-slate-200/90 flex flex-col justify-between flex-1">
         <div>
           <div className="flex items-center justify-between gap-3">
-            <h3 className="text-xl sm:text-[22px] font-display font-bold text-[#0B192C] tracking-tight transition-colors duration-300 group-hover:text-[#0070AD]">
+            <h3 className="text-lg sm:text-[22px] font-display font-bold text-[#0B192C] tracking-tight transition-colors duration-300 group-hover:text-[#0070AD]">
               {pillar.title}
             </h3>
             <div
-              className="flex h-10 w-10 items-center justify-center rounded-xl transition-transform duration-300 group-hover:scale-110 shrink-0"
+              className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-xl transition-transform duration-300 group-hover:scale-110 shrink-0"
               style={{ backgroundColor: `${pillar.accent}15`, color: pillar.accent }}
             >
-              <IconComponent size={20} strokeWidth={1.9} />
+              <IconComponent size={18} strokeWidth={1.9} />
             </div>
           </div>
 
-          <p className="mt-3.5 text-sm sm:text-[15px] leading-relaxed text-slate-600 font-body">
+          <p className="mt-2.5 sm:mt-3.5 text-xs sm:text-[15px] leading-relaxed text-slate-600 font-body">
             <span className="font-semibold text-slate-800">{pillar.title}</span> : {pillar.description}
           </p>
         </div>
 
         {/* Action Link */}
-        <div className="mt-6 pt-2">
+        <div className="mt-5 sm:mt-6 pt-2">
           <Link
             to={pillar.path}
-            className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#0B192C] group/link hover:text-[#0070AD] transition-colors duration-200"
+            className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-[#0B192C] group/link hover:text-[#0070AD] transition-colors duration-200"
           >
             <span className="underline underline-offset-4 decoration-slate-300 group-hover/link:decoration-[#0070AD] transition-all">
               Learn More
@@ -133,14 +133,14 @@ const PillarCard = ({
 
 const PillarsSection = () => {
   return (
-    <section className="py-20 pb-28 relative">
+    <section className="py-14 sm:py-20 pb-20 sm:pb-28 relative">
       <div className="container mx-auto px-4 max-w-[1240px] relative z-10">
         {/* Unified Mission Header */}
-        <div className="mb-14 lg:max-w-6xl">
-          <h2 className="text-4xl md:text-[46px] font-display font-bold text-[#0B192C] mb-6 tracking-tight leading-tight">
+        <div className="mb-10 sm:mb-14 lg:max-w-6xl">
+          <h2 className="text-2xl sm:text-4xl md:text-[46px] font-display font-bold text-[#0B192C] mb-4 sm:mb-6 tracking-tight leading-tight">
             Where Innovation Meets AI
           </h2>
-          <p className="text-[16px] text-slate-600 font-body leading-relaxed lg:max-w-6xl mb-12">
+          <p className="text-sm sm:text-[16px] text-slate-600 font-body leading-relaxed lg:max-w-6xl mb-8 sm:mb-12">
             fastigo is an AI-powered innovation platform that empowers businesses to automate operations,
             enhance productivity, and scale faster through intelligent solutions. By integrating advanced AI
             technologies with practical execution, we streamline workflows, reduce manual effort, and unlock

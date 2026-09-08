@@ -87,7 +87,7 @@ const HeroSection = () => {
   const titleWords = currentSlide.title.split(" ");
 
   return (
-    <section className="relative w-full h-screen min-h-[640px] max-h-[1080px] p-0 m-0 overflow-hidden bg-[#041021] flex items-center">
+    <section className="relative w-full h-[100dvh] min-h-[600px] max-h-[1080px] p-0 m-0 overflow-hidden bg-[#041021] flex items-center">
       {/* Background Banner Carousel with AnimatePresence */}
       <AnimatePresence mode="sync">
         <motion.div
@@ -112,36 +112,36 @@ const HeroSection = () => {
       </AnimatePresence>
 
       {/* Cinematic Gradient Overlays */}
-      <div className="absolute inset-0 z-10 bg-gradient-to-r from-[#041021]/95 via-[#0B192C]/70 to-[#041021]/35 p-0 m-0 pointer-events-none" />
+      <div className="absolute inset-0 z-10 bg-gradient-to-r from-[#041021]/95 via-[#0B192C]/75 to-[#041021]/40 p-0 m-0 pointer-events-none" />
       <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#041021]/95 via-transparent to-[#041021]/50 p-0 m-0 pointer-events-none" />
 
       {/* Main Text Content Overlaid on Full-Page Banner */}
-      <div className="relative z-20 w-full h-full flex flex-col justify-between px-6 sm:px-12 md:px-16 lg:px-24 pt-32 pb-12 sm:pb-16 max-w-[1600px] mx-auto">
+      <div className="relative z-20 w-full h-full flex flex-col justify-between px-4 sm:px-10 md:px-16 lg:px-24 pt-24 sm:pt-32 pb-8 sm:pb-14 max-w-[1600px] mx-auto">
         
         {/* Top Floating Search Bar */}
-        <div className="w-full max-w-2xl mx-auto mb-4">
+        <div className="w-full max-w-2xl mx-auto mb-2 sm:mb-4">
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="flex items-center bg-white/15 backdrop-blur-xl rounded-full px-4 py-1.5 sm:py-2 border border-white/25 shadow-[0_8px_32px_rgba(0,0,0,0.3)] hover:border-white/40 transition-all duration-300"
+            className="flex items-center bg-white/15 backdrop-blur-xl rounded-full px-3 sm:px-4 py-1.5 sm:py-2 border border-white/25 shadow-[0_8px_32px_rgba(0,0,0,0.3)] hover:border-white/40 transition-all duration-300"
           >
-            <div className="pl-2 sm:pl-3 flex items-center flex-1 bg-transparent">
-              <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 mr-2.5 text-[#00A3E0]" />
+            <div className="pl-1.5 sm:pl-3 flex items-center flex-1 bg-transparent">
+              <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 mr-2 sm:mr-2.5 text-[#00A3E0] shrink-0" />
               <input
                 type="text"
                 placeholder="How can Fastigo AI help you navigate change?"
-                className="bg-transparent outline-none text-white w-full py-2 text-xs sm:text-sm md:text-base font-body placeholder:text-slate-300 font-medium"
+                className="bg-transparent outline-none text-white w-full py-1.5 sm:py-2 text-xs sm:text-sm md:text-base font-body placeholder:text-slate-300 font-medium"
               />
             </div>
-            <button className="bg-[#0070AD] hover:bg-[#0084C7] text-white px-5 sm:px-6 py-2 rounded-full text-xs sm:text-sm font-semibold tracking-wide hover:shadow-[0_0_20px_rgba(0,112,173,0.6)] transition-all whitespace-nowrap">
+            <button className="bg-[#0070AD] hover:bg-[#0084C7] text-white px-4 sm:px-6 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-semibold tracking-wide hover:shadow-[0_0_20px_rgba(0,112,173,0.6)] transition-all whitespace-nowrap">
               Explore
             </button>
           </motion.div>
         </div>
 
         {/* Center / Lower-Left Banner Slide Animated Text */}
-        <div className="my-auto max-w-3xl min-h-[300px] flex items-center">
+        <div className="my-auto max-w-3xl min-h-[260px] sm:min-h-[300px] flex items-center">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentSlide.id}
@@ -177,18 +177,18 @@ const HeroSection = () => {
                     transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] },
                   },
                 }}
-                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#0070AD]/30 border border-[#00A3E0]/40 backdrop-blur-md mb-4 sm:mb-6 shadow-[0_0_20px_rgba(0,163,224,0.25)]"
+                className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1 sm:py-1.5 rounded-full bg-[#0070AD]/30 border border-[#00A3E0]/40 backdrop-blur-md mb-3 sm:mb-6 shadow-[0_0_20px_rgba(0,163,224,0.25)]"
               >
                 <span className="w-2 h-2 rounded-full bg-[#00A3E0] animate-pulse" />
-                <span className="text-xs sm:text-sm font-semibold tracking-widest text-[#00A3E0] uppercase font-display">
+                <span className="text-[11px] sm:text-xs font-semibold tracking-widest text-[#00A3E0] uppercase font-display">
                   {currentSlide.category}
                 </span>
               </motion.div>
 
               {/* Main Headline with Masked Word Stagger Animation */}
-              <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-extrabold text-white leading-[1.08] tracking-tight mb-4 sm:mb-6 flex flex-wrap gap-x-3.5 sm:gap-x-4">
+              <h1 className="text-[28px] xs:text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-extrabold text-white leading-[1.12] sm:leading-[1.08] tracking-tight mb-3 sm:mb-6 flex flex-wrap gap-x-2.5 sm:gap-x-4">
                 {titleWords.map((word, wIdx) => (
-                  <span key={wIdx} className="overflow-hidden inline-block py-1">
+                  <span key={wIdx} className="overflow-hidden inline-block py-0.5 sm:py-1">
                     <motion.span
                       variants={{
                         hidden: { y: "115%", opacity: 0, rotate: 2 },
@@ -225,7 +225,7 @@ const HeroSection = () => {
                     },
                   },
                 }}
-                className="text-base sm:text-lg md:text-xl lg:text-2xl text-slate-200 font-body mb-8 sm:mb-10 max-w-2xl leading-relaxed"
+                className="text-sm sm:text-lg md:text-xl lg:text-2xl text-slate-200 font-body mb-6 sm:mb-10 max-w-2xl leading-relaxed line-clamp-3 sm:line-clamp-none"
               >
                 {currentSlide.subtitle}
               </motion.p>
@@ -245,11 +245,11 @@ const HeroSection = () => {
                     },
                   },
                 }}
-                className="flex flex-wrap items-center gap-4"
+                className="flex flex-wrap items-center gap-3 sm:gap-4"
               >
                 <a
                   href={currentSlide.link}
-                  className="inline-flex items-center gap-2.5 bg-[#0070AD] hover:bg-[#0084C7] text-white font-semibold text-sm sm:text-base px-7 sm:px-8 py-3.5 sm:py-4 rounded-xl shadow-[0_4px_24px_rgba(0,112,173,0.4)] hover:shadow-[0_8px_32px_rgba(0,112,173,0.6)] hover:scale-[1.02] transition-all duration-300 group"
+                  className="inline-flex items-center gap-2 bg-[#0070AD] hover:bg-[#0084C7] text-white font-semibold text-xs sm:text-base px-5 sm:px-8 py-3 sm:py-4 rounded-xl shadow-[0_4px_24px_rgba(0,112,173,0.4)] hover:shadow-[0_8px_32px_rgba(0,112,173,0.6)] hover:scale-[1.02] transition-all duration-300 group"
                 >
                   <span>{currentSlide.cta}</span>
                   <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 group-hover:translate-x-1" />
@@ -257,7 +257,7 @@ const HeroSection = () => {
 
                 <a
                   href="/contact"
-                  className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/25 backdrop-blur-md font-semibold text-sm sm:text-base px-6 sm:px-7 py-3.5 sm:py-4 rounded-xl transition-all duration-300 hover:scale-[1.02]"
+                  className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/25 backdrop-blur-md font-semibold text-xs sm:text-base px-5 sm:px-7 py-3 sm:py-4 rounded-xl transition-all duration-300 hover:scale-[1.02]"
                 >
                   Get in Touch
                 </a>

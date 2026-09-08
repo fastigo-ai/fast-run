@@ -77,7 +77,7 @@ const reviews = [
 ];
 
 const ReviewCard = ({ review }: { review: typeof reviews[0] }) => (
-  <div className="flex-shrink-0 w-[380px] sm:w-[420px] mx-3.5 p-7 sm:p-8 border border-slate-200/90 rounded-[24px] bg-white/95 backdrop-blur-xl transition-all duration-400 group flex flex-col justify-between h-[320px] relative overflow-hidden shadow-[0_8px_25px_rgba(0,112,173,0.06)] hover:shadow-[0_22px_45px_-8px_rgba(0,112,173,0.16)] hover:border-[#0070AD]/40 hover:-translate-y-2 cursor-pointer">
+  <div className="flex-shrink-0 w-[290px] xs:w-[330px] sm:w-[400px] md:w-[420px] mx-2 sm:mx-3.5 p-5 sm:p-8 border border-slate-200/90 rounded-[20px] sm:rounded-[24px] bg-white/95 backdrop-blur-xl transition-all duration-400 group flex flex-col justify-between h-[290px] sm:h-[320px] relative overflow-hidden shadow-[0_8px_25px_rgba(0,112,173,0.06)] hover:shadow-[0_22px_45px_-8px_rgba(0,112,173,0.16)] hover:border-[#0070AD]/40 hover:-translate-y-2 cursor-pointer">
     
     {/* Subtle Accent Glow Aura on Card Top */}
     <div
@@ -87,33 +87,33 @@ const ReviewCard = ({ review }: { review: typeof reviews[0] }) => (
 
     {/* Background Watermark Quote */}
     <div className="absolute top-2 right-4 opacity-[0.03] group-hover:opacity-[0.07] transition-opacity pointer-events-none">
-      <Quote size={110} className="text-[#0B192C]" />
+      <Quote size={90} className="text-[#0B192C]" />
     </div>
 
     {/* Top Bar: Stars + Quote Icon */}
-    <div className="flex items-center justify-between mb-4 relative z-10">
+    <div className="flex items-center justify-between mb-3 sm:mb-4 relative z-10">
       <div className="flex items-center gap-1">
         {[...Array(review.rating)].map((_, i) => (
-          <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
+          <Star key={i} className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-amber-400 text-amber-400" />
         ))}
       </div>
       <div
-        className="w-8 h-8 rounded-full flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
+        className="w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
         style={{ backgroundColor: `${review.accent}12`, color: review.accent }}
       >
-        <Quote className="w-4 h-4" />
+        <Quote className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
       </div>
     </div>
 
     {/* Quote Body */}
-    <p className="text-[#0B192C] font-body text-[14px] sm:text-[15px] leading-relaxed mb-6 flex-1 relative z-10 font-normal">
+    <p className="text-[#0B192C] font-body text-xs sm:text-[15px] leading-relaxed mb-4 sm:mb-6 flex-1 relative z-10 font-normal line-clamp-4 sm:line-clamp-none">
       "{review.quote}"
     </p>
 
     {/* Author Info */}
-    <div className="pt-5 border-t border-slate-100 flex items-center gap-3.5 relative z-10">
+    <div className="pt-4 sm:pt-5 border-t border-slate-100 flex items-center gap-3 relative z-10">
       <div 
-        className="w-11 h-11 rounded-full flex items-center justify-center font-display font-bold text-sm text-white shadow-sm shrink-0 transition-transform duration-300 group-hover:scale-105"
+        className="w-9 h-9 sm:w-11 sm:h-11 rounded-full flex items-center justify-center font-display font-bold text-xs sm:text-sm text-white shadow-sm shrink-0 transition-transform duration-300 group-hover:scale-105"
         style={{
           background: `linear-gradient(135deg, ${review.accent}, #0070AD)`
         }}
@@ -123,12 +123,12 @@ const ReviewCard = ({ review }: { review: typeof reviews[0] }) => (
 
       <div className="overflow-hidden">
         <div className="flex items-center gap-1.5">
-          <h4 className="font-display font-bold text-[15px] text-[#0B192C] tracking-tight truncate">
+          <h4 className="font-display font-bold text-sm sm:text-[15px] text-[#0B192C] tracking-tight truncate">
             {review.author}
           </h4>
           <CheckCircle2 className="w-3.5 h-3.5 text-[#0070AD] shrink-0" />
         </div>
-        <p className="text-slate-500 text-xs font-body tracking-normal truncate">
+        <p className="text-slate-500 text-[11px] sm:text-xs font-body tracking-normal truncate">
           {review.role} <span className="text-slate-300 mx-1">•</span> <span className="font-medium text-slate-700">{review.company}</span>
         </p>
       </div>
@@ -145,7 +145,7 @@ const MarqueeRow = ({
   direction?: 'left' | 'right';
   speed?: number;
 }) => (
-  <div className="flex overflow-hidden relative py-3 group">
+  <div className="flex overflow-hidden relative py-2 sm:py-3 group">
     <div
       className="flex marquee-content"
       style={{
@@ -178,20 +178,20 @@ const ReviewsSection = () => {
   const secondRow = reviews.slice(4);
 
   return (
-    <section className="relative py-28 border-t border-slate-200/60 overflow-hidden z-10">
+    <section className="relative py-16 sm:py-28 border-t border-slate-200/60 overflow-hidden z-10">
       
       {/* Background Ambient Glows */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-blue-100/30 rounded-full blur-[140px] pointer-events-none -z-10" />
 
-      <div className="container mx-auto px-4 max-w-[1240px] mb-16 relative z-20">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8">
+      <div className="container mx-auto px-4 max-w-[1240px] mb-10 sm:mb-16 relative z-20">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 sm:gap-8">
           <div>
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50/80 border border-blue-100 text-[#0070AD] text-xs font-semibold uppercase tracking-wider mb-4 shadow-sm">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50/80 border border-blue-100 text-[#0070AD] text-xs font-semibold uppercase tracking-wider mb-3 sm:mb-4 shadow-sm">
               <ShieldCheck className="w-3.5 h-3.5 text-[#0070AD]" />
               Proven Enterprise Impact
             </div>
 
-            <h2 className="text-3xl sm:text-4xl md:text-[46px] font-display font-bold text-[#0B192C] leading-[1.15] tracking-tight">
+            <h2 className="text-2xl sm:text-4xl md:text-[46px] font-display font-bold text-[#0B192C] leading-[1.15] tracking-tight">
               <span>Engineering Trust</span><br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0070AD] via-[#0084C7] to-[#00A3E0]">
                 Through Results
@@ -209,10 +209,10 @@ const ReviewsSection = () => {
       </div>
 
       {/* Marquee Rows with Viewport Gradient Masks */}
-      <div className="relative space-y-6">
+      <div className="relative space-y-4 sm:space-y-6">
         {/* Left & Right Fade Masks for Seamless Marquee */}
-        <div className="absolute inset-y-0 left-0 w-24 sm:w-40 bg-gradient-to-r from-background to-transparent z-20 pointer-events-none" />
-        <div className="absolute inset-y-0 right-0 w-24 sm:w-40 bg-gradient-to-l from-background to-transparent z-20 pointer-events-none" />
+        <div className="absolute inset-y-0 left-0 w-16 sm:w-40 bg-gradient-to-r from-background to-transparent z-20 pointer-events-none" />
+        <div className="absolute inset-y-0 right-0 w-16 sm:w-40 bg-gradient-to-l from-background to-transparent z-20 pointer-events-none" />
 
         <MarqueeRow items={firstRow} direction="left" speed={45} />
         <MarqueeRow items={secondRow} direction="right" speed={55} />
@@ -220,11 +220,11 @@ const ReviewsSection = () => {
 
       {/* Industry Badges Footer */}
       <div className="container mx-auto px-4 max-w-[1240px]">
-        <div className="mt-20 pt-14 border-t border-slate-200/80 flex flex-wrap justify-center items-center gap-6 sm:gap-10 lg:gap-16 text-slate-500 font-semibold tracking-wider text-xs sm:text-sm">
+        <div className="mt-12 sm:mt-20 pt-10 sm:pt-14 border-t border-slate-200/80 flex flex-wrap justify-center items-center gap-3 sm:gap-6 lg:gap-16 text-slate-500 font-semibold tracking-wider text-xs sm:text-sm">
           {["AUTOMOTIVE", "LOGISTICS", "HEALTHCARE", "FINTECH", "RETAIL"].map((industry) => (
             <span
               key={industry}
-              className="font-display px-4 py-2 rounded-xl bg-white/60 border border-slate-200/60 shadow-xs hover:border-[#0070AD]/40 hover:text-[#0070AD] hover:bg-white transition-all duration-300 cursor-default"
+              className="font-display px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl bg-white/60 border border-slate-200/60 shadow-xs hover:border-[#0070AD]/40 hover:text-[#0070AD] hover:bg-white transition-all duration-300 cursor-default"
             >
               {industry}
             </span>
