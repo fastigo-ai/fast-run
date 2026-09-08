@@ -25,6 +25,10 @@ const Navbar = () => {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
+  const closeMegaMenu = useCallback(() => {
+    setActiveDropdown(null);
+  }, []);
+
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
@@ -33,14 +37,24 @@ const Navbar = () => {
 
   useEffect(() => {
     setActiveDropdown(null);
+    setIsMobileMenuOpen(false);
   }, [location.pathname]);
 
-  const closeMegaMenu = useCallback(() => setActiveDropdown(null), []);
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isMobileMenuOpen]);
 
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled || activeDropdown !== null
+        isScrolled || activeDropdown !== null || isMobileMenuOpen
           ? "bg-white/95 backdrop-blur-2xl border-b border-slate-200/80 shadow-[0_4px_24px_rgba(0,112,173,0.08)]"
           : "bg-white/85 backdrop-blur-xl border-b border-slate-200/50 shadow-[0_2px_16px_rgba(0,0,0,0.04)]"
       }`}
@@ -48,17 +62,21 @@ const Navbar = () => {
       aria-label="Main navigation"
     >
       <div className="container mx-auto px-4 lg:px-6">
-        <div className="flex h-[76px] items-center justify-between">
+        <div className="flex h-[68px] sm:h-[76px] items-center justify-between">
           {/* Original Fastigo Logo */}
           <Link
             to="/"
+            onClick={() => {
+              setIsMobileMenuOpen(false);
+              closeMegaMenu();
+            }}
             className="flex items-center gap-2 shrink-0 group"
             aria-label="Fastigo Home"
           >
             <img
               src={fastigoLogo}
               alt="Fastigo Technology"
-              className="h-14 sm:h-16 w-auto object-contain transition-all duration-300 origin-left"
+              className="h-10 sm:h-14 w-auto object-contain transition-all duration-300 origin-left"
             />
           </Link>
 
@@ -105,18 +123,18 @@ const Navbar = () => {
 
           {/* Mobile toggle */}
           <button
-            className="md:hidden p-2 text-foreground"
+            className="md:hidden p-2.5 rounded-xl text-slate-700 hover:text-[#0070AD] hover:bg-slate-100/80 active:scale-95 transition-all"
             onClick={() => {
-              setIsMobileMenuOpen(!isMobileMenuOpen);
+              setIsMobileMenuOpen((prev) => !prev);
               setActiveDropdown(null);
             }}
             aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={isMobileMenuOpen}
           >
             {isMobileMenuOpen ? (
-              <X className="h-6 w-6" />
+              <X className="h-6 w-6 text-[#0070AD] transition-transform duration-200" />
             ) : (
-              <Menu className="h-6 w-6" />
+              <Menu className="h-6 w-6 transition-transform duration-200" />
             )}
           </button>
         </div>

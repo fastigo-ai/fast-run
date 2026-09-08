@@ -1,4 +1,4 @@
-import { BrainCircuit, Database, Shield, Smartphone, Link as LinkIcon, Cloud, Cpu, Activity, Globe, Zap } from 'lucide-react';
+import { BrainCircuit, Database, Shield, Smartphone, Link as LinkIcon, Cloud, Cpu, Activity, Globe, Zap, LucideIcon } from 'lucide-react';
 import sustainability from '@/assets/sustainability.webp';
 import Network from '@/assets/Network-Solutions.webp';
 import mobilityImg from '@/assets/mobality.webp';
@@ -13,7 +13,7 @@ export interface ServiceData {
   image: string;
   features: string[];
   color: string;
-  icon: any;
+  icon: LucideIcon;
 }
 
 export const servicesData: Record<string, ServiceData> = {
@@ -147,6 +147,6 @@ servicesData['interactive-design'] = servicesData['fastigo-interactive'];
 
 export const getSlug = (name: string) => {
   return name.toLowerCase()
-    .replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, '')
+    .replace(/[&/\\#,+()$~%.'":*?<>{}]/g, '')
     .replace(/\s+/g, '-');
 };

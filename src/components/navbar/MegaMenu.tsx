@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Building2, Layers, Lightbulb, Handshake } from 'lucide-react';
+import { ArrowRight, Building2, Layers, Lightbulb, Handshake, LucideIcon } from 'lucide-react';
 import { useState } from 'react';
 import { getSlug } from '@/data/services';
 
 type CategoryKey = 'Industries' | 'Services' | 'Research & Innovation' | 'Alliances';
 
-const menuCategories: { name: CategoryKey; path: string; icon: any }[] = [
+const menuCategories: { name: CategoryKey; path: string; icon: LucideIcon }[] = [
   { name: 'Services', path: '/services', icon: Layers },
   { name: 'Industries', path: '/industries', icon: Building2 },
   { name: 'Research & Innovation', path: '/research', icon: Lightbulb },
