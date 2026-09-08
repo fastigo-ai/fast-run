@@ -1,0 +1,21 @@
+<svg width="1200" height="900" viewBox="0 0 1200 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="1200" y2="900" gradientUnits="userSpaceOnUse"><stop stop-color="#334F9A"/><stop offset="1" stop-color="#203A78"/></linearGradient>
+<linearGradient id="ring" x1="100" y1="100" x2="1100" y2="800" gradientUnits="userSpaceOnUse"><stop stop-color="#F5F3FF"/><stop offset=".42" stop-color="#B9C5FF"/><stop offset=".7" stop-color="#A58FEA"/><stop offset="1" stop-color="#E8EBFF"/></linearGradient>
+<radialGradient id="sphere" cx="30%" cy="20%" r="85%"><stop stop-color="#FFFFFF"/><stop offset=".3" stop-color="#D0D6FF"/><stop offset=".72" stop-color="#8293DF"/><stop offset="1" stop-color="#223A83"/></radialGradient>
+<filter id="blur"><feGaussianBlur stdDeviation="22"/></filter>
+</defs>
+<rect width="1200" height="900" fill="url(#bg)"/>
+<ellipse cx="690" cy="520" rx="480" ry="145" fill="#AAB8FF" opacity=".2" filter="url(#blur)"/>
+<path d="M-130 150C180 50 390 170 530 320C670 470 840 610 1320 560" stroke="#172E6D" stroke-width="190" stroke-linecap="round"/>
+<path d="M-130 150C180 50 390 170 530 320C670 470 840 610 1320 560" stroke="url(#ring)" stroke-width="148" stroke-linecap="round"/>
+<path d="M70 1010C20 760 180 610 430 590C700 568 720 800 1040 890" stroke="#172E6D" stroke-width="185" stroke-linecap="round"/>
+<path d="M70 1010C20 760 180 610 430 590C700 568 720 800 1040 890" stroke="url(#ring)" stroke-width="145" stroke-linecap="round"/>
+<path d="M840 -120C1010 40 960 190 820 340C700 470 820 620 1190 700" stroke="url(#ring)" stroke-width="64" stroke-linecap="round"/>
+<circle cx="900" cy="455" r="115" fill="#172E6D" opacity=".55" filter="url(#blur)"/>
+<circle cx="900" cy="425" r="105" fill="url(#sphere)" stroke="#F4F4FF" stroke-opacity=".45" stroke-width="3"/>
+<ellipse cx="865" cy="382" rx="32" ry="18" fill="white" opacity=".35" transform="rotate(-25 865 382)"/>
+<circle cx="420" cy="205" r="59" fill="#172E6D" opacity=".5" filter="url(#blur)"/>
+<circle cx="410" cy="183" r="55" fill="url(#sphere)" stroke="#F4F4FF" stroke-opacity=".5" stroke-width="2"/>
+<ellipse cx="393" cy="165" rx="18" ry="10" fill="white" opacity=".4" transform="rotate(-25 393 165)"/>
+</svg>

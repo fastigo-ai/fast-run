@@ -1,0 +1,49 @@
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react-swc";
+import path from "path";
+import { componentTagger } from "lovable-tagger";
+import viteCompression from "vite-plugin-compression";
+import { visualizer } from "rollup-plugin-visualizer";
+
+// https://vitejs.dev/config/
+export default defineConfig(({ mode }) => ({
+  server: {
+    host: "::",
+    port: 8080,
+    hmr: {
+      overlay: false,
+    },
+  },
+  plugins: [
+    react(), 
+    mode === "development" && componentTagger(),
+    viteCompression({ algorithm: "brotliCompress" }),
+    visualizer({ open: false, gzipSize: true, brotliSize: true })
+  ].filter(Boolean),
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+    },
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes("node_modules")) {
+            // Only chunk large UI libraries explicitly.
+            // Leave React and core libraries to Vite's default chunking to prevent execution order errors.
+            if (id.includes("framer-motion")) {
+              return "framer-motion";
+            }
+            if (id.includes("lucide-react")) {
+              return "lucide-react";
+            }
+            if (id.includes("@radix-ui")) {
+              return "radix-ui";
+            }
+          }
+        },
+      },
+    },
+  },
+}));

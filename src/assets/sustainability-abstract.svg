@@ -1,0 +1,23 @@
+<svg width="1200" height="900" viewBox="0 0 1200 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="surface" x1="120" y1="80" x2="1080" y2="820" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F3F4F6"/><stop offset="1" stop-color="#D6D7DA"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="240" y1="180" x2="920" y2="760" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#B8D7FF" stop-opacity=".78"/><stop offset=".25" stop-color="#8F72D9" stop-opacity=".65"/><stop offset=".5" stop-color="#FFB7D4" stop-opacity=".7"/><stop offset=".72" stop-color="#FFD45C" stop-opacity=".7"/><stop offset="1" stop-color="#82B4FF" stop-opacity=".8"/>
+    </linearGradient>
+    <linearGradient id="warm" x1="300" y1="260" x2="790" y2="700" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6E5BD7"/><stop offset=".45" stop-color="#F04D72"/><stop offset=".75" stop-color="#FFB51B"/><stop offset="1" stop-color="#7955C9"/>
+    </linearGradient>
+    <filter id="shadow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="28"/></filter>
+    <filter id="blur" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="7"/></filter>
+  </defs>
+  <rect width="1200" height="900" fill="url(#surface)"/>
+  <ellipse cx="600" cy="790" rx="310" ry="36" fill="#777B88" opacity=".24" filter="url(#shadow)"/>
+  <path d="M370 170C250 238 255 410 350 485C430 548 360 635 480 713C575 775 743 728 801 645C857 566 944 521 875 407C832 336 875 226 769 173C672 126 482 108 370 170Z" fill="url(#glass)" fill-opacity=".65" stroke="#F4F5FF" stroke-opacity=".6" stroke-width="7"/>
+  <path d="M398 245C335 305 375 388 453 420C531 453 502 559 566 614C633 672 735 625 751 540C766 457 840 423 787 346C746 286 668 294 612 250C548 200 451 196 398 245Z" fill="url(#warm)" fill-opacity=".7" stroke="#F8F4FF" stroke-opacity=".7" stroke-width="6"/>
+  <path d="M495 290C428 338 464 420 538 433C604 445 599 505 649 529C708 556 751 489 723 439C690 379 742 332 676 299C623 272 548 257 495 290Z" fill="#FFF5F8" fill-opacity=".3" stroke="#FFFFFF" stroke-opacity=".7" stroke-width="5"/>
+  <path d="M315 465C405 492 441 563 502 620C558 672 628 699 704 662" stroke="#FFFFFF" stroke-opacity=".6" stroke-width="17" stroke-linecap="round" filter="url(#blur)"/>
+  <path d="M400 210C470 165 560 178 620 213" stroke="white" stroke-opacity=".65" stroke-width="16" stroke-linecap="round" filter="url(#blur)"/>
+  <ellipse cx="500" cy="255" rx="72" ry="30" fill="white" opacity=".3" transform="rotate(-28 500 255)"/>
+</svg>
