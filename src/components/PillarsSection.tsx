@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { ArrowUpRight, CarFront, Cpu, Leaf } from "lucide-react";
+import { ArrowUpRight, CarFront, Cpu, Leaf, Zap, ShieldCheck, TrendingUp } from "lucide-react";
 import { motion } from "framer-motion";
 import mobilityArtwork from "../assets/innovation-topaz.jpg";
 import sustainabilityArtwork from "../assets/innovation-cobalt.jpg";
@@ -135,24 +135,74 @@ const PillarsSection = () => {
   return (
     <section className="py-14 sm:py-20 pb-20 sm:pb-28 relative">
       <div className="container mx-auto px-4 max-w-[1240px] relative z-10">
-        {/* Unified Mission Header */}
-        <div className="mb-10 sm:mb-14 lg:max-w-6xl">
-          <h2 className="text-2xl sm:text-4xl md:text-[46px] font-display font-bold text-[#0B192C] mb-4 sm:mb-6 tracking-tight leading-tight">
-            Where Innovation Meets AI
+        {/* Modernised Mission & Innovation Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-40px" }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="mb-10 sm:mb-14"
+        >
+          <h2 className="text-2xl sm:text-4xl md:text-[46px] font-display font-bold text-[#0B192C] mb-6 tracking-tight leading-[1.18]">
+            Where Innovation Meets <span className="bg-gradient-to-r from-[#0070AD] via-[#0091df] to-[#00A3E0] bg-clip-text text-transparent">AI</span>
           </h2>
-          <p className="text-sm sm:text-[16px] text-slate-600 font-body leading-relaxed lg:max-w-6xl mb-8 sm:mb-12">
-            fastigo is an AI-powered innovation platform that empowers businesses to automate operations,
-            enhance productivity, and scale faster through intelligent solutions. By integrating advanced AI
-            technologies with practical execution, we streamline workflows, reduce manual effort, and unlock
-            new growth opportunities. Our solutions are designed to be scalable, efficient, and results-driven,
-            helping organizations stay competitive in a rapidly evolving digital landscape. From AI agents to
-            custom automation tools, fastigo transforms complex challenges into simple, effective systems. We
-            bridge the gap between ideas and execution, delivering impactful digital experiences that drive
-            measurable business success and long-term value for modern enterprises.
-          </p>
-        </div>
 
-        {/* Pillars Grid */}
+          {/* Modernised Glassmorphic Content Card */}
+          <div className="relative rounded-2xl sm:rounded-3xl bg-white/80 backdrop-blur-xl border border-slate-200/80 p-6 sm:p-8 lg:p-10 shadow-[0_10px_35px_-5px_rgba(0,112,173,0.07)] overflow-hidden">
+            {/* Top subtle highlight gradient */}
+            <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-[#0070AD]/40 to-transparent" />
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-start">
+              {/* Main Text Content */}
+              <div className="lg:col-span-8 space-y-4">
+                <p className="text-base sm:text-[17px] text-slate-800 font-medium font-body leading-relaxed">
+                  <span className="font-bold text-[#0B192C]">fastigo</span> is an AI-powered innovation platform that empowers businesses to automate operations, enhance productivity, and scale faster through intelligent solutions.
+                </p>
+                <p className="text-sm sm:text-[15px] text-slate-600 font-body leading-relaxed">
+                  By integrating advanced AI technologies with practical execution, we streamline workflows, reduce manual effort, and unlock new growth opportunities. Our solutions are designed to be scalable, efficient, and results-driven, helping organizations stay competitive in a rapidly evolving digital landscape.
+                </p>
+                <p className="text-sm sm:text-[15px] text-slate-600 font-body leading-relaxed">
+                  From AI agents to custom automation tools, fastigo transforms complex challenges into simple, effective systems. We bridge the gap between ideas and execution, delivering impactful digital experiences that drive measurable business success and long-term value for modern enterprises.
+                </p>
+              </div>
+
+              {/* Right Side Feature Highlights */}
+              <div className="lg:col-span-4 grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-3 border-t lg:border-t-0 lg:border-l border-slate-100 lg:pl-8 pt-4 lg:pt-0">
+                <div className="flex items-center gap-3.5 p-3 rounded-2xl bg-slate-50/90 border border-slate-200/60 transition-all hover:bg-blue-50/60 hover:border-blue-200/70">
+                  <div className="w-9 h-9 rounded-xl bg-blue-100/70 flex items-center justify-center text-[#0070AD] shrink-0 shadow-sm">
+                    <Zap className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <span className="text-[13px] font-bold text-[#0B192C] block">Intelligent Automation</span>
+                    <span className="text-[11px] text-slate-500 font-medium">Workflows & Productivity</span>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3.5 p-3 rounded-2xl bg-slate-50/90 border border-slate-200/60 transition-all hover:bg-blue-50/60 hover:border-blue-200/70">
+                  <div className="w-9 h-9 rounded-xl bg-emerald-100/70 flex items-center justify-center text-emerald-600 shrink-0 shadow-sm">
+                    <ShieldCheck className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <span className="text-[13px] font-bold text-[#0B192C] block">Scalable Systems</span>
+                    <span className="text-[11px] text-slate-500 font-medium">Enterprise-grade execution</span>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3.5 p-3 rounded-2xl bg-slate-50/90 border border-slate-200/60 transition-all hover:bg-blue-50/60 hover:border-blue-200/70">
+                  <div className="w-9 h-9 rounded-xl bg-cyan-100/70 flex items-center justify-center text-[#00A3E0] shrink-0 shadow-sm">
+                    <TrendingUp className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <span className="text-[13px] font-bold text-[#0B192C] block">Measurable ROI</span>
+                    <span className="text-[11px] text-slate-500 font-medium">Long-term value creation</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Pillars Grid (Preserved Box Design) */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7 md:gap-8 lg:gap-8">
           {pillars.map((pillar, index) => (
             <PillarCard key={pillar.title} pillar={pillar} index={index} />
