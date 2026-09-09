@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import MobileHeroAssistant from "./MobileHeroAssistant";
 import banner1 from "../assets/AIPOWEREDENGINERRING.webp";
 import banner2 from "../assets/DIGITALMANUFACTURING.webp";
 import banner3 from "../assets/NEXT-GEN-MOBILITY.webp";
@@ -87,7 +88,7 @@ const HeroSection = () => {
   const titleWords = currentSlide.title.split(" ");
 
   return (
-    <section className="relative w-full h-[100dvh] min-h-[600px] max-h-[1080px] p-0 m-0 overflow-hidden bg-[#041021] flex items-center">
+    <section className="relative w-full min-h-[100dvh] h-auto lg:h-[100dvh] lg:max-h-[1080px] p-0 m-0 overflow-hidden bg-[#041021] flex flex-col justify-between rounded-b-[32px] sm:rounded-b-[48px] shadow-[0_20px_50px_rgba(0,0,0,0.3)]">
       {/* Background Banner Carousel with AnimatePresence */}
       <AnimatePresence mode="sync">
         <motion.div
@@ -116,10 +117,10 @@ const HeroSection = () => {
       <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#041021]/95 via-transparent to-[#041021]/50 p-0 m-0 pointer-events-none" />
 
       {/* Main Text Content Overlaid on Full-Page Banner */}
-      <div className="relative z-20 w-full h-full flex flex-col justify-between px-4 sm:px-10 md:px-16 lg:px-24 pt-24 sm:pt-32 pb-8 sm:pb-14 max-w-[1600px] mx-auto">
+      <div className="relative z-20 w-full h-full flex flex-col justify-between px-5 sm:px-10 md:px-16 lg:px-24 pt-20 sm:pt-28 pb-6 sm:pb-12 max-w-[1600px] mx-auto">
         
-        {/* Top Floating Search Bar */}
-        <div className="w-full max-w-2xl mx-auto mb-2 sm:mb-4">
+        {/* Desktop Top Floating Search Bar (hidden on mobile, mobile has custom assistant) */}
+        <div className="hidden md:block w-full max-w-2xl mx-auto mb-2 sm:mb-4">
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -140,134 +141,143 @@ const HeroSection = () => {
           </motion.div>
         </div>
 
-        {/* Center / Lower-Left Banner Slide Animated Text */}
-        <div className="my-auto max-w-3xl min-h-[260px] sm:min-h-[300px] flex items-center">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentSlide.id}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-              variants={{
-                hidden: { opacity: 0 },
-                visible: {
-                  opacity: 1,
-                  transition: {
-                    staggerChildren: 0.08,
-                    delayChildren: 0.1,
-                  },
-                },
-                exit: {
-                  opacity: 0,
-                  y: -18,
-                  filter: "blur(6px)",
-                  transition: { duration: 0.35, ease: "easeIn" },
-                },
-              }}
-              className="flex flex-col items-start w-full"
-            >
-              {/* Category Pill with Kinetic Slide & Glow */}
+        {/* Hero Content Section */}
+        <div className="w-full my-auto flex flex-col items-center md:items-start">
+          {/* Main Title & Subtitle for Desktop & Mobile Header */}
+          <div className="max-w-3xl min-h-[140px] md:min-h-[260px] flex items-center w-full">
+            <AnimatePresence mode="wait">
               <motion.div
+                key={currentSlide.id}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
                 variants={{
-                  hidden: { opacity: 0, y: -12, scale: 0.92 },
+                  hidden: { opacity: 0 },
                   visible: {
                     opacity: 1,
-                    y: 0,
-                    scale: 1,
-                    transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] },
+                    transition: {
+                      staggerChildren: 0.08,
+                      delayChildren: 0.1,
+                    },
+                  },
+                  exit: {
+                    opacity: 0,
+                    y: -18,
+                    filter: "blur(6px)",
+                    transition: { duration: 0.35, ease: "easeIn" },
                   },
                 }}
-                className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1 sm:py-1.5 rounded-full bg-[#0070AD]/30 border border-[#00A3E0]/40 backdrop-blur-md mb-3 sm:mb-6 shadow-[0_0_20px_rgba(0,163,224,0.25)]"
+                className="flex flex-col items-center md:items-start text-center md:text-left w-full"
               >
-                <span className="w-2 h-2 rounded-full bg-[#00A3E0] animate-pulse" />
-                <span className="text-[11px] sm:text-xs font-semibold tracking-widest text-[#00A3E0] uppercase font-display">
-                  {currentSlide.category}
-                </span>
-              </motion.div>
-
-              {/* Main Headline with Masked Word Stagger Animation */}
-              <h1 className="text-[28px] xs:text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-extrabold text-white leading-[1.12] sm:leading-[1.08] tracking-tight mb-3 sm:mb-6 flex flex-wrap gap-x-2.5 sm:gap-x-4">
-                {titleWords.map((word, wIdx) => (
-                  <span key={wIdx} className="overflow-hidden inline-block py-0.5 sm:py-1">
-                    <motion.span
-                      variants={{
-                        hidden: { y: "115%", opacity: 0, rotate: 2 },
-                        visible: {
-                          y: "0%",
-                          opacity: 1,
-                          rotate: 0,
-                          transition: {
-                            duration: 0.65,
-                            ease: [0.16, 1, 0.3, 1],
-                          },
-                        },
-                      }}
-                      className="inline-block"
-                    >
-                      {word}
-                    </motion.span>
+                {/* Category Pill with Kinetic Slide & Glow */}
+                <motion.div
+                  variants={{
+                    hidden: { opacity: 0, y: -12, scale: 0.92 },
+                    visible: {
+                      opacity: 1,
+                      y: 0,
+                      scale: 1,
+                      transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] },
+                    },
+                  }}
+                  className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1 sm:py-1.5 rounded-full bg-[#0070AD]/30 border border-[#00A3E0]/40 backdrop-blur-md mb-3 sm:mb-6 shadow-[0_0_20px_rgba(0,163,224,0.25)]"
+                >
+                  <span className="w-2 h-2 rounded-full bg-[#00A3E0] animate-pulse" />
+                  <span className="text-[11px] sm:text-xs font-semibold tracking-widest text-[#00A3E0] uppercase font-display">
+                    {currentSlide.category}
                   </span>
-                ))}
-              </h1>
+                </motion.div>
 
-              {/* Subtitle with Soft Kinetic Blur & Slide Reveal */}
-              <motion.p
-                variants={{
-                  hidden: { opacity: 0, y: 22, filter: "blur(8px)" },
-                  visible: {
-                    opacity: 1,
-                    y: 0,
-                    filter: "blur(0px)",
-                    transition: {
-                      duration: 0.6,
-                      delay: 0.25,
-                      ease: [0.16, 1, 0.3, 1],
-                    },
-                  },
-                }}
-                className="text-sm sm:text-lg md:text-xl lg:text-2xl text-slate-200 font-body mb-6 sm:mb-10 max-w-2xl leading-relaxed line-clamp-3 sm:line-clamp-none"
-              >
-                {currentSlide.subtitle}
-              </motion.p>
+                {/* Main Headline with 40-48px Mobile Typography */}
+                <h1 className="text-[38px] xs:text-[42px] sm:text-5xl md:text-6xl lg:text-7xl font-display font-extrabold text-white leading-[1.08] tracking-tight mb-2 sm:mb-6 flex flex-wrap justify-center md:justify-start gap-x-2 sm:gap-x-4">
+                  {titleWords.map((word, wIdx) => (
+                    <span key={wIdx} className="overflow-hidden inline-block py-0.5 sm:py-1">
+                      <motion.span
+                        variants={{
+                          hidden: { y: "115%", opacity: 0, rotate: 2 },
+                          visible: {
+                            y: "0%",
+                            opacity: 1,
+                            rotate: 0,
+                            transition: {
+                              duration: 0.65,
+                              ease: [0.16, 1, 0.3, 1],
+                            },
+                          },
+                        }}
+                        className="inline-block"
+                      >
+                        {word}
+                      </motion.span>
+                    </span>
+                  ))}
+                </h1>
 
-              {/* CTA Action Buttons with Elastic Fade-In */}
-              <motion.div
-                variants={{
-                  hidden: { opacity: 0, y: 20, scale: 0.95 },
-                  visible: {
-                    opacity: 1,
-                    y: 0,
-                    scale: 1,
-                    transition: {
-                      duration: 0.55,
-                      delay: 0.35,
-                      ease: [0.16, 1, 0.3, 1],
-                    },
-                  },
-                }}
-                className="flex flex-wrap items-center gap-3 sm:gap-4"
-              >
-                <a
-                  href={currentSlide.link}
-                  className="inline-flex items-center gap-2 bg-[#0070AD] hover:bg-[#0084C7] text-white font-semibold text-xs sm:text-base px-5 sm:px-8 py-3 sm:py-4 rounded-xl shadow-[0_4px_24px_rgba(0,112,173,0.4)] hover:shadow-[0_8px_32px_rgba(0,112,173,0.6)] hover:scale-[1.02] transition-all duration-300 group"
-                >
-                  <span>{currentSlide.cta}</span>
-                  <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 group-hover:translate-x-1" />
-                </a>
+                {/* Desktop Subtitle & CTA (hidden on mobile to feature Infosys AI Assistant Cards cleanly) */}
+                <div className="hidden md:flex flex-col items-start w-full">
+                  <motion.p
+                    variants={{
+                      hidden: { opacity: 0, y: 22, filter: "blur(8px)" },
+                      visible: {
+                        opacity: 1,
+                        y: 0,
+                        filter: "blur(0px)",
+                        transition: {
+                          duration: 0.6,
+                          delay: 0.25,
+                          ease: [0.16, 1, 0.3, 1],
+                        },
+                      },
+                    }}
+                    className="text-sm sm:text-lg md:text-xl lg:text-2xl text-slate-200 font-body mb-6 sm:mb-10 max-w-2xl leading-relaxed"
+                  >
+                    {currentSlide.subtitle}
+                  </motion.p>
 
-                <a
-                  href="/contact"
-                  className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/25 backdrop-blur-md font-semibold text-xs sm:text-base px-5 sm:px-7 py-3 sm:py-4 rounded-xl transition-all duration-300 hover:scale-[1.02]"
-                >
-                  Get in Touch
-                </a>
+                  <motion.div
+                    variants={{
+                      hidden: { opacity: 0, y: 20, scale: 0.95 },
+                      visible: {
+                        opacity: 1,
+                        y: 0,
+                        scale: 1,
+                        transition: {
+                          duration: 0.55,
+                          delay: 0.35,
+                          ease: [0.16, 1, 0.3, 1],
+                        },
+                      },
+                    }}
+                    className="flex flex-wrap items-center gap-3 sm:gap-4"
+                  >
+                    <a
+                      href={currentSlide.link}
+                      className="inline-flex items-center gap-2 bg-[#0070AD] hover:bg-[#0084C7] text-white font-semibold text-xs sm:text-base px-5 sm:px-8 py-3 sm:py-4 rounded-xl shadow-[0_4px_24px_rgba(0,112,173,0.4)] hover:shadow-[0_8px_32px_rgba(0,112,173,0.6)] hover:scale-[1.02] transition-all duration-300 group"
+                    >
+                      <span>{currentSlide.cta}</span>
+                      <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 group-hover:translate-x-1" />
+                    </a>
+
+                    <a
+                      href="/contact"
+                      className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/25 backdrop-blur-md font-semibold text-xs sm:text-base px-5 sm:px-7 py-3 sm:py-4 rounded-xl transition-all duration-300 hover:scale-[1.02]"
+                    >
+                      Get in Touch
+                    </a>
+                  </motion.div>
+                </div>
               </motion.div>
-            </motion.div>
-          </AnimatePresence>
+            </AnimatePresence>
+          </div>
+
+          {/* Mobile View: Infosys Style Interactive AI Search & 2x2 Feature Cards */}
+          <div className="w-full md:hidden mt-2">
+            <MobileHeroAssistant />
+          </div>
         </div>
 
         {/* Bottom Bar: Watermark, Arrows & 4.5s Progress Indicators */}
-        <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-white/15">
+        <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-white/15 mt-4">
           {/* Engineering The Change Tagline */}
           <div className="flex items-center gap-3">
             <span className="w-2.5 h-2.5 rounded-full bg-[#0070AD]" />

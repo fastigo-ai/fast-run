@@ -16,8 +16,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif'],
-        body: ['Inter', '"Plus Jakarta Sans"', 'sans-serif'],
+        display: ['Geist', '"Plus Jakarta Sans"', 'Inter', 'sans-serif'],
+        body: ['Geist', 'Inter', '"Plus Jakarta Sans"', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",

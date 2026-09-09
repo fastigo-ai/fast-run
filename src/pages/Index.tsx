@@ -47,21 +47,21 @@ const Index = () => {
           <div className="w-full">
             <ReviewsSection />
           </div>
-          <div className="w-full mb-16 flex justify-center">
-            <div className="container px-4 text-center max-w-3xl">
-              <h2 className="text-3xl md:text-[44px] font-display font-semibold text-[#0B192C] mb-4 tracking-tight">
+          <div className="w-full mb-16 sm:mb-24 flex justify-center">
+            <div className="container px-5 sm:px-4 text-center max-w-3xl">
+              <h2 className="text-[28px] sm:text-3xl md:text-[44px] font-display font-semibold text-[#0E0A42] mb-4 tracking-tight">
                 Careers
               </h2>
-              <p className="text-slate-600 mb-8 max-w-2xl mx-auto leading-relaxed font-normal">
+              <p className="text-slate-600 mb-8 max-w-2xl mx-auto leading-relaxed text-[15px] sm:text-base font-normal">
                 If you share our love for engineering and innovation, we'll
                 provide you with all the tools and platforms to navigate your
                 growth journey. Join us to engineer the change you envision!
               </p>
               <a
                 href="/careers"
-                className="inline-block bg-[#0070AD] text-white px-8 py-3.5 rounded-xl text-sm font-semibold tracking-wide hover:bg-[#005c8f] hover:shadow-lg hover:shadow-blue-600/20 transition-all duration-300"
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-[#0E0A42] to-[#0070AD] hover:from-[#080526] hover:to-[#005a8c] text-white px-8 py-3.5 rounded-full text-sm font-semibold tracking-wide shadow-[0_8px_24px_rgba(14,10,66,0.25)] hover:shadow-[0_12px_32px_rgba(0,112,173,0.35)] hover:scale-[1.02] transition-all duration-300"
               >
-                Explore Opportunities
+                <span>Explore Opportunities</span>
               </a>
             </div>
           </div>

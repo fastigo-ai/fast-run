@@ -43,9 +43,9 @@
     --shadow-glow: 0 10px 30px -5px rgba(0, 112, 173, 0.12);
     --shadow-glow-intense: 0 18px 45px -5px rgba(0, 112, 173, 0.22);
 
-    --font-display: 'Plus Jakarta Sans', 'Inter', sans-serif;
-    --font-body: 'Inter', 'Plus Jakarta Sans', sans-serif;
-    --heading: 215 60% 11%;
+    --font-display: 'Geist', 'Plus Jakarta Sans', 'Inter', sans-serif;
+    --font-body: 'Geist', 'Inter', 'Plus Jakarta Sans', sans-serif;
+    --heading: 245 73% 15%;
   }
 }
 
@@ -68,6 +68,7 @@
     background: radial-gradient(circle at 10% 0%, rgba(0, 112, 173, 0.05), transparent 35%), linear-gradient(180deg, #f8fafc 0%, #eef4f9 100%);
     font-family: var(--font-body);
     letter-spacing: -0.01em;
+    color: #0E0A42;
   }
 
   ::selection {
@@ -91,7 +92,7 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply text-[#0B192C] leading-[1.2];
+    @apply text-[#0E0A42] leading-[1.2];
     font-family: var(--font-display);
     letter-spacing: -0.02em;
   }

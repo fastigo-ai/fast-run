@@ -215,24 +215,24 @@ const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: 'calc(100dvh - 68px)' }}
-          exit={{ opacity: 0, height: 0 }}
-          transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          className="md:hidden fixed top-[68px] sm:top-[76px] inset-x-0 bottom-0 z-50 bg-white/98 backdrop-blur-2xl border-t border-slate-200/90 flex flex-col justify-between overflow-hidden shadow-2xl h-[calc(100dvh-68px)] sm:h-[calc(100dvh-76px)]"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+          className="md:hidden fixed top-[62px] sm:top-[76px] inset-x-0 bottom-0 z-[999] bg-white flex flex-col justify-between overflow-hidden shadow-2xl h-[calc(100dvh-62px)] sm:h-[calc(100dvh-76px)]"
         >
           {/* Scrollable Content Container */}
-          <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-4 space-y-4">
+          <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-4 space-y-3 bg-[#F8FAFC]">
             {/* Real-Time Interactive Search Bar */}
             <div className="relative">
-              <div className="flex items-center bg-slate-100/90 rounded-2xl px-3.5 py-2.5 border border-slate-200/90 shadow-sm focus-within:border-[#0070AD] focus-within:bg-white focus-within:ring-2 focus-within:ring-blue-100 transition-all">
+              <div className="flex items-center bg-white rounded-2xl px-3.5 py-3 border border-slate-200 shadow-sm focus-within:border-[#0070AD] focus-within:ring-2 focus-within:ring-blue-100 transition-all">
                 <Search className="w-4 h-4 text-[#0070AD] mr-2.5 shrink-0" />
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search solutions, products, services..."
-                  className="bg-transparent text-[14px] w-full outline-none text-[#0B192C] placeholder:text-slate-400 font-body"
+                  className="bg-transparent text-[14px] w-full outline-none text-[#0E0A42] placeholder:text-slate-400 font-body"
                 />
                 {searchQuery && (
                   <button
@@ -247,7 +247,7 @@ const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
 
               {/* Instant Search Results Dropdown */}
               {searchQuery.trim().length > 0 && (
-                <div className="mt-2 bg-white rounded-2xl border border-slate-200/80 shadow-xl p-2 max-h-64 overflow-y-auto">
+                <div className="mt-2 bg-white rounded-2xl border border-slate-200 shadow-xl p-2 max-h-64 overflow-y-auto">
                   {searchResults.length > 0 ? (
                     <div className="space-y-1">
                       {searchResults.map((res) => (
@@ -255,17 +255,17 @@ const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
                           key={res.path}
                           to={res.path}
                           onClick={handleLinkClick}
-                          className="flex items-center justify-between p-2.5 rounded-xl hover:bg-blue-50/70 transition-colors group"
+                          className="flex items-center justify-between p-2.5 rounded-xl hover:bg-blue-50 transition-colors group"
                         >
                           <div className="flex flex-col">
-                            <span className="text-sm font-semibold text-slate-800 group-hover:text-[#0070AD]">
+                            <span className="text-sm font-semibold text-[#0E0A42] group-hover:text-[#0070AD]">
                               {res.name}
                             </span>
-                            <span className="text-[11px] text-slate-400 font-medium">
+                            <span className="text-[11px] text-slate-500 font-medium">
                               {res.category}
                             </span>
                           </div>
-                          <ArrowRight className="w-4 h-4 text-slate-300 group-hover:text-[#0070AD] group-hover:translate-x-1 transition-all" />
+                          <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-[#0070AD] group-hover:translate-x-1 transition-all" />
                         </Link>
                       ))}
                     </div>
@@ -292,23 +292,23 @@ const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
                     return (
                       <div
                         key={section.name}
-                        className="rounded-2xl border border-slate-200/70 bg-white/70 overflow-hidden shadow-sm"
+                        className="rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-sm"
                       >
                         <button
                           onClick={() =>
                             setExpandedSection(isExpanded ? null : section.name)
                           }
-                          className="flex items-center justify-between w-full p-3.5 text-left transition-colors hover:bg-slate-50/80"
+                          className="flex items-center justify-between w-full p-3.5 text-left transition-colors hover:bg-slate-50"
                           aria-expanded={isExpanded}
                         >
                           <div className="flex items-center gap-3">
                             {Icon && (
-                              <div className="w-8 h-8 rounded-xl bg-blue-50 flex items-center justify-center text-[#0070AD] shrink-0 border border-blue-100/60">
+                              <div className="w-8 h-8 rounded-xl bg-blue-50 flex items-center justify-center text-[#0070AD] shrink-0 border border-blue-100">
                                 <Icon className="w-4 h-4" />
                               </div>
                             )}
                             <div>
-                              <span className="text-[15px] font-display font-semibold text-[#0B192C]">
+                              <span className="text-[15px] font-display font-semibold text-[#0E0A42]">
                                 {section.name}
                               </span>
                               {section.badge && (
@@ -421,23 +421,23 @@ const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
                     return (
                       <div
                         key={section.name}
-                        className="rounded-2xl border border-slate-200/70 bg-white/70 overflow-hidden shadow-sm"
+                        className="rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-sm"
                       >
                         <button
                           onClick={() =>
                             setExpandedSection(isExpanded ? null : section.name)
                           }
-                          className="flex items-center justify-between w-full p-3.5 text-left transition-colors hover:bg-slate-50/80"
+                          className="flex items-center justify-between w-full p-3.5 text-left transition-colors hover:bg-slate-50"
                           aria-expanded={isExpanded}
                         >
                           <div className="flex items-center gap-3">
                             {Icon && (
-                              <div className="w-8 h-8 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 shrink-0 border border-emerald-100/60">
+                              <div className="w-8 h-8 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 shrink-0 border border-emerald-100">
                                 <Icon className="w-4 h-4" />
                               </div>
                             )}
                             <div>
-                              <span className="text-[15px] font-display font-semibold text-[#0B192C]">
+                              <span className="text-[15px] font-display font-semibold text-[#0E0A42]">
                                 {section.name}
                               </span>
                               {section.badge && (
@@ -463,18 +463,18 @@ const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
                               animate={{ opacity: 1, height: 'auto' }}
                               exit={{ opacity: 0, height: 0 }}
                               transition={{ duration: 0.25 }}
-                              className="px-3 pb-3 pt-1 space-y-1.5 border-t border-slate-100 bg-slate-50/40"
+                              className="px-3 pb-3 pt-1 space-y-1.5 border-t border-slate-100 bg-slate-50"
                             >
                               {section.submenu.map((sub) => (
                                 <Link
                                   key={sub.name}
                                   to={sub.path}
                                   onClick={handleLinkClick}
-                                  className="group flex flex-col p-2.5 rounded-xl bg-white border border-slate-200/60 hover:border-[#0070AD]/40 hover:bg-blue-50/30 transition-all"
+                                  className="group flex flex-col p-2.5 rounded-xl bg-white border border-slate-200 hover:border-[#0070AD]/60 hover:bg-blue-50/50 transition-all shadow-xs"
                                 >
                                   <div className="flex items-center justify-between">
                                     <div className="flex items-center gap-2">
-                                      <span className="text-[14px] font-display font-semibold text-slate-800 group-hover:text-[#0070AD] transition-colors">
+                                      <span className="text-[14px] font-display font-semibold text-[#0E0A42] group-hover:text-[#0070AD] transition-colors">
                                         {sub.name}
                                       </span>
                                       {sub.badge && (
@@ -483,7 +483,7 @@ const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
                                         </span>
                                       )}
                                     </div>
-                                    <ArrowRight className="w-3.5 h-3.5 text-slate-300 group-hover:text-[#0070AD] group-hover:translate-x-1 transition-all" />
+                                    <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-[#0070AD] group-hover:translate-x-1 transition-all" />
                                   </div>
                                   {sub.desc && (
                                     <span className="text-xs text-slate-500 mt-1 line-clamp-1">
@@ -507,8 +507,8 @@ const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
                       onClick={handleLinkClick}
                       className={`flex items-center justify-between p-3.5 rounded-2xl border transition-all ${
                         isCurrentPath
-                          ? 'bg-blue-50/90 border-[#0070AD]/40 text-[#0070AD] font-bold shadow-sm'
-                          : 'bg-white/70 border-slate-200/70 text-[#0B192C] font-semibold hover:bg-slate-50/80 hover:text-[#0070AD]'
+                          ? 'bg-blue-50 border-[#0070AD]/60 text-[#0070AD] font-bold shadow-sm'
+                          : 'bg-white border-slate-200 text-[#0E0A42] font-semibold hover:bg-slate-50 hover:text-[#0070AD] shadow-xs'
                       }`}
                     >
                       <div className="flex items-center gap-3">
@@ -517,13 +517,13 @@ const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
                             className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 border ${
                               isCurrentPath
                                 ? 'bg-[#0070AD] text-white border-[#0070AD]'
-                                : 'bg-slate-100 text-slate-600 border-slate-200/60'
+                                : 'bg-slate-100 text-slate-600 border-slate-200'
                             }`}
                           >
                             <Icon className="w-4 h-4" />
                           </div>
                         )}
-                        <span className="text-[15px] font-display">{section.name}</span>
+                        <span className="text-[15px] font-display font-semibold">{section.name}</span>
                         {section.badge && (
                           <span
                             className={`text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full border ${section.badgeColor}`}
@@ -534,7 +534,7 @@ const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
                       </div>
                       <ArrowRight
                         className={`w-4 h-4 transition-transform ${
-                          isCurrentPath ? 'text-[#0070AD]' : 'text-slate-300'
+                          isCurrentPath ? 'text-[#0070AD]' : 'text-slate-400'
                         }`}
                       />
                     </Link>
@@ -545,7 +545,7 @@ const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
           </div>
 
           {/* Persistent Mobile Bottom Action Bar */}
-          <div className="p-4 bg-slate-50/95 border-t border-slate-200/90 space-y-3 shrink-0 shadow-inner">
+          <div className="p-4 bg-white border-t border-slate-200 space-y-3 shrink-0 shadow-lg">
             <Link
               to="/contact"
               onClick={handleLinkClick}
@@ -558,7 +558,7 @@ const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
             <div className="flex items-center justify-between text-xs text-slate-500 pt-0.5 px-1">
               <a
                 href="mailto:Info@fastigo.co"
-                className="flex items-center gap-1.5 hover:text-[#0070AD] transition-colors"
+                className="flex items-center gap-1.5 text-slate-600 hover:text-[#0070AD] transition-colors"
               >
                 <Mail className="w-3.5 h-3.5 text-[#0070AD]" />
                 <span>Info@fastigo.co</span>

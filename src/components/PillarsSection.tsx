@@ -157,30 +157,38 @@ const PillarsSection = () => {
   }, [isPaused, nextSlide, currentIndex]);
 
   return (
-    <section className="py-14 sm:py-20 pb-20 sm:pb-28 relative">
-      <div className="container mx-auto px-4 max-w-[1240px] relative z-10">
+    <section className="py-12 sm:py-20 pb-16 sm:pb-28 relative bg-[#F4F8FC]/80 border-t border-b border-slate-200/50">
+      <div className="container mx-auto px-5 sm:px-4 max-w-[1240px] relative z-10">
         {/* Modernised Mission & Innovation Header */}
         <motion.div
           initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-40px" }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="mb-10 sm:mb-14"
+          className="mb-8 sm:mb-14"
         >
-          <h2 className="text-2xl sm:text-4xl md:text-[46px] font-display font-bold text-[#0B192C] mb-6 tracking-tight leading-[1.18]">
-            Where Innovation Meets <span className="bg-gradient-to-r from-[#0070AD] via-[#0091df] to-[#00A3E0] bg-clip-text text-transparent">AI</span>
-          </h2>
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-4">
+            <h2 className="text-[28px] sm:text-4xl md:text-[44px] font-display font-bold text-[#0E0A42] tracking-tight leading-[1.15]">
+              Where Innovation Meets <span className="bg-gradient-to-r from-[#0070AD] via-[#0091df] to-[#00A3E0] bg-clip-text text-transparent">AI</span>
+            </h2>
+            {/* Mobile Slide Counter */}
+            <div className="md:hidden inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 font-mono self-start">
+              <span className="text-[#0070AD] font-bold">0{currentIndex + 1}</span>
+              <span>/</span>
+              <span>0{pillars.length}</span>
+            </div>
+          </div>
 
           {/* Modernised Glassmorphic Content Card */}
-          <div className="relative rounded-2xl sm:rounded-3xl bg-white/80 backdrop-blur-xl border border-slate-200/80 p-6 sm:p-8 lg:p-10 shadow-[0_10px_35px_-5px_rgba(0,112,173,0.07)] overflow-hidden">
+          <div className="relative rounded-2xl sm:rounded-3xl bg-white/90 backdrop-blur-xl border border-slate-200/80 p-5 sm:p-8 lg:p-10 shadow-[0_10px_35px_-5px_rgba(0,112,173,0.07)] overflow-hidden">
             {/* Top subtle highlight gradient */}
             <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-[#0070AD]/40 to-transparent" />
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-start">
               {/* Main Text Content */}
               <div className="lg:col-span-8 space-y-4">
-                <p className="text-base sm:text-[17px] text-slate-800 font-medium font-body leading-relaxed">
-                  <span className="font-bold text-[#0B192C]">fastigo</span> is an AI-powered innovation platform that empowers businesses to automate operations, enhance productivity, and scale faster through intelligent solutions.
+                <p className="text-[15px] sm:text-[17px] text-slate-800 font-medium font-body leading-relaxed">
+                  <span className="font-bold text-[#0E0A42]">fastigo</span> is an AI-powered innovation platform that empowers businesses to automate operations, enhance productivity, and scale faster through intelligent solutions.
                 </p>
                 <p className="text-sm sm:text-[15px] text-slate-600 font-body leading-relaxed">
                   By integrating advanced AI technologies with practical execution, we streamline workflows, reduce manual effort, and unlock new growth opportunities. Our solutions are designed to be scalable, efficient, and results-driven, helping organizations stay competitive in a rapidly evolving digital landscape.
@@ -197,7 +205,7 @@ const PillarsSection = () => {
                     <Zap className="w-4 h-4" />
                   </div>
                   <div>
-                    <span className="text-[13px] font-bold text-[#0B192C] block">Intelligent Automation</span>
+                    <span className="text-[13px] font-bold text-[#0E0A42] block">Intelligent Automation</span>
                     <span className="text-[11px] text-slate-500 font-medium">Workflows & Productivity</span>
                   </div>
                 </div>
@@ -207,7 +215,7 @@ const PillarsSection = () => {
                     <ShieldCheck className="w-4 h-4" />
                   </div>
                   <div>
-                    <span className="text-[13px] font-bold text-[#0B192C] block">Scalable Systems</span>
+                    <span className="text-[13px] font-bold text-[#0E0A42] block">Scalable Systems</span>
                     <span className="text-[11px] text-slate-500 font-medium">Enterprise-grade execution</span>
                   </div>
                 </div>
@@ -217,7 +225,7 @@ const PillarsSection = () => {
                     <TrendingUp className="w-4 h-4" />
                   </div>
                   <div>
-                    <span className="text-[13px] font-bold text-[#0B192C] block">Measurable ROI</span>
+                    <span className="text-[13px] font-bold text-[#0E0A42] block">Measurable ROI</span>
                     <span className="text-[11px] text-slate-500 font-medium">Long-term value creation</span>
                   </div>
                 </div>
@@ -301,12 +309,12 @@ const PillarsSection = () => {
             </AnimatePresence>
           </div>
 
-          {/* Controls & Auto-Scroll Pagination Indicators */}
+          {/* Controls & Auto-Scroll Pagination Indicators with Slide Counter */}
           <div className="flex items-center justify-between mt-4 px-2">
             <button
               onClick={prevSlide}
               aria-label="Previous Box"
-              className="p-2.5 rounded-full bg-white/95 border border-slate-200/90 shadow-sm text-slate-700 hover:text-[#0070AD] hover:border-[#0070AD]/40 active:scale-95 transition-all"
+              className="p-2.5 rounded-full bg-white border border-slate-200/90 shadow-sm text-slate-700 hover:text-[#0070AD] hover:border-[#0070AD]/40 active:scale-95 transition-all"
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
@@ -344,7 +352,7 @@ const PillarsSection = () => {
             <button
               onClick={nextSlide}
               aria-label="Next Box"
-              className="p-2.5 rounded-full bg-white/95 border border-slate-200/90 shadow-sm text-slate-700 hover:text-[#0070AD] hover:border-[#0070AD]/40 active:scale-95 transition-all"
+              className="p-2.5 rounded-full bg-white border border-slate-200/90 shadow-sm text-slate-700 hover:text-[#0070AD] hover:border-[#0070AD]/40 active:scale-95 transition-all"
             >
               <ChevronRight className="w-4 h-4" />
             </button>

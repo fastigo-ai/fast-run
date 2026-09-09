@@ -144,19 +144,27 @@ const InsightsSection = () => {
   }, [isPaused, nextSlide, currentIndex]);
 
   return (
-    <section className="py-24 relative">
-      <div className="container mx-auto px-4 max-w-[1240px] relative z-10">
+    <section className="py-14 sm:py-24 relative">
+      <div className="container mx-auto px-5 sm:px-4 max-w-[1240px] relative z-10">
         
         {/* Header Section */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-10 sm:mb-14 border-b border-slate-200/80 pb-4 sm:pb-6">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-8 sm:mb-14 border-b border-slate-200/80 pb-4 sm:pb-6">
           <div>
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50/80 border border-blue-100 text-[#0070AD] text-xs font-semibold uppercase tracking-wider mb-3 shadow-sm">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50/80 border border-blue-100 text-[#0070AD] text-xs font-semibold uppercase tracking-wider mb-2.5 shadow-sm">
               <Sparkles className="w-3.5 h-3.5 text-[#0070AD]" />
               Thought Leadership
             </div>
-            <h2 className="text-2xl sm:text-3xl md:text-[46px] font-display font-bold text-[#0B192C] tracking-tight leading-tight">
-              Our Latest Insights
-            </h2>
+            <div className="flex items-center justify-between gap-4 w-full">
+              <h2 className="text-[28px] sm:text-3xl md:text-[44px] font-display font-bold text-[#0E0A42] tracking-tight leading-tight">
+                Our Latest Insights
+              </h2>
+              {/* Mobile Slide Counter */}
+              <div className="md:hidden inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 font-mono">
+                <span className="text-[#0070AD] font-bold">0{currentIndex + 1}</span>
+                <span>/</span>
+                <span>0{insights.length}</span>
+              </div>
+            </div>
           </div>
 
           <Link 

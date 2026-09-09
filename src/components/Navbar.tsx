@@ -121,22 +121,58 @@ const Navbar = () => {
             </Link>
           </div>
 
-          {/* Mobile toggle */}
-          <button
-            className="md:hidden p-2.5 rounded-xl text-slate-700 hover:text-[#0070AD] hover:bg-slate-100/80 active:scale-95 transition-all"
-            onClick={() => {
-              setIsMobileMenuOpen((prev) => !prev);
-              setActiveDropdown(null);
-            }}
-            aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
-            aria-expanded={isMobileMenuOpen}
-          >
-            {isMobileMenuOpen ? (
-              <X className="h-6 w-6 text-[#0070AD] transition-transform duration-200" />
-            ) : (
-              <Menu className="h-6 w-6 transition-transform duration-200" />
-            )}
-          </button>
+          {/* Mobile Right Controls: Search & Circular Hamburger */}
+          <div className="flex md:hidden items-center gap-2">
+            <button
+              onClick={() => {
+                const searchEl = document.getElementById("mobile-hero-ai-input");
+                if (searchEl) {
+                  searchEl.scrollIntoView({ behavior: "smooth" });
+                  searchEl.focus();
+                } else {
+                  setIsSearchOpen((prev) => !prev);
+                }
+              }}
+              className="w-10 h-10 rounded-full border border-slate-200/90 bg-white/90 shadow-sm flex items-center justify-center text-slate-700 hover:text-[#0070AD] hover:border-[#0070AD]/40 active:scale-95 transition-all duration-300"
+              aria-label="Search or Ask AI"
+            >
+              <Search className="h-4 w-4" />
+            </button>
+
+            <button
+              className="w-10 h-10 rounded-full border border-slate-200/90 bg-white/90 shadow-sm flex items-center justify-center text-slate-700 hover:text-[#0070AD] hover:border-[#0070AD]/40 active:scale-95 transition-all duration-300"
+              onClick={() => {
+                setIsMobileMenuOpen((prev) => !prev);
+                setActiveDropdown(null);
+              }}
+              aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={isMobileMenuOpen}
+            >
+              <AnimatePresence mode="wait">
+                {isMobileMenuOpen ? (
+                  <motion.div
+                    key="close"
+                    initial={{ rotate: -90, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: 90, opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <X className="h-5 w-5 text-[#0070AD]" />
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="menu"
+                    initial={{ rotate: 90, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: -90, opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <Menu className="h-5 w-5 text-slate-800" />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </button>
+          </div>
         </div>
       </div>
 
