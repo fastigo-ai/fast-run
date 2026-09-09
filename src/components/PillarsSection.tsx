@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
-import { ArrowUpRight, CarFront, Cpu, Leaf, Zap, ShieldCheck, TrendingUp } from "lucide-react";
-import { motion } from "framer-motion";
+import { ArrowUpRight, CarFront, Cpu, Leaf, Zap, ShieldCheck, TrendingUp, ChevronLeft, ChevronRight } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import mobilityArtwork from "../assets/innovation-topaz.jpg";
 import sustainabilityArtwork from "../assets/innovation-cobalt.jpg";
 import techArtwork from "../assets/innovation-aster.jpg";
@@ -41,21 +41,16 @@ const pillars = [
 
 const PillarCard = ({
   pillar,
-  index,
+  index = 0,
 }: {
   pillar: typeof pillars[0];
-  index: number;
+  index?: number;
 }) => {
   const IconComponent = pillar.icon;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 35 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.6, delay: index * 0.15, ease: [0.22, 1, 0.36, 1] }}
-      whileHover={{ y: -10, scale: 1.025 }}
-      className="group relative flex flex-col rounded-[26px] bg-slate-50/70 p-2.5 sm:p-3 border border-slate-200/90 transition-all duration-500 cursor-pointer shadow-[0_10px_30px_-10px_rgba(0,112,173,0.08)] hover:border-[#0070AD]/40"
+    <div
+      className="group relative flex flex-col rounded-[26px] bg-slate-50/70 p-2.5 sm:p-3 border border-slate-200/90 transition-all duration-500 cursor-pointer shadow-[0_10px_30px_-10px_rgba(0,112,173,0.08)] hover:border-[#0070AD]/40 h-full"
       style={{
         transition: "box-shadow 0.4s ease, border-color 0.4s ease, transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1)",
       }}
@@ -127,11 +122,40 @@ const PillarCard = ({
           </Link>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
 const PillarsSection = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [direction, setDirection] = useState(1);
+  const [isPaused, setIsPaused] = useState(false);
+
+  const nextSlide = useCallback(() => {
+    setDirection(1);
+    setCurrentIndex((prev) => (prev + 1) % pillars.length);
+  }, []);
+
+  const prevSlide = useCallback(() => {
+    setDirection(-1);
+    setCurrentIndex((prev) => (prev - 1 + pillars.length) % pillars.length);
+  }, []);
+
+  const goToSlide = (idx: number) => {
+    setDirection(idx > currentIndex ? 1 : -1);
+    setCurrentIndex(idx);
+  };
+
+  // Auto-scroll every 5 seconds on mobile
+  useEffect(() => {
+    if (isPaused) return;
+    const timer = setInterval(() => {
+      nextSlide();
+    }, 5000);
+
+    return () => clearInterval(timer);
+  }, [isPaused, nextSlide, currentIndex]);
+
   return (
     <section className="py-14 sm:py-20 pb-20 sm:pb-28 relative">
       <div className="container mx-auto px-4 max-w-[1240px] relative z-10">
@@ -202,11 +226,129 @@ const PillarsSection = () => {
           </div>
         </motion.div>
 
-        {/* Pillars Grid (Preserved Box Design) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7 md:gap-8 lg:gap-8">
+        {/* Desktop Pillars Grid (md and up) */}
+        <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-7 md:gap-8 lg:gap-8">
           {pillars.map((pillar, index) => (
-            <PillarCard key={pillar.title} pillar={pillar} index={index} />
+            <motion.div
+              key={pillar.title}
+              initial={{ opacity: 0, y: 35 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.6, delay: index * 0.15, ease: [0.22, 1, 0.36, 1] }}
+              whileHover={{ y: -10, scale: 1.025 }}
+              className="h-full"
+            >
+              <PillarCard pillar={pillar} index={index} />
+            </motion.div>
           ))}
+        </div>
+
+        {/* Mobile Auto-Scrolling Carousel (< md) */}
+        <div 
+          className="block md:hidden relative"
+          onTouchStart={() => setIsPaused(true)}
+          onTouchEnd={() => setIsPaused(false)}
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
+          <div className="relative overflow-hidden px-1 py-1 min-h-[440px]">
+            <AnimatePresence initial={false} custom={direction} mode="wait">
+              <motion.div
+                key={currentIndex}
+                custom={direction}
+                variants={{
+                  enter: (dir: number) => ({
+                    x: dir > 0 ? "100%" : "-100%",
+                    opacity: 0,
+                    scale: 0.95,
+                  }),
+                  center: {
+                    x: 0,
+                    opacity: 1,
+                    scale: 1,
+                    transition: {
+                      x: { type: "spring", stiffness: 280, damping: 28 },
+                      opacity: { duration: 0.35 },
+                    },
+                  },
+                  exit: (dir: number) => ({
+                    x: dir > 0 ? "-100%" : "100%",
+                    opacity: 0,
+                    scale: 0.95,
+                    transition: {
+                      x: { type: "spring", stiffness: 280, damping: 28 },
+                      opacity: { duration: 0.3 },
+                    },
+                  }),
+                }}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={0.2}
+                onDragEnd={(_, { offset, velocity }) => {
+                  if (offset.x < -40 || velocity.x < -200) {
+                    nextSlide();
+                  } else if (offset.x > 40 || velocity.x > 200) {
+                    prevSlide();
+                  }
+                }}
+                className="w-full cursor-grab active:cursor-grabbing"
+              >
+                <PillarCard pillar={pillars[currentIndex]} index={currentIndex} />
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          {/* Controls & Auto-Scroll Pagination Indicators */}
+          <div className="flex items-center justify-between mt-4 px-2">
+            <button
+              onClick={prevSlide}
+              aria-label="Previous Box"
+              className="p-2.5 rounded-full bg-white/95 border border-slate-200/90 shadow-sm text-slate-700 hover:text-[#0070AD] hover:border-[#0070AD]/40 active:scale-95 transition-all"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+
+            {/* Pagination Dots with 5-second progress animation */}
+            <div className="flex items-center gap-2">
+              {pillars.map((pillar, idx) => {
+                const isActive = idx === currentIndex;
+                return (
+                  <button
+                    key={pillar.title}
+                    onClick={() => goToSlide(idx)}
+                    aria-label={`Go to slide ${pillar.title}`}
+                    className="relative h-2 rounded-full transition-all duration-300 overflow-hidden"
+                    style={{
+                      width: isActive ? "32px" : "8px",
+                      backgroundColor: isActive ? `${pillar.accent}30` : "#CBD5E1",
+                    }}
+                  >
+                    {isActive && (
+                      <motion.div
+                        key={`progress-${currentIndex}-${isPaused}`}
+                        initial={{ width: "0%" }}
+                        animate={{ width: "100%" }}
+                        transition={{ duration: isPaused ? 0 : 5, ease: "linear" }}
+                        className="h-full rounded-full"
+                        style={{ backgroundColor: pillar.accent }}
+                      />
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+
+            <button
+              onClick={nextSlide}
+              aria-label="Next Box"
+              className="p-2.5 rounded-full bg-white/95 border border-slate-200/90 shadow-sm text-slate-700 hover:text-[#0070AD] hover:border-[#0070AD]/40 active:scale-95 transition-all"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
         </div>
       </div>
     </section>

@@ -1,6 +1,7 @@
-import { ArrowRight, ArrowUpRight, Sparkles } from 'lucide-react';
+import { useState, useEffect, useCallback } from 'react';
+import { ArrowRight, ArrowUpRight, Sparkles, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import image1 from '../assets/banner-2.jpeg';
 import image2 from '../assets/banner-3.jpeg';
 import image3 from '../assets/banner-1.jpeg';
@@ -35,7 +36,113 @@ const insights = [
   }
 ];
 
+const InsightCard = ({
+  item,
+  index = 0,
+}: {
+  item: typeof insights[0];
+  index?: number;
+}) => {
+  return (
+    <div
+      className="group relative flex flex-col rounded-[26px] bg-slate-50/70 p-2.5 sm:p-3 border border-slate-200/90 transition-all duration-500 cursor-pointer shadow-[0_10px_30px_-10px_rgba(0,112,173,0.08)] hover:border-[#0070AD]/40 h-full"
+      style={{
+        transition: "box-shadow 0.4s ease, border-color 0.4s ease, transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1)",
+      }}
+    >
+      {/* Dynamic Ambient Hover Glow Aura */}
+      <div
+        className="pointer-events-none absolute -inset-0.5 rounded-[28px] opacity-0 transition-opacity duration-500 group-hover:opacity-100 blur-xl -z-10"
+        style={{
+          background: `radial-gradient(circle at 50% 50%, ${item.glowColor}, transparent 70%)`,
+        }}
+      />
+
+      {/* Top Image Container with large rounded corners */}
+      <div className="relative w-full h-[220px] sm:h-[280px] lg:h-[300px] rounded-[20px] overflow-hidden bg-slate-900 shadow-inner">
+        <img
+          src={item.image}
+          alt={item.title}
+          className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-108"
+        />
+
+        {/* Ambient Top & Bottom Lighting Gradient */}
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/50 via-transparent to-black/10 pointer-events-none" />
+
+        {/* Specular Light Shimmer Reflection */}
+        <div className="absolute inset-0 pointer-events-none bg-gradient-to-tr from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+        {/* Badge */}
+        <div className="absolute top-3 left-3 sm:top-3.5 sm:left-3.5 z-10">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 sm:py-1.5 rounded-full text-xs font-semibold backdrop-blur-md bg-white/90 text-slate-800 border border-white/60 shadow-sm transition-transform duration-300 group-hover:scale-105">
+            <span
+              className="w-2 h-2 rounded-full animate-pulse"
+              style={{ backgroundColor: item.accent }}
+            />
+            {item.type}
+          </span>
+        </div>
+      </div>
+
+      {/* Nested / Docked White Content Box (Overlapping Bottom) */}
+      <div className="relative -mt-12 sm:-mt-20 mx-1 sm:mx-2 z-20 rounded-[20px] bg-white p-5 sm:p-7 shadow-[0_12px_32px_rgba(0,0,0,0.06)] border border-slate-100/90 transition-all duration-300 group-hover:shadow-[0_18px_40px_rgba(0,112,173,0.12)] group-hover:border-slate-200/90 flex flex-col justify-between flex-1">
+        <div>
+          <h3 className="text-base sm:text-lg lg:text-xl font-display font-bold text-[#0B192C] tracking-tight transition-colors duration-300 group-hover:text-[#0070AD] leading-snug line-clamp-2">
+            {item.title}
+          </h3>
+
+          <p className="mt-2.5 sm:mt-3 text-xs sm:text-sm leading-relaxed text-slate-600 font-body line-clamp-3">
+            {item.description}
+          </p>
+        </div>
+
+        {/* Action Link */}
+        <div className="mt-5 sm:mt-6 pt-2">
+          <Link
+            to={`/blog/${item.slug}`}
+            className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-[#0B192C] group/link hover:text-[#0070AD] transition-colors duration-200"
+          >
+            <span className="underline underline-offset-4 decoration-slate-300 group-hover/link:decoration-[#0070AD] transition-all">
+              Know More
+            </span>
+            <ArrowUpRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1 text-[#0070AD]" />
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const InsightsSection = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [direction, setDirection] = useState(1);
+  const [isPaused, setIsPaused] = useState(false);
+
+  const nextSlide = useCallback(() => {
+    setDirection(1);
+    setCurrentIndex((prev) => (prev + 1) % insights.length);
+  }, []);
+
+  const prevSlide = useCallback(() => {
+    setDirection(-1);
+    setCurrentIndex((prev) => (prev - 1 + insights.length) % insights.length);
+  }, []);
+
+  const goToSlide = (idx: number) => {
+    setDirection(idx > currentIndex ? 1 : -1);
+    setCurrentIndex(idx);
+  };
+
+  // Auto-scroll every 5 seconds on mobile
+  useEffect(() => {
+    if (isPaused) return;
+    const timer = setInterval(() => {
+      nextSlide();
+    }, 5000);
+
+    return () => clearInterval(timer);
+  }, [isPaused, nextSlide, currentIndex]);
+
   return (
     <section className="py-24 relative">
       <div className="container mx-auto px-4 max-w-[1240px] relative z-10">
@@ -61,8 +168,8 @@ const InsightsSection = () => {
           </Link>
         </div>
 
-        {/* Modern 3D Style Insights Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+        {/* Desktop Modern 3D Style Insights Grid (md and up) */}
+        <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {insights.map((item, index) => (
             <motion.div
               key={index}
@@ -71,72 +178,119 @@ const InsightsSection = () => {
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, delay: index * 0.15, ease: [0.22, 1, 0.36, 1] }}
               whileHover={{ y: -10, scale: 1.025 }}
-              className="group relative flex flex-col rounded-[26px] bg-slate-50/70 p-2.5 sm:p-3 border border-slate-200/90 transition-all duration-500 cursor-pointer shadow-[0_10px_30px_-10px_rgba(0,112,173,0.08)] hover:border-[#0070AD]/40"
-              style={{
-                transition: "box-shadow 0.4s ease, border-color 0.4s ease, transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1)",
-              }}
+              className="h-full"
             >
-              {/* Dynamic Ambient Hover Glow Aura */}
-              <div
-                className="pointer-events-none absolute -inset-0.5 rounded-[28px] opacity-0 transition-opacity duration-500 group-hover:opacity-100 blur-xl -z-10"
-                style={{
-                  background: `radial-gradient(circle at 50% 50%, ${item.glowColor}, transparent 70%)`,
-                }}
-              />
-
-              {/* Top Image Container with large rounded corners */}
-              <div className="relative w-full h-[220px] sm:h-[280px] lg:h-[300px] rounded-[20px] overflow-hidden bg-slate-900 shadow-inner">
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-108"
-                />
-
-                {/* Ambient Top & Bottom Lighting Gradient */}
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/50 via-transparent to-black/10 pointer-events-none" />
-
-                {/* Specular Light Shimmer Reflection */}
-                <div className="absolute inset-0 pointer-events-none bg-gradient-to-tr from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                {/* Badge */}
-                <div className="absolute top-3 left-3 sm:top-3.5 sm:left-3.5 z-10">
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 sm:py-1.5 rounded-full text-xs font-semibold backdrop-blur-md bg-white/90 text-slate-800 border border-white/60 shadow-sm transition-transform duration-300 group-hover:scale-105">
-                    <span
-                      className="w-2 h-2 rounded-full animate-pulse"
-                      style={{ backgroundColor: item.accent }}
-                    />
-                    {item.type}
-                  </span>
-                </div>
-              </div>
-
-              {/* Nested / Docked White Content Box (Overlapping Bottom) */}
-              <div className="relative -mt-12 sm:-mt-20 mx-1 sm:mx-2 z-20 rounded-[20px] bg-white p-5 sm:p-7 shadow-[0_12px_32px_rgba(0,0,0,0.06)] border border-slate-100/90 transition-all duration-300 group-hover:shadow-[0_18px_40px_rgba(0,112,173,0.12)] group-hover:border-slate-200/90 flex flex-col justify-between flex-1">
-                <div>
-                  <h3 className="text-base sm:text-lg lg:text-xl font-display font-bold text-[#0B192C] tracking-tight transition-colors duration-300 group-hover:text-[#0070AD] leading-snug line-clamp-2">
-                    {item.title}
-                  </h3>
-
-                  <p className="mt-2.5 sm:mt-3 text-xs sm:text-sm leading-relaxed text-slate-600 font-body line-clamp-3">
-                    {item.description}
-                  </p>
-                </div>
-
-                {/* Action Link */}
-                <div className="mt-5 sm:mt-6 pt-2">
-                  <Link
-                    to={`/blog/${item.slug}`}
-                    className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-[#0B192C] group/link hover:text-[#0070AD] transition-colors duration-200"
-                  >
-                    <span className="underline underline-offset-4 decoration-slate-300 group-hover/link:decoration-[#0070AD] transition-all">
-                      Know More
-                    </span>
-                    <ArrowUpRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1 text-[#0070AD]" />
-                  </Link>
-                </div>
-              </div>
+              <InsightCard item={item} index={index} />
             </motion.div>
           ))}
+        </div>
+
+        {/* Mobile Auto-Scrolling Carousel (< md) */}
+        <div
+          className="block md:hidden relative"
+          onTouchStart={() => setIsPaused(true)}
+          onTouchEnd={() => setIsPaused(false)}
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
+          <div className="relative overflow-hidden px-1 py-1 min-h-[440px]">
+            <AnimatePresence initial={false} custom={direction} mode="wait">
+              <motion.div
+                key={currentIndex}
+                custom={direction}
+                variants={{
+                  enter: (dir: number) => ({
+                    x: dir > 0 ? "100%" : "-100%",
+                    opacity: 0,
+                    scale: 0.95,
+                  }),
+                  center: {
+                    x: 0,
+                    opacity: 1,
+                    scale: 1,
+                    transition: {
+                      x: { type: "spring", stiffness: 280, damping: 28 },
+                      opacity: { duration: 0.35 },
+                    },
+                  },
+                  exit: (dir: number) => ({
+                    x: dir > 0 ? "-100%" : "100%",
+                    opacity: 0,
+                    scale: 0.95,
+                    transition: {
+                      x: { type: "spring", stiffness: 280, damping: 28 },
+                      opacity: { duration: 0.3 },
+                    },
+                  }),
+                }}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={0.2}
+                onDragEnd={(_, { offset, velocity }) => {
+                  if (offset.x < -40 || velocity.x < -200) {
+                    nextSlide();
+                  } else if (offset.x > 40 || velocity.x > 200) {
+                    prevSlide();
+                  }
+                }}
+                className="w-full cursor-grab active:cursor-grabbing"
+              >
+                <InsightCard item={insights[currentIndex]} index={currentIndex} />
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          {/* Controls & Auto-Scroll Pagination Indicators */}
+          <div className="flex items-center justify-between mt-4 px-2">
+            <button
+              onClick={prevSlide}
+              aria-label="Previous Insight"
+              className="p-2.5 rounded-full bg-white/95 border border-slate-200/90 shadow-sm text-slate-700 hover:text-[#0070AD] hover:border-[#0070AD]/40 active:scale-95 transition-all"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+
+            {/* Pagination Dots with 5-second progress animation */}
+            <div className="flex items-center gap-2">
+              {insights.map((item, idx) => {
+                const isActive = idx === currentIndex;
+                return (
+                  <button
+                    key={item.title}
+                    onClick={() => goToSlide(idx)}
+                    aria-label={`Go to insight ${item.title}`}
+                    className="relative h-2 rounded-full transition-all duration-300 overflow-hidden"
+                    style={{
+                      width: isActive ? "32px" : "8px",
+                      backgroundColor: isActive ? `${item.accent}30` : "#CBD5E1",
+                    }}
+                  >
+                    {isActive && (
+                      <motion.div
+                        key={`progress-insight-${currentIndex}-${isPaused}`}
+                        initial={{ width: "0%" }}
+                        animate={{ width: "100%" }}
+                        transition={{ duration: isPaused ? 0 : 5, ease: "linear" }}
+                        className="h-full rounded-full"
+                        style={{ backgroundColor: item.accent }}
+                      />
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+
+            <button
+              onClick={nextSlide}
+              aria-label="Next Insight"
+              className="p-2.5 rounded-full bg-white/95 border border-slate-200/90 shadow-sm text-slate-700 hover:text-[#0070AD] hover:border-[#0070AD]/40 active:scale-95 transition-all"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
         </div>
         
         {/* Mobile View All Button */}
