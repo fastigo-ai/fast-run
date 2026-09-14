@@ -4,6 +4,7 @@ import { Mail, MapPin, Phone, Send, MessageSquare, Clock } from 'lucide-react';
 import AnimatedBackground from '@/components/AnimatedBackground';
 import { useToast } from '@/hooks/use-toast';
 import { SplitText } from '@/components/SplitText';
+import { api } from '@/lib/api';
 
 const contactInfo = [
   {
@@ -51,16 +52,29 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    toast({
-      title: "Message Sent!",
-      description: "We'll get back to you within 24 hours.",
-    });
-    
-    setFormData({ name: '', email: '', company: '', service: '', message: '' });
-    setIsSubmitting(false);
+    try {
+      await api.contact.submit({
+        name: formData.name,
+        email: formData.email,
+        company: formData.company || undefined,
+        service: formData.service || undefined,
+        message: formData.message,
+      });
+      
+      toast({
+        title: "Message Sent!",
+        description: "Thank you! We have received your inquiry and will respond within 24 hours.",
+      });
+      setFormData({ name: '', email: '', company: '', service: '', message: '' });
+    } catch (err: any) {
+      toast({
+        title: "Submission Error",
+        description: err.message || "Failed to send message. Please try again or email us directly.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {

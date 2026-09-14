@@ -168,6 +168,10 @@
   .font-body {
     font-family: var(--font-body);
   }
+
+  .font-script {
+    font-family: 'Caveat', cursive, sans-serif;
+  }
 }
 
 @keyframes float {

@@ -9,6 +9,8 @@ import PageWrapper from "./components/PageWrapper";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
+import { AuthProvider } from "./context/AuthContext";
+import ProtectedRoute from "./components/admin/ProtectedRoute";
 
 // Lazy load route components
 const Index = lazy(() => import("./pages/Index"));
@@ -30,6 +32,12 @@ const IndustriesSection = lazy(() => import("./components/IndustriesSection"));
 const ResearchSection = lazy(() => import("./components/ResearchSection"));
 const AllianceSection = lazy(() => import("./components/AllianceSection"));
 
+// Admin Portal Pages
+const AdminLogin = lazy(() => import("./pages/admin/AdminLogin"));
+const AdminDashboard = lazy(() => import("./pages/admin/AdminDashboard"));
+const AdminJobs = lazy(() => import("./pages/admin/AdminJobs"));
+const AdminApplications = lazy(() => import("./pages/admin/AdminApplications"));
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -44,12 +52,15 @@ const AnimatedRoutes = memo(() => {
 
   return (
     <AnimatePresence mode="wait">
-      <Suspense fallback={
-        <div className="h-screen w-full flex items-center justify-center bg-background">
-          <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-        </div>
-      }>
+      <Suspense
+        fallback={
+          <div className="h-screen w-full flex items-center justify-center bg-background">
+            <div className="w-8 h-8 border-4 border-[#0070AD] border-t-transparent rounded-full animate-spin"></div>
+          </div>
+        }
+      >
         <Routes location={location} key={location.pathname}>
+          {/* Public Website Routes */}
           <Route path="/" element={<PageWrapper><Index /></PageWrapper>} />
           <Route path="/services" element={<PageWrapper><Services /></PageWrapper>} />
           <Route path="/services/:serviceId" element={<PageWrapper><ServiceDetail /></PageWrapper>} />
@@ -63,10 +74,38 @@ const AnimatedRoutes = memo(() => {
           <Route path="/blog/:slug" element={<PageWrapper><BlogPost /></PageWrapper>} />
           <Route path="/contact" element={<PageWrapper><Contact /></PageWrapper>} />
           <Route path="/industries" element={<PageWrapper><IndustriesSection /></PageWrapper>} />
-          <Route path='/research' element={<PageWrapper><ResearchSection /></PageWrapper>} />
-          <Route path='/alliances' element={<PageWrapper><AllianceSection /></PageWrapper>} />
-          <Route path='/leadership' element={<PageWrapper><Leadership /></PageWrapper>} />
-          <Route path='/careers' element={<PageWrapper><Careers /></PageWrapper>} />
+          <Route path="/research" element={<PageWrapper><ResearchSection /></PageWrapper>} />
+          <Route path="/alliances" element={<PageWrapper><AllianceSection /></PageWrapper>} />
+          <Route path="/leadership" element={<PageWrapper><Leadership /></PageWrapper>} />
+          <Route path="/careers" element={<PageWrapper><Careers /></PageWrapper>} />
+
+          {/* Admin Portal Routes */}
+          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute>
+                <AdminDashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/jobs"
+            element={
+              <ProtectedRoute>
+                <AdminJobs />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/applications"
+            element={
+              <ProtectedRoute>
+                <AdminApplications />
+              </ProtectedRoute>
+            }
+          />
+
           <Route path="*" element={<PageWrapper><NotFound /></PageWrapper>} />
         </Routes>
       </Suspense>
@@ -74,24 +113,38 @@ const AnimatedRoutes = memo(() => {
   );
 });
 
+const AppShell = () => {
+  const location = useLocation();
+  const isAdminRoute = location.pathname.startsWith("/admin");
+
+  return (
+    <>
+      <ScrollToTop />
+      {!isAdminRoute && <Navbar />}
+      <AnimatedRoutes />
+      {!isAdminRoute && <Footer />}
+    </>
+  );
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter
-        future={{
-          v7_startTransition: true,
-          v7_relativeSplatPath: true,
-        }}
-      >
-        <ScrollToTop />
-        <Navbar />
-        <AnimatedRoutes />
-        <Footer />
-      </BrowserRouter>
-    </TooltipProvider>
+    <AuthProvider>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter
+          future={{
+            v7_startTransition: true,
+            v7_relativeSplatPath: true,
+          }}
+        >
+          <AppShell />
+        </BrowserRouter>
+      </TooltipProvider>
+    </AuthProvider>
   </QueryClientProvider>
 );
 
 export default App;
+

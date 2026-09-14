@@ -1,4 +1,4 @@
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
 import {
   Heart,
@@ -8,9 +8,19 @@ import {
   CheckCircle2,
   ChevronRight,
   Briefcase,
+  Search,
+  MapPin,
+  Clock,
+  DollarSign,
+  Sparkles,
+  Layers,
+  X,
+  Send,
+  Building,
 } from "lucide-react";
 import AnimatedBackground from "@/components/AnimatedBackground";
-import abstractBg from "@/assets/alliance_abstract.webp"; // Re-using a generated abstract for the hero
+import abstractBg from "@/assets/alliance_abstract.webp";
+import { api, Job, ApplicationInput } from "@/lib/api";
 
 // ----------------------------------------------------------------------
 // DATA: "Why Join Us"
@@ -47,72 +57,6 @@ const benefits = [
 ];
 
 // ----------------------------------------------------------------------
-// DATA: Open Positions (Requested by User)
-// ----------------------------------------------------------------------
-const openPositions = [
-  {
-    id: "ai-developer-intern",
-    title: "AI Developer Intern",
-    department: "Engineering & Research",
-    location: "Remote / New Delhi",
-    type: "Internship (3-6 Months)",
-    description:
-      "Dive into the deep end of Artificial Intelligence. You will be working shoulder-to-shoulder with our senior architects to train models, build AI Agents, and deploy LLM applications for real-world enterprise use cases.",
-    requirements: [
-      "Strong foundational knowledge of Python and Machine Learning concepts.",
-      "Experience (academic or personal projects) with PyTorch or TensorFlow.",
-      "Familiarity with NLP, LLMs (OpenAI, Anthropic APIs), and LangChain is a major plus.",
-      "A hungry, problem-solving mindset and willingness to learn extremely fast.",
-    ],
-  },
-  {
-    id: "seo-marketing",
-    title: "SEO Marketing Specialist",
-    department: "Marketing & Growth",
-    location: "Remote",
-    type: "Full-time",
-    description:
-      "Drive the organic growth engine of Fastigo. You will be responsible for architecting and executing advanced SEO strategies, content architectures, and technical site audits to dominate search rankings in the highly competitive B2B tech space.",
-    requirements: [
-      "2+ years of hardcore SEO experience, preferably in B2B Tech or SaaS.",
-      "Mastery of technical SEO, schema markup, and site architecture optimization.",
-      "Experience with tools like Ahrefs, SEMrush, Screaming Frog, and Google Search Console.",
-      "Data-driven approach to content mapping and keyword strategy.",
-    ],
-  },
-  {
-    id: "bdm-presales",
-    title: "Business Dev Manager (BDM) - Pre-Sales",
-    department: "Sales & Strategy",
-    location: "",
-    type: "Full-time",
-    description:
-      "We are seeking a motivated and results-driven Business Development Representative to join our growing technology team. This role is ideal for someone with 1-2 years of experience who is passionate about driving growth, building relationships, and expanding our market presence in the software industry",
-    requirements: [
-      "1-2 years of experience in business development, sales, or a related role, preferably in the technology or software industry",
-      "Bachelor's degree in Business, Marketing, Computer Science, or a related field",
-      "Proven track record of meeting or exceeding sales targets",
-      "Experience with CRM software (Salesforce, HubSpot, Zoho, or similar)",
-    ],
-  },
-  {
-    id: "it-sales",
-    title: "IT Sales Executive",
-    department: "Sales",
-    location: "Remote / New Delhi",
-    type: "Full-time",
-    description:
-      "Fuel our global expansion. You will be responsible for full-cycle B2B sales—prospecting, pitching, and closing deals for our core IT services (App Dev, Cyber, Cloud migration). We need a relentless closer who understands the value of premium technology services.",
-    requirements: [
-      "2+ years of direct B2B tech/IT service selling experience.",
-      "Proven ability to build a robust pipeline via outbound prospecting (Cold Calling, LinkedIn, Email).",
-      "Strong negotiation skills and ability to manage complex sales cycles.",
-      "Hunger for immense uncapped commission potential and career growth.",
-    ],
-  },
-];
-
-// ----------------------------------------------------------------------
 // DATA: Hiring Timeline
 // ----------------------------------------------------------------------
 const hiringTimeline = [
@@ -139,9 +83,8 @@ const hiringTimeline = [
 ];
 
 // ----------------------------------------------------------------------
-// COMPONENTS
+// Interactive Benefit Card
 // ----------------------------------------------------------------------
-
 const InteractiveBenefitCard = ({
   benefit,
 }: {
@@ -222,11 +165,14 @@ const InteractiveBenefitCard = ({
   );
 };
 
-const JobCard = ({
+// ----------------------------------------------------------------------
+// Dynamic Job Card
+// ----------------------------------------------------------------------
+const DynamicJobCard = ({
   job,
   onClick,
 }: {
-  job: (typeof openPositions)[0];
+  job: Job;
   onClick: () => void;
 }) => {
   return (
@@ -234,34 +180,65 @@ const JobCard = ({
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      whileHover={{ y: -5 }}
-      className="rounded-2xl border border-white/15 bg-black p-6 md:p-8 cursor-pointer group hover:border-primary/60 transition-all duration-300 relative overflow-hidden"
+      whileHover={{ y: -4 }}
+      className="rounded-2xl border border-slate-200/80 bg-white/90 shadow-sm hover:shadow-xl hover:border-[#0070AD]/60 p-6 md:p-8 cursor-pointer group transition-all duration-300 relative overflow-hidden backdrop-blur-md"
       onClick={onClick}
     >
-      {/* Subtle hover glow */}
-      <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-2xl group-hover:bg-primary/20 transition-colors duration-500 pointer-events-none" />
+      <div className="absolute top-0 right-0 w-32 h-32 bg-[#0070AD]/5 rounded-full blur-2xl group-hover:bg-[#0070AD]/15 transition-colors duration-500 pointer-events-none" />
 
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
-        <div>
-          <div className="flex flex-wrap items-center gap-3 mb-3">
-            <span className="px-3 py-1 rounded-full text-xs font-semibold bg-primary/10 text-primary uppercase tracking-wider">
+        <div className="space-y-3">
+          <div className="flex flex-wrap items-center gap-2.5">
+            <span className="px-3 py-1 rounded-full text-xs font-semibold bg-[#0070AD]/10 text-[#0070AD] uppercase tracking-wider">
               {job.department}
             </span>
-            <span className="px-3 py-1 rounded-full text-xs font-semibold bg-secondary/10 text-secondary-foreground uppercase tracking-wider">
-              {job.type}
+            <span className="px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-700 uppercase tracking-wider">
+              {job.job_type}
             </span>
+            {job.experience && (
+              <span className="px-3 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600">
+                {job.experience}
+              </span>
+            )}
           </div>
-          <h3 className="text-2xl font-display font-bold text-white mb-2 group-hover:text-primary transition-colors">
+
+          <h3 className="text-2xl font-display font-bold text-slate-900 group-hover:text-[#0070AD] transition-colors">
             {job.title}
           </h3>
-          <div className="flex items-center gap-2 text-sm text-white/65">
-            <span className="w-1.5 h-1.5 rounded-full bg-white/50" />
-            {job.location}
+
+          <div className="flex flex-wrap items-center gap-4 text-sm text-slate-500">
+            <span className="flex items-center gap-1.5">
+              <MapPin className="w-4 h-4 text-[#0070AD]" />
+              {job.location}
+            </span>
+            {job.salary && (
+              <span className="flex items-center gap-1.5 font-medium text-emerald-600">
+                <DollarSign className="w-4 h-4" />
+                {job.salary}
+              </span>
+            )}
           </div>
+
+          {/* Skills tags */}
+          {job.skills && job.skills.length > 0 && (
+            <div className="flex flex-wrap items-center gap-1.5 pt-1">
+              {job.skills.slice(0, 5).map((skill) => (
+                <span
+                  key={skill}
+                  className="px-2.5 py-0.5 rounded-md bg-slate-50 text-slate-600 text-xs font-mono border border-slate-200"
+                >
+                  {skill}
+                </span>
+              ))}
+              {job.skills.length > 5 && (
+                <span className="text-xs text-slate-400">+{job.skills.length - 5} more</span>
+              )}
+            </div>
+          )}
         </div>
 
-        <div className="flex items-center gap-3 text-primary font-semibold group-hover:translate-x-2 transition-transform">
-          View Details
+        <div className="flex items-center gap-3 text-[#0070AD] font-semibold group-hover:translate-x-2 transition-transform shrink-0">
+          <span>View Details &amp; Apply</span>
           <ChevronRight className="w-5 h-5" />
         </div>
       </div>
@@ -270,32 +247,118 @@ const JobCard = ({
 };
 
 // ----------------------------------------------------------------------
-// MAIN PAGE
+// MAIN CAREERS PAGE
 // ----------------------------------------------------------------------
 const Careers = () => {
-  const [selectedJob, setSelectedJob] = useState<
-    (typeof openPositions)[0] | null
-  >(null);
+  const [jobs, setJobs] = useState<Job[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [selectedDept, setSelectedDept] = useState('All');
+  const [selectedType, setSelectedType] = useState('All');
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // Selected Job & Application Form States
+  const [selectedJob, setSelectedJob] = useState<Job | null>(null);
   const [isApplying, setIsApplying] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [appError, setAppError] = useState<string | null>(null);
+
+  // Application Form Inputs
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    linkedin: '',
+    portfolio: '',
+    experience_years: '',
+    message: '',
+  });
+
+  const fetchPublicJobs = async () => {
+    setIsLoading(true);
+    try {
+      const data = await api.jobs.list({
+        department: selectedDept !== 'All' ? selectedDept : undefined,
+        job_type: selectedType !== 'All' ? selectedType : undefined,
+        search: searchQuery || undefined,
+      });
+      setJobs(data);
+    } catch (err) {
+      console.error('Failed to load published jobs from backend:', err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+    fetchPublicJobs();
+  }, [selectedDept, selectedType]);
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    fetchPublicJobs();
+  };
+
+  const handleApplicationSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!selectedJob) return;
+
+    setIsSubmitting(true);
+    setAppError(null);
+
+    const payload: ApplicationInput = {
+      job_id: selectedJob.id,
+      job_title: selectedJob.title,
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone || undefined,
+      linkedin: formData.linkedin || undefined,
+      portfolio: formData.portfolio || undefined,
+      experience_years: formData.experience_years || undefined,
+      message: formData.message || undefined,
+    };
+
+    try {
+      await api.applications.submit(payload);
+      setIsSubmitted(true);
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        linkedin: '',
+        portfolio: '',
+        experience_years: '',
+        message: '',
+      });
+    } catch (err: any) {
+      setAppError(err.message || 'Submission failed. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const departments = [
+    'All',
+    'Engineering & Research',
+    'Marketing & Growth',
+    'Sales & Strategy',
+    'Sales',
+    'Cloud & Infrastructure',
+  ];
 
   return (
-    <div className="relative min-h-screen w-full bg-background overflow-x-hidden">
+    <div className="relative min-h-screen w-full bg-background overflow-x-hidden font-body selection:bg-[#0070ad] selection:text-white">
       <AnimatedBackground />
       <div className="fixed inset-0 grid-pattern pointer-events-none z-0" />
 
       <div className="relative z-10 w-full flex flex-col min-h-screen pt-32 pb-20">
         {/* 1. HERO SECTION */}
-        <section className="container mx-auto px-4 mb-20 md:mb-32 relative max-w-[1200px]">
-          <div className="rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-16 border border-white/15 bg-black overflow-hidden relative">
-            {/* Background Image/Glow */}
+        <section className="container mx-auto px-4 mb-20 md:mb-28 relative max-w-[1240px]">
+          <div className="rounded-[2rem] md:rounded-[2.5rem] p-6 sm:p-10 md:p-16 border border-white/20 bg-gradient-to-br from-black via-slate-950 to-slate-900 shadow-2xl overflow-hidden relative">
             <motion.div
               initial={{ scale: 1.1, opacity: 0 }}
-              animate={{ scale: 1, opacity: 0.15 }}
+              animate={{ scale: 1, opacity: 0.2 }}
               transition={{ duration: 1.5 }}
               className="absolute inset-0 pointer-events-none"
             >
@@ -311,49 +374,52 @@ const Careers = () => {
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
                 animate={{ opacity: 1, x: 0 }}
-                className="inline-flex items-center gap-3 mb-6 px-4 py-2 rounded-full border border-primary/30 bg-primary/10 backdrop-blur-sm text-primary"
+                className="inline-flex items-center gap-2.5 mb-6 px-4 py-1.5 rounded-full border border-[#0070AD]/40 bg-[#0070AD]/15 backdrop-blur-md text-[#38bdf8]"
               >
-                <Briefcase className="w-5 h-5" />
-                <span className="font-display font-semibold tracking-wide uppercase text-sm">
-                  Join The Mission
+                <Briefcase className="w-4 h-4" />
+                <span className="font-display font-semibold tracking-wide uppercase text-xs">
+                  Join Fastigo AI &amp; Engineering
                 </span>
               </motion.div>
 
-              <h1 className="font-display text-5xl md:text-7xl font-bold mb-6 text-white leading-tight">
-                Build Technologies <br />
-                <span className="text-gradient-primary">That Matter.</span>
+              <h1 className="font-display text-4xl sm:text-6xl md:text-7xl font-bold mb-6 text-white leading-[1.1] tracking-tight">
+                Build Your Future <br />
+                <span className="text-gradient-primary">With Fastigo.</span>
               </h1>
 
-              <p className="text-xl text-white/70 leading-relaxed mb-10">
-                We don't hire employees; we partner with visionaries. If you are
-                obsessed with pushing the boundaries of AI, Cloud, and
-                Enterprise Tech, you belong here.
+              <p className="text-base sm:text-lg md:text-xl text-slate-300 leading-relaxed mb-8 max-w-2xl">
+                We partner with bold visionaries to engineer autonomous AI systems, cloud platforms, and enterprise digital solutions. Explore active openings and accelerate your impact.
               </p>
 
-              <motion.button
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                onClick={() =>
-                  document
-                    .getElementById("open-positions")
-                    ?.scrollIntoView({ behavior: "smooth" })
-                }
-                className="px-8 py-4 rounded-full font-bold text-black transition-all shadow-lg hover:scale-105 bg-primary shadow-[0_0_30px_hsl(190,100%,50%,0.4)]"
-              >
-                View Open Positions
-              </motion.button>
+              <div className="flex flex-wrap items-center gap-4">
+                <motion.button
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 }}
+                  onClick={() =>
+                    document
+                      .getElementById("open-positions")
+                      ?.scrollIntoView({ behavior: "smooth" })
+                  }
+                  className="px-8 py-3.5 rounded-full font-bold text-white transition-all shadow-lg hover:scale-105 bg-gradient-to-r from-[#0070AD] to-[#00A3E0] shadow-[#0070AD]/30 cursor-pointer text-sm sm:text-base"
+                >
+                  Explore {jobs.length > 0 ? `${jobs.length} ` : ''}Open Positions
+                </motion.button>
+              </div>
             </div>
           </div>
         </section>
 
         {/* 2. WHY JOIN US GRID */}
-        <section className="container mx-auto px-4 mb-32 max-w-[1200px]">
-          <div className="text-center mb-16">
-            <h2 className="font-display text-4xl md:text-5xl font-bold mb-4">
+        <section className="container mx-auto px-4 mb-28 max-w-[1240px]">
+          <div className="text-center mb-14">
+            <h2 className="font-display text-3xl md:text-4xl font-bold mb-3">
               Why Fastigo?
             </h2>
-            <div className="cyber-line mx-auto" />
+            <p className="text-muted-foreground max-w-xl mx-auto text-sm">
+              Empowering innovators with true autonomy, rapid trajectory, and world-class AI challenges.
+            </p>
+            <div className="cyber-line mx-auto mt-4" />
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -364,20 +430,19 @@ const Careers = () => {
         </section>
 
         {/* 3. HIRING TIMELINE */}
-        <section className="container mx-auto px-4 mb-32 max-w-[1200px]">
-          <div className="text-center mb-20">
-            <h2 className="font-display text-4xl md:text-5xl font-bold mb-4">
+        <section className="container mx-auto px-4 mb-28 max-w-[1240px]">
+          <div className="text-center mb-16">
+            <h2 className="font-display text-3xl md:text-4xl font-bold mb-3">
               Our Hiring Process
             </h2>
-            <p className="text-muted-foreground  max-w-xl mx-auto">
-              Fast, transparent, and designed to discover your true potential
-              without wasting your time.
+            <p className="text-muted-foreground max-w-xl mx-auto text-sm">
+              Fast, human-centric, and structured to assess your real-world creativity without delays.
             </p>
-            <div className="cyber-line mx-auto mt-6" />
+            <div className="cyber-line mx-auto mt-4" />
           </div>
 
           <div className="max-w-5xl mx-auto relative">
-            <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-primary/30 to-transparent -translate-y-1/2" />
+            <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-[#0070AD]/30 to-transparent -translate-y-1/2" />
 
             <div className="grid lg:grid-cols-4 gap-8 lg:gap-4 relative z-10">
               {hiringTimeline.map((item, idx) => (
@@ -386,308 +451,433 @@ const Careers = () => {
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: idx * 0.15 }}
+                  transition={{ delay: idx * 0.12 }}
                   className="flex flex-col items-center text-center group"
                 >
-                  <div className="w-16 h-16 rounded-full bg-card border-2 border-primary border-dashed flex items-center justify-center font-display font-bold text-xl text-primary mb-6 transition-all duration-500 group-hover:scale-110 group-hover:bg-primary/10 shadow-[0_0_20px_rgba(0,0,0,0)] group-hover:shadow-[0_0_20px_hsl(190,100%,50%,0.3)]">
+                  <div className="w-16 h-16 rounded-full bg-white border-2 border-[#0070AD] border-dashed flex items-center justify-center font-display font-bold text-xl text-[#0070AD] mb-5 transition-all duration-500 group-hover:scale-110 group-hover:bg-[#0070AD]/10 shadow-sm">
                     {item.step}
                   </div>
-                  <h3 className="font-display font-bold text-lg mb-2">
+                  <h3 className="font-display font-bold text-base mb-1.5 text-foreground">
                     {item.title}
                   </h3>
-                  <p className="text-sm text-muted-foreground">{item.desc}</p>
+                  <p className="text-xs text-muted-foreground leading-relaxed">{item.desc}</p>
                 </motion.div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* 4. OPEN POSITIONS */}
+        {/* 4. OPEN POSITIONS (DYNAMIC FASTAPI FETCH) */}
         <section
           id="open-positions"
-          className="container mx-auto px-4 relative z-20 max-w-[1200px]"
+          className="container mx-auto px-4 relative z-20 max-w-[1240px]"
         >
-          <div className="text-center mb-16">
-            <h2 className="font-display text-4xl md:text-5xl font-bold mb-4">
-              Open Roles
+          <div className="text-center mb-10">
+            <span className="text-xs font-semibold uppercase tracking-wider text-[#0070AD] bg-[#0070AD]/10 px-3 py-1 rounded-full border border-[#0070AD]/20">
+              Live Hiring Board
+            </span>
+            <h2 className="font-display text-3xl md:text-5xl font-bold mt-3 mb-2 text-foreground">
+              Open Positions
             </h2>
-            <div className="cyber-line mx-auto" />
+            <p className="text-sm text-muted-foreground">
+              Find the role that matches your superpowers.
+            </p>
+            <div className="cyber-line mx-auto mt-4" />
           </div>
 
-          <div className="max-w-5xl mx-auto space-y-4">
-            {openPositions.map((job) => (
-              <JobCard
-                key={job.id}
-                job={job}
-                onClick={() => setSelectedJob(job)}
+          {/* Search & Filter Controls */}
+          <div className="max-w-4xl mx-auto mb-8 rounded-2xl bg-white/90 border border-slate-200/80 p-4 shadow-sm backdrop-blur-md flex flex-col sm:flex-row gap-3 items-center justify-between">
+            <form onSubmit={handleSearch} className="relative w-full sm:w-72">
+              <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+              <input
+                type="text"
+                placeholder="Search by title or keyword..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full bg-slate-50 border border-slate-200 focus:border-[#0070AD] rounded-xl py-2 pl-10 pr-4 text-xs sm:text-sm text-slate-800 placeholder-slate-400 outline-hidden"
               />
-            ))}
+            </form>
+
+            <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+              <select
+                value={selectedDept}
+                onChange={(e) => setSelectedDept(e.target.value)}
+                className="bg-slate-50 border border-slate-200 text-xs text-slate-700 rounded-xl px-3 py-2 outline-hidden focus:border-[#0070AD]"
+              >
+                {departments.map((dept) => (
+                  <option key={dept} value={dept}>
+                    {dept === 'All' ? 'All Departments' : dept}
+                  </option>
+                ))}
+              </select>
+
+              <select
+                value={selectedType}
+                onChange={(e) => setSelectedType(e.target.value)}
+                className="bg-slate-50 border border-slate-200 text-xs text-slate-700 rounded-xl px-3 py-2 outline-hidden focus:border-[#0070AD]"
+              >
+                <option value="All">All Job Types</option>
+                <option value="Full-time">Full-time</option>
+                <option value="Internship">Internship</option>
+                <option value="Contract">Contract</option>
+                <option value="Remote">Remote</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Jobs List */}
+          <div className="max-w-4xl mx-auto space-y-4">
+            {isLoading ? (
+              <div className="space-y-4 py-8">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="h-32 rounded-2xl bg-slate-200/50 animate-pulse" />
+                ))}
+              </div>
+            ) : jobs.length === 0 ? (
+              <div className="rounded-2xl border border-slate-200 bg-white/80 p-12 text-center backdrop-blur-md">
+                <Briefcase className="w-12 h-12 text-slate-400 mx-auto mb-3" />
+                <h3 className="text-lg font-bold text-slate-800 mb-1">No Openings Found</h3>
+                <p className="text-xs text-slate-500 max-w-md mx-auto mb-4">
+                  We are continuously expanding our talent pool. Try clearing your filters or check back soon.
+                </p>
+                <button
+                  onClick={() => {
+                    setSelectedDept('All');
+                    setSelectedType('All');
+                    setSearchQuery('');
+                  }}
+                  className="px-4 py-2 bg-[#0070AD] text-white text-xs font-semibold rounded-xl hover:bg-[#005f94]"
+                >
+                  Reset Filters
+                </button>
+              </div>
+            ) : (
+              jobs.map((job) => (
+                <DynamicJobCard
+                  key={job.id}
+                  job={job}
+                  onClick={() => {
+                    setSelectedJob(job);
+                    setIsApplying(false);
+                    setIsSubmitted(false);
+                  }}
+                />
+              ))
+            )}
           </div>
         </section>
       </div>
 
-      {/* 5. JOB DETAIL MODAL OVERLAY */}
-      {selectedJob && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 backdrop-blur-sm bg-background/80">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            className="w-full max-w-3xl max-h-[90vh] overflow-y-auto glass-card rounded-2xl border-primary/30 p-6 md:p-10 hide-scrollbar shadow-2xl relative"
-          >
-            <div className="flex justify-between items-start mb-6">
-              <div>
-                <div className="flex flex-wrap items-center gap-3 mb-4">
-                  <span className="px-3 py-1 rounded-full text-xs font-semibold bg-primary/10 text-primary uppercase tracking-wider">
-                    {selectedJob.department}
-                  </span>
-                  <span className="px-3 py-1 rounded-full text-xs font-semibold bg-secondary/10 text-secondary-foreground uppercase tracking-wider">
-                    {selectedJob.type}
-                  </span>
-                </div>
-                <h2 className="font-display text-3xl font-bold text-foreground mb-2">
-                  {selectedJob.title}
-                </h2>
-                <div className="text-muted-foreground flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                  {selectedJob.location}
-                </div>
-              </div>
-              <button
-                onClick={() => {
-                  setSelectedJob(null);
-                  setIsApplying(false);
-                  setIsSubmitted(false);
-                }}
-                className="px-4 py-2 bg-muted hover:bg-muted/80 text-muted-foreground hover:text-foreground rounded-full transition-colors font-semibold text-sm"
-              >
-                Close
-              </button>
-            </div>
-
-            {!isApplying ? (
-              <>
-                <div className="space-y-6 mb-10">
-                  <div className="p-4 rounded-xl bg-card border border-border">
-                    <h4 className="font-display font-semibold text-primary mb-2">
-                      Role Overview
-                    </h4>
-                    <p className="text-sm text-foreground/80 leading-relaxed">
-                      {selectedJob.description}
-                    </p>
+      {/* ── JOB DETAIL & APPLY MODAL ── */}
+      <AnimatePresence>
+        {selectedJob && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 backdrop-blur-md bg-black/60 overflow-y-auto">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="w-full max-w-3xl max-h-[90vh] overflow-y-auto bg-white rounded-3xl border border-slate-200 shadow-2xl p-6 sm:p-10 relative"
+            >
+              {/* Header */}
+              <div className="flex justify-between items-start mb-6 pb-4 border-b border-slate-100">
+                <div>
+                  <div className="flex flex-wrap items-center gap-2.5 mb-2.5">
+                    <span className="px-3 py-1 rounded-full text-xs font-semibold bg-[#0070AD]/10 text-[#0070AD] uppercase tracking-wider">
+                      {selectedJob.department}
+                    </span>
+                    <span className="px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-700 uppercase tracking-wider">
+                      {selectedJob.job_type}
+                    </span>
                   </div>
-
-                  <div>
-                    <h4 className="font-display font-semibold text-lg mb-4">
-                      What We're Looking For
-                    </h4>
-                    <ul className="space-y-3">
-                      {selectedJob.requirements.map((req, idx) => (
-                        <li key={idx} className="flex flex-start gap-3">
-                          <CheckCircle2 className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                          <span className="text-sm text-muted-foreground leading-relaxed">
-                            {req}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
+                  <h2 className="font-display text-2xl sm:text-3xl font-bold text-slate-900 mb-2">
+                    {selectedJob.title}
+                  </h2>
+                  <div className="text-sm text-slate-500 flex flex-wrap items-center gap-4">
+                    <span className="flex items-center gap-1">
+                      <MapPin className="w-4 h-4 text-[#0070AD]" />
+                      {selectedJob.location}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <Clock className="w-4 h-4 text-slate-400" />
+                      {selectedJob.experience}
+                    </span>
+                    {selectedJob.salary && (
+                      <span className="flex items-center gap-1 font-medium text-emerald-600">
+                        <DollarSign className="w-4 h-4" />
+                        {selectedJob.salary}
+                      </span>
+                    )}
                   </div>
                 </div>
 
-                <div className="flex gap-4 border-t border-border pt-6">
-                  <button
-                    onClick={() => setIsApplying(true)}
-                    className="flex-1 py-4 bg-primary text-black font-bold rounded-xl hover:bg-primary/90 transition-colors shadow-[0_0_20px_hsl(190,100%,50%,0.3)]"
-                  >
-                    Apply for this role
-                  </button>
-                </div>
-              </>
-            ) : isSubmitted ? (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="flex flex-col items-center justify-center py-12 text-center"
-              >
-                <div className="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center mb-6 shadow-[0_0_30px_hsl(190,100%,50%,0.4)]">
-                  <CheckCircle2 className="w-10 h-10 text-primary" />
-                </div>
-                <h3 className="text-3xl font-display font-bold mb-4">
-                  Application Submitted!
-                </h3>
-                <p className="text-muted-foreground max-w-md mx-auto mb-8 leading-relaxed">
-                  Thank you for your interest in joining Fastigo. Our recruiting
-                  team will review your profile and reach out within 48 hours if
-                  there's a match.
-                </p>
                 <button
                   onClick={() => {
                     setSelectedJob(null);
                     setIsApplying(false);
                     setIsSubmitted(false);
                   }}
-                  className="px-8 py-3 bg-muted hover:bg-muted/80 text-foreground rounded-full transition-colors font-semibold"
+                  className="p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-full transition-colors"
                 >
-                  Return to Careers
+                  <X className="w-5 h-5" />
                 </button>
-              </motion.div>
-            ) : (
-              <motion.form
-  initial={{ opacity: 0, x: 20 }}
-  animate={{ opacity: 1, x: 0 }}
-  onSubmit={async (e) => {
-    e.preventDefault();
+              </div>
 
-    const form = e.currentTarget;
-    const formData = new FormData(form);
+              {/* View: Job Details vs Application Form */}
+              {!isApplying ? (
+                <div className="space-y-6">
+                  {/* Role Overview */}
+                  <div className="p-4 rounded-2xl bg-slate-50 border border-slate-100">
+                    <h4 className="font-display font-semibold text-[#0070AD] text-sm mb-1.5 uppercase tracking-wider">
+                      Role Mission &amp; Overview
+                    </h4>
+                    <p className="text-sm text-slate-700 leading-relaxed">
+                      {selectedJob.description}
+                    </p>
+                  </div>
 
-    formData.append(
-      "subject",
-      `New Job Application - ${selectedJob?.title}`
-    );
-    formData.append("job_role", selectedJob?.title || "");
+                  {/* Responsibilities */}
+                  {selectedJob.responsibilities && selectedJob.responsibilities.length > 0 && (
+                    <div>
+                      <h4 className="font-display font-bold text-base text-slate-900 mb-3">
+                        Key Responsibilities
+                      </h4>
+                      <ul className="space-y-2.5">
+                        {selectedJob.responsibilities.map((resp, idx) => (
+                          <li key={idx} className="flex items-start gap-3">
+                            <CheckCircle2 className="w-4 h-4 text-[#0070AD] shrink-0 mt-0.5" />
+                            <span className="text-sm text-slate-600 leading-relaxed">{resp}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
 
-    try {
-      const response = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        body: formData,
-      });
+                  {/* Requirements */}
+                  {selectedJob.requirements && selectedJob.requirements.length > 0 && (
+                    <div>
+                      <h4 className="font-display font-bold text-base text-slate-900 mb-3">
+                        What We're Looking For
+                      </h4>
+                      <ul className="space-y-2.5">
+                        {selectedJob.requirements.map((req, idx) => (
+                          <li key={idx} className="flex items-start gap-3">
+                            <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                            <span className="text-sm text-slate-600 leading-relaxed">{req}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
 
-      const result = await response.json();
+                  {/* Skills tags */}
+                  {selectedJob.skills && selectedJob.skills.length > 0 && (
+                    <div>
+                      <h4 className="font-display font-bold text-sm text-slate-900 mb-2">
+                        Target Skills
+                      </h4>
+                      <div className="flex flex-wrap gap-2">
+                        {selectedJob.skills.map((skill) => (
+                          <span
+                            key={skill}
+                            className="px-3 py-1 rounded-lg bg-sky-50 text-[#0070AD] text-xs font-mono font-medium border border-sky-100"
+                          >
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
 
-      if (result.success) {
-        setIsSubmitted(true);
-        form.reset();
-      } else {
-        alert("Submission failed. Please try again.");
-      }
-    } catch (error) {
-      alert("Something went wrong. Please try again.");
-    }
-  }}
-  className="space-y-6"
->
-  {/* Hidden Fields */}
-  <input
-    type="hidden"
-    name="access_key"
-    value="59913b8b-06dd-4458-858b-1b5583d49d22"
-  />
+                  {/* Apply Action Bar */}
+                  <div className="pt-6 border-t border-slate-100 flex items-center justify-between gap-4">
+                    <button
+                      onClick={() => setIsApplying(true)}
+                      className="flex-1 py-3.5 bg-gradient-to-r from-[#0070AD] to-[#00A3E0] hover:from-[#005f94] hover:to-[#008ec4] text-white font-bold rounded-2xl transition-all shadow-lg shadow-[#0070AD]/25 text-sm cursor-pointer"
+                    >
+                      Apply For This Role Now
+                    </button>
+                  </div>
+                </div>
+              ) : isSubmitted ? (
+                /* Success Screen */
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="py-12 text-center"
+                >
+                  <div className="w-20 h-20 bg-emerald-50 text-emerald-600 border border-emerald-200 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg shadow-emerald-500/10">
+                    <CheckCircle2 className="w-10 h-10" />
+                  </div>
+                  <h3 className="text-2xl font-display font-bold text-slate-900 mb-2">
+                    Application Successfully Submitted!
+                  </h3>
+                  <p className="text-slate-600 text-sm max-w-md mx-auto mb-6 leading-relaxed">
+                    Thank you for applying for <strong className="text-slate-900">{selectedJob.title}</strong>. Your profile has been stored in our talent database. Our team will review your application and contact you directly.
+                  </p>
+                  <button
+                    onClick={() => {
+                      setSelectedJob(null);
+                      setIsApplying(false);
+                      setIsSubmitted(false);
+                    }}
+                    className="px-6 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs rounded-xl transition-colors"
+                  >
+                    Close &amp; Back to Careers
+                  </button>
+                </motion.div>
+              ) : (
+                /* Application Form */
+                <motion.form
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  onSubmit={handleApplicationSubmit}
+                  className="space-y-4"
+                >
+                  <div className="p-3.5 rounded-xl bg-sky-50 border border-sky-100 flex items-center gap-2.5">
+                    <Sparkles className="w-4 h-4 text-[#0070AD]" />
+                    <p className="text-xs text-slate-700">
+                      Applying for: <strong className="text-[#0070AD]">{selectedJob.title}</strong>
+                    </p>
+                  </div>
 
-  <input
-    type="hidden"
-    name="job_role"
-    value={selectedJob?.title}
-  />
+                  {appError && (
+                    <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-600 text-xs">
+                      {appError}
+                    </div>
+                  )}
 
-  <input
-    type="hidden"
-    name="from_name"
-    value="Fastigo Careers Form"
-  />
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+                        Full Name *
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        placeholder="John Doe"
+                        className="w-full bg-slate-50 border border-slate-200 focus:border-[#0070AD] rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-900 outline-hidden"
+                      />
+                    </div>
 
-  <input type="checkbox" name="botcheck" className="hidden" />
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+                        Email Address *
+                      </label>
+                      <input
+                        type="email"
+                        required
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        placeholder="john@example.com"
+                        className="w-full bg-slate-50 border border-slate-200 focus:border-[#0070AD] rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-900 outline-hidden"
+                      />
+                    </div>
+                  </div>
 
-  {/* Job Info */}
-  <div className="p-4 flex flex-col md:flex-row md:items-center gap-3 rounded-xl bg-primary/5 border border-primary/20 mb-6">
-    <span className="hidden md:block w-2 h-2 rounded-full bg-primary" />
-    <p className="text-sm text-foreground">
-      You are applying for:
-      <span className="font-bold text-primary block md:inline mt-1 md:mt-0">
-        {selectedJob.title}
-      </span>
-    </p>
-  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+                        Phone Number
+                      </label>
+                      <input
+                        type="tel"
+                        value={formData.phone}
+                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                        placeholder="+91 9876543210"
+                        className="w-full bg-slate-50 border border-slate-200 focus:border-[#0070AD] rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-900 outline-hidden"
+                      />
+                    </div>
 
-  {/* Name + Email */}
-  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-    <div className="space-y-2">
-      <label className="text-sm font-medium text-foreground">
-        Full Name *
-      </label>
-      <input
-        name="name"
-        required
-        type="text"
-        placeholder="John Doe"
-        className="w-full bg-background border border-border rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-primary"
-      />
-    </div>
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+                        Years of Experience
+                      </label>
+                      <input
+                        type="text"
+                        value={formData.experience_years}
+                        onChange={(e) => setFormData({ ...formData, experience_years: e.target.value })}
+                        placeholder="e.g. 2 years, Fresher"
+                        className="w-full bg-slate-50 border border-slate-200 focus:border-[#0070AD] rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-900 outline-hidden"
+                      />
+                    </div>
+                  </div>
 
-    <div className="space-y-2">
-      <label className="text-sm font-medium text-foreground">
-        Email Address *
-      </label>
-      <input
-        name="email"
-        required
-        type="email"
-        placeholder="john@example.com"
-        className="w-full bg-background border border-border rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-primary"
-      />
-    </div>
-  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+                        LinkedIn Profile URL
+                      </label>
+                      <input
+                        type="url"
+                        value={formData.linkedin}
+                        onChange={(e) => setFormData({ ...formData, linkedin: e.target.value })}
+                        placeholder="https://linkedin.com/in/..."
+                        className="w-full bg-slate-50 border border-slate-200 focus:border-[#0070AD] rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-900 outline-hidden"
+                      />
+                    </div>
 
-  {/* LinkedIn */}
-  <div className="space-y-2">
-    <label className="text-sm font-medium text-foreground">
-      LinkedIn Profile URL
-    </label>
-    <input
-      name="linkedin"
-      type="url"
-      placeholder="https://linkedin.com/in/..."
-      className="w-full bg-background border border-border rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-primary"
-    />
-  </div>
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+                        Portfolio / GitHub URL
+                      </label>
+                      <input
+                        type="url"
+                        value={formData.portfolio}
+                        onChange={(e) => setFormData({ ...formData, portfolio: e.target.value })}
+                        placeholder="https://github.com/..."
+                        className="w-full bg-slate-50 border border-slate-200 focus:border-[#0070AD] rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-900 outline-hidden"
+                      />
+                    </div>
+                  </div>
 
-  {/* Portfolio */}
-  <div className="space-y-2">
-    <label className="text-sm font-medium text-foreground">
-      Portfolio / GitHub / Website (Optional)
-    </label>
-    <input
-      name="portfolio"
-      type="url"
-      placeholder="https://..."
-      className="w-full bg-background border border-border rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-primary"
-    />
-  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+                      Why are you a good fit? (Cover note)
+                    </label>
+                    <textarea
+                      rows={3}
+                      value={formData.message}
+                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      placeholder="Briefly highlight your key strengths and why you're passionate about joining Fastigo..."
+                      className="w-full bg-slate-50 border border-slate-200 focus:border-[#0070AD] rounded-xl p-3 text-xs sm:text-sm text-slate-900 outline-hidden resize-none"
+                    />
+                  </div>
 
-  {/* Message */}
-  <div className="space-y-2">
-    <label className="text-sm font-medium text-foreground">
-      Why are you a good fit?
-    </label>
-    <textarea
-      name="message"
-      rows={4}
-      placeholder="Tell us succinctly why you belong at Fastigo..."
-      className="w-full bg-background border border-border rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-primary resize-none"
-    />
-  </div>
+                  <div className="pt-4 border-t border-slate-100 flex items-center justify-between gap-3">
+                    <button
+                      type="button"
+                      onClick={() => setIsApplying(false)}
+                      className="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs rounded-xl transition-colors"
+                    >
+                      Back to Details
+                    </button>
 
-  {/* Buttons */}
-  <div className="flex flex-col-reverse md:flex-row gap-4 border-t border-border pt-6 mt-6">
-    <button
-      type="button"
-      onClick={() => setIsApplying(false)}
-      className="w-full md:w-auto px-6 py-4 bg-muted text-muted-foreground font-bold rounded-xl hover:bg-muted/80 transition-colors"
-    >
-      Back
-    </button>
-
-    <button
-      type="submit"
-      className="flex-1 py-4 bg-primary text-black font-bold rounded-xl hover:bg-primary/90 transition-colors shadow-[0_0_20px_hsl(190,100%,50%,0.3)]"
-    >
-      Submit Application
-    </button>
-  </div>
-</motion.form>
-            )}
-          </motion.div>
-        </div>
-      )}
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="flex-1 py-3 bg-[#0070AD] hover:bg-[#005f94] text-white font-bold text-xs rounded-xl transition-all shadow-lg shadow-[#0070AD]/25 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                          <span>Submitting Application...</span>
+                        </>
+                      ) : (
+                        <>
+                          <Send className="w-4 h-4" />
+                          <span>Submit Application</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+                </motion.form>
+              )}
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

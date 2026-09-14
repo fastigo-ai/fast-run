@@ -17,8 +17,8 @@ export default defineConfig(({ mode }) => ({
   plugins: [
     react(), 
     mode === "development" && componentTagger(),
-    viteCompression({ algorithm: "brotliCompress" }),
-    visualizer({ open: false, gzipSize: true, brotliSize: true })
+    mode === "production" && viteCompression({ algorithm: "brotliCompress" }),
+    mode === "production" && visualizer({ filename: "dist/stats.html", open: false, gzipSize: true, brotliSize: true })
   ].filter(Boolean),
   resolve: {
     alias: {

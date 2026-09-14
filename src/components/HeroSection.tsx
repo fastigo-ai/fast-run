@@ -1,7 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
-import MobileHeroAssistant from "./MobileHeroAssistant";
 import banner1 from "../assets/AIPOWEREDENGINERRING.webp";
 import banner2 from "../assets/DIGITALMANUFACTURING.webp";
 import banner3 from "../assets/NEXT-GEN-MOBILITY.webp";
@@ -12,330 +11,373 @@ import banner6 from "../assets/HRMS.webp";
 const slides = [
   {
     id: 1,
-    title: "AI-Powered Engineering",
-    subtitle: "Accelerate Global PDLCs with PLxAI and next-gen intelligence.",
-    image: banner1,
-    cta: "Know More",
-    category: "Artificial Intelligence",
-    link: "/services",
+    title: "EdTech",
+    subtitle: "Transforming education through smart digital learning platforms.",
+    image: banner5,
+    category: "Education",
+    link: "/category/edtech",
+    tagline: "THE CHANGE",
   },
   {
     id: 2,
-    title: "Healthcare Innovation",
-    subtitle: "Innovative healthcare solutions for better patient outcomes and clinical precision.",
-    image: banner4,
-    cta: "Explore More",
-    category: "Healthcare",
-    link: "/category/healthcare",
+    title: "AI-Powered Engineering",
+    subtitle: "Accelerate global product lifecycles with next-generation autonomous AI intelligence.",
+    image: banner1,
+    category: "Artificial Intelligence",
+    link: "/services",
+    tagline: "INTELLIGENCE",
   },
   {
     id: 3,
     title: "Next-Gen Mobility",
     subtitle: "Driving the future of sustainable transportation and autonomous vehicle tech.",
     image: banner3,
-    cta: "Research Now",
     category: "Mobility",
     link: "/category/mobility",
+    tagline: "MOBILITY",
   },
   {
     id: 4,
-    title: "EdTech Platforms",
-    subtitle: "Transforming education through smart digital learning and automated assessment platforms.",
-    image: banner5,
-    cta: "Explore More",
-    category: "Education",
-    link: "/category/edtech",
+    title: "Healthcare Innovation",
+    subtitle: "Innovative healthcare solutions for better patient outcomes and clinical precision.",
+    image: banner4,
+    category: "Healthcare",
+    link: "/category/healthcare",
+    tagline: "CARE",
   },
   {
     id: 5,
-    title: "Staffing & Recruitment",
-    subtitle: "Connecting the right talent with the right opportunities through AI matching.",
-    image: banner6,
-    cta: "Explore More",
-    category: "Enterprise HR",
-    link: "/careers",
-  },
-  {
-    id: 6,
     title: "Digital Manufacturing",
     subtitle: "Smart factories powered by intelligent automation, IoT telemetry, and digital twins.",
     image: banner2,
-    cta: "Explore More",
     category: "Industry 4.0",
     link: "/services",
+    tagline: "INDUSTRY",
+  },
+  {
+    id: 6,
+    title: "Staffing & Recruitment",
+    subtitle: "Connecting the right talent with transformative opportunities through AI matching.",
+    image: banner6,
+    category: "Enterprise HR",
+    link: "/careers",
+    tagline: "TALENT",
   },
 ];
 
+const INTERVAL_MS = 5000; // 5-second interval as requested
+
 const HeroSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [direction, setDirection] = useState(1); // 1 = next, -1 = prev
+  const [isPaused, setIsPaused] = useState(false);
+  const [isShuffling, setIsShuffling] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const touchStartX = useRef<number | null>(null);
 
+  // Responsive mobile check for sweep distance
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % slides.length);
-    }, 4500); // Auto change every 4.5 seconds
-    return () => clearInterval(timer);
-  }, [currentIndex]);
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
-  const handlePrev = () => {
+  const handleNext = useCallback(() => {
+    if (isShuffling) return;
+    setIsShuffling(true);
+    setDirection(1);
+    setCurrentIndex((prev) => (prev + 1) % slides.length);
+    setTimeout(() => setIsShuffling(false), 620);
+  }, [isShuffling]);
+
+  const handlePrev = useCallback(() => {
+    if (isShuffling) return;
+    setIsShuffling(true);
+    setDirection(-1);
     setCurrentIndex((prev) => (prev - 1 + slides.length) % slides.length);
+    setTimeout(() => setIsShuffling(false), 620);
+  }, [isShuffling]);
+
+  const goToSlide = (idx: number) => {
+    if (isShuffling || idx === currentIndex) return;
+    setIsShuffling(true);
+    setDirection(idx > currentIndex ? 1 : -1);
+    setCurrentIndex(idx);
+    setTimeout(() => setIsShuffling(false), 620);
   };
 
-  const handleNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % slides.length);
+  // Auto-play timer with 5-second interval
+  useEffect(() => {
+    if (isPaused) return;
+
+    const timer = setInterval(() => {
+      handleNext();
+    }, INTERVAL_MS);
+
+    return () => clearInterval(timer);
+  }, [handleNext, isPaused]);
+
+  // Touch swipe support
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+    const diff = touchStartX.current - e.changedTouches[0].clientX;
+    if (diff > 50) handleNext();
+    else if (diff < -50) handlePrev();
+    touchStartX.current = null;
   };
 
   const currentSlide = slides[currentIndex];
-  const titleWords = currentSlide.title.split(" ");
+  // Upcoming cards in the deck
+  const nextSlide = slides[(currentIndex + 1) % slides.length];
+  const thirdSlide = slides[(currentIndex + 2) % slides.length];
+
+  // Smooth Front-to-Back Card Transition (No sideways shuffling or tilting)
+  const cardTransitionVariants = {
+    enter: () => ({
+      x: 0,
+      y: -14,
+      scale: 0.96,
+      opacity: 0.75,
+      zIndex: 20,
+    }),
+    center: () => ({
+      x: 0,
+      y: 0,
+      scale: 1,
+      opacity: 1,
+      zIndex: 35,
+      transition: {
+        duration: 0.6,
+        ease: [0.22, 1, 0.36, 1],
+      },
+    }),
+    exit: () => ({
+      // Smoothly transitions from front to back of the deck
+      x: 0,
+      y: -28,
+      scale: 0.90,
+      opacity: [1, 0.6, 0],
+      zIndex: 10,
+      transition: {
+        duration: 0.58,
+        ease: [0.22, 1, 0.36, 1],
+      },
+    }),
+  };
 
   return (
-    <section className="relative w-full min-h-[100dvh] h-auto lg:h-[100dvh] lg:max-h-[1080px] p-0 m-0 overflow-hidden bg-[#041021] flex flex-col justify-between rounded-b-[32px] sm:rounded-b-[48px] shadow-[0_20px_50px_rgba(0,0,0,0.3)]">
-      {/* Background Banner Carousel with AnimatePresence */}
-      <AnimatePresence mode="sync">
+    <section className="relative w-full overflow-hidden bg-gradient-to-b from-[#eaf4fe] via-[#f1f8fd] to-[#f8fbfe] pt-24 sm:pt-32 pb-14 sm:pb-20">
+      {/* Background Decorative Ambient Mesh & Wave Glows */}
+      <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[850px] h-[350px] bg-gradient-to-r from-[#0070AD]/10 via-[#00A3E0]/15 to-[#38bdf8]/10 rounded-full blur-[110px] pointer-events-none" />
+      <div className="absolute top-0 inset-x-0 h-40 bg-[radial-gradient(ellipse_80%_60%_at_50%_-20%,rgba(0,112,173,0.12),transparent_70%)] pointer-events-none" />
+
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-[1240px] relative z-10">
+        {/* 1. Top Floating AI Prompt Search Bar */}
         <motion.div
-          key={currentSlide.id}
-          initial={{ opacity: 0, scale: 1.08 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.98 }}
-          transition={{ duration: 1.0, ease: [0.22, 1, 0.36, 1] }}
-          className="absolute inset-0 w-full h-full z-0 p-0 m-0"
+          initial={{ opacity: 0, y: -16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="w-full max-w-xl mx-auto mb-8 sm:mb-12"
         >
-          <img
-            src={currentSlide.image}
-            alt={currentSlide.title}
-            width={1920}
-            height={1080}
-            fetchPriority={currentIndex === 0 ? "high" : "auto"}
-            loading={currentIndex === 0 ? "eager" : "lazy"}
-            decoding="async"
-            className="w-full h-full object-cover object-center p-0 m-0"
-          />
-        </motion.div>
-      </AnimatePresence>
-
-      {/* Cinematic Gradient Overlays */}
-      <div className="absolute inset-0 z-10 bg-gradient-to-r from-[#041021]/95 via-[#0B192C]/75 to-[#041021]/40 p-0 m-0 pointer-events-none" />
-      <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#041021]/95 via-transparent to-[#041021]/50 p-0 m-0 pointer-events-none" />
-
-      {/* Main Text Content Overlaid on Full-Page Banner */}
-      <div className="relative z-20 w-full h-full flex flex-col justify-between px-5 sm:px-10 md:px-16 lg:px-24 pt-20 sm:pt-28 pb-6 sm:pb-12 max-w-[1600px] mx-auto">
-        
-        {/* Desktop Top Floating Search Bar (hidden on mobile, mobile has custom assistant) */}
-        <div className="hidden md:block w-full max-w-2xl mx-auto mb-2 sm:mb-4">
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="flex items-center bg-white/15 backdrop-blur-xl rounded-full px-3 sm:px-4 py-1.5 sm:py-2 border border-white/25 shadow-[0_8px_32px_rgba(0,0,0,0.3)] hover:border-white/40 transition-all duration-300"
-          >
-            <div className="pl-1.5 sm:pl-3 flex items-center flex-1 bg-transparent">
-              <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 mr-2 sm:mr-2.5 text-[#00A3E0] shrink-0" />
+          <div className="flex items-center bg-white/90 backdrop-blur-2xl rounded-full pl-4 sm:pl-5 pr-1.5 sm:pr-2 py-1.5 sm:py-2 border border-sky-100/90 shadow-[0_12px_36px_rgba(0,112,173,0.1)] hover:shadow-[0_16px_44px_rgba(0,112,173,0.16)] hover:border-sky-200 transition-all duration-300">
+            <div className="flex items-center flex-1 min-w-0 pr-2">
+              <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-[#00A3E0] mr-2.5 shrink-0" />
               <input
                 type="text"
-                placeholder="How can Fastigo AI help you navigate change?"
-                className="bg-transparent outline-none text-white w-full py-1.5 sm:py-2 text-xs sm:text-sm md:text-base font-body placeholder:text-slate-300 font-medium"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="How can we help?"
+                className="bg-transparent outline-none text-slate-800 w-full py-1 text-sm sm:text-[15px] font-body placeholder:text-slate-400 font-medium"
               />
             </div>
-            <button className="bg-[#0070AD] hover:bg-[#0084C7] text-white px-4 sm:px-6 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-semibold tracking-wide hover:shadow-[0_0_20px_rgba(0,112,173,0.6)] transition-all whitespace-nowrap">
-              Explore
+            <button
+              onClick={() => {
+                if (searchQuery.trim()) {
+                  window.location.href = `/services?search=${encodeURIComponent(searchQuery)}`;
+                }
+              }}
+              className="bg-[#0b1b38] hover:bg-[#0070AD] text-white px-5 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold tracking-wide shadow-sm hover:shadow-[0_4px_16px_rgba(0,112,173,0.4)] transition-all duration-300 shrink-0 cursor-pointer"
+            >
+              Generate
             </button>
-          </motion.div>
-        </div>
+          </div>
+        </motion.div>
 
-        {/* Hero Content Section */}
-        <div className="w-full my-auto flex flex-col items-center md:items-start">
-          {/* Main Title & Subtitle for Desktop & Mobile Header */}
-          <div className="max-w-3xl min-h-[140px] md:min-h-[260px] flex items-center w-full">
-            <AnimatePresence mode="wait">
+        {/* 2. Stacked 3D Cards Deck Carousel with Physical Shuffle Animation */}
+        <div
+          className="relative w-full max-w-[1140px] mx-auto pt-6 sm:pt-8"
+          style={{ perspective: "1600px" }}
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+        >
+          {/* Stack Tier 2 (Back card peek in the deck) */}
+          <motion.div
+            key={`tier2-${thirdSlide.id}`}
+            initial={{ opacity: 0, scale: 0.88 }}
+            animate={{ opacity: 0.7, scale: 0.92, y: -26 }}
+            transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+            className="absolute -top-6 inset-x-8 sm:inset-x-12 h-[350px] sm:h-[430px] md:h-[480px] lg:h-[500px] rounded-3xl bg-[#061226]/90 border border-slate-800/70 shadow-md pointer-events-none overflow-hidden z-0"
+          >
+            <div className="absolute inset-0 bg-[#061226]/95" />
+          </motion.div>
+
+          {/* Stack Tier 1 (Middle card peek in the deck with preview artwork) */}
+          <motion.div
+            key={`tier1-${nextSlide.id}`}
+            initial={{ opacity: 0.6, scale: 0.94, y: -20 }}
+            animate={{ opacity: 0.92, scale: 0.96, y: -13 }}
+            transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+            className="absolute -top-3 inset-x-4 sm:inset-x-6 h-[350px] sm:h-[430px] md:h-[480px] lg:h-[500px] rounded-3xl bg-[#071733] border border-slate-700/60 shadow-lg pointer-events-none overflow-hidden z-10"
+          >
+            <img
+              src={nextSlide.image}
+              alt=""
+              className="absolute right-0 top-0 h-full w-3/5 object-cover opacity-25 filter blur-[1px]"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#071733] via-[#071733]/90 to-transparent" />
+            <div className="relative z-10 p-6 sm:p-10 opacity-40 flex items-center gap-3">
+              <span className="w-2 h-2 rounded-full bg-[#00A3E0]" />
+              <span className="font-display text-lg sm:text-2xl font-bold text-white">
+                {nextSlide.title}
+              </span>
+            </div>
+          </motion.div>
+
+          {/* Active Front Card & Shuffling Deck Container */}
+          <div className="relative z-30 w-full h-[360px] sm:h-[430px] md:h-[480px] lg:h-[500px]">
+            <AnimatePresence mode="popLayout" custom={direction}>
               <motion.div
                 key={currentSlide.id}
-                initial="hidden"
-                animate="visible"
+                custom={direction}
+                variants={cardTransitionVariants}
+                initial="enter"
+                animate="center"
                 exit="exit"
-                variants={{
-                  hidden: { opacity: 0 },
-                  visible: {
-                    opacity: 1,
-                    transition: {
-                      staggerChildren: 0.08,
-                      delayChildren: 0.1,
-                    },
-                  },
-                  exit: {
-                    opacity: 0,
-                    y: -18,
-                    filter: "blur(6px)",
-                    transition: { duration: 0.35, ease: "easeIn" },
-                  },
-                }}
-                className="flex flex-col items-center md:items-start text-center md:text-left w-full"
+                style={{ transformStyle: "preserve-3d", backfaceVisibility: "hidden" }}
+                className="absolute inset-0 w-full h-full rounded-3xl overflow-hidden bg-[#07132b] border border-slate-700/80 shadow-[0_25px_60px_-15px_rgba(7,19,43,0.55)] flex flex-col justify-between select-none transform-gpu will-change-transform"
               >
-                {/* Category Pill with Kinetic Slide & Glow */}
-                <motion.div
-                  variants={{
-                    hidden: { opacity: 0, y: -12, scale: 0.92 },
-                    visible: {
-                      opacity: 1,
-                      y: 0,
-                      scale: 1,
-                      transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] },
-                    },
-                  }}
-                  className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1 sm:py-1.5 rounded-full bg-[#0070AD]/30 border border-[#00A3E0]/40 backdrop-blur-md mb-3 sm:mb-6 shadow-[0_0_20px_rgba(0,163,224,0.25)]"
-                >
-                  <span className="w-2 h-2 rounded-full bg-[#00A3E0] animate-pulse" />
-                  <span className="text-[11px] sm:text-xs font-semibold tracking-widest text-[#00A3E0] uppercase font-display">
-                    {currentSlide.category}
-                  </span>
-                </motion.div>
+                {/* Background Image on Right */}
+                <div className="absolute right-0 top-0 bottom-0 w-full md:w-[68%] lg:w-[62%] h-full pointer-events-none overflow-hidden">
+                  <motion.img
+                    src={currentSlide.image}
+                    alt={currentSlide.title}
+                    initial={{ scale: 1.06 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 5, ease: "easeOut" }}
+                    className="w-full h-full object-cover object-center"
+                  />
+                  {/* Seamless Fade Gradient from dark navy on left into image */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#07132b] via-[#07132b]/85 md:via-[#07132b]/40 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#07132b] via-transparent to-transparent md:hidden" />
+                </div>
 
-                {/* Main Headline with 40-48px Mobile Typography */}
-                <h1 className="text-[38px] xs:text-[42px] sm:text-5xl md:text-6xl lg:text-7xl font-display font-extrabold text-white leading-[1.08] tracking-tight mb-2 sm:mb-6 flex flex-wrap justify-center md:justify-start gap-x-2 sm:gap-x-4">
-                  {titleWords.map((word, wIdx) => (
-                    <span key={wIdx} className="overflow-hidden inline-block py-0.5 sm:py-1">
-                      <motion.span
-                        variants={{
-                          hidden: { y: "115%", opacity: 0, rotate: 2 },
-                          visible: {
-                            y: "0%",
-                            opacity: 1,
-                            rotate: 0,
-                            transition: {
-                              duration: 0.65,
-                              ease: [0.16, 1, 0.3, 1],
-                            },
-                          },
-                        }}
-                        className="inline-block"
-                      >
-                        {word}
-                      </motion.span>
-                    </span>
-                  ))}
-                </h1>
+                {/* Card Top & Middle Content (Left Column) */}
+                <div className="relative z-10 flex-1 flex flex-col justify-center px-6 sm:px-10 md:px-14 lg:px-16 pt-8 pb-4 max-w-2xl">
+                  {/* Blue Accent Dot + Title */}
+                  <div className="flex items-center gap-3 sm:gap-3.5 mb-3 sm:mb-4">
+                    <span className="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-[#00A3E0] shadow-[0_0_12px_#00A3E0] shrink-0" />
+                    <h2 className="font-display text-3xl sm:text-5xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight">
+                      {currentSlide.title}
+                    </h2>
+                  </div>
 
-                {/* Desktop Subtitle & CTA (hidden on mobile to feature Infosys AI Assistant Cards cleanly) */}
-                <div className="hidden md:flex flex-col items-start w-full">
-                  <motion.p
-                    variants={{
-                      hidden: { opacity: 0, y: 22, filter: "blur(8px)" },
-                      visible: {
-                        opacity: 1,
-                        y: 0,
-                        filter: "blur(0px)",
-                        transition: {
-                          duration: 0.6,
-                          delay: 0.25,
-                          ease: [0.16, 1, 0.3, 1],
-                        },
-                      },
-                    }}
-                    className="text-sm sm:text-lg md:text-xl lg:text-2xl text-slate-200 font-body mb-6 sm:mb-10 max-w-2xl leading-relaxed"
-                  >
+                  {/* Subtitle Description */}
+                  <p className="text-sm sm:text-base md:text-lg text-slate-300 font-body leading-relaxed max-w-xl mb-6">
                     {currentSlide.subtitle}
-                  </motion.p>
+                  </p>
 
-                  <motion.div
-                    variants={{
-                      hidden: { opacity: 0, y: 20, scale: 0.95 },
-                      visible: {
-                        opacity: 1,
-                        y: 0,
-                        scale: 1,
-                        transition: {
-                          duration: 0.55,
-                          delay: 0.35,
-                          ease: [0.16, 1, 0.3, 1],
-                        },
-                      },
-                    }}
-                    className="flex flex-wrap items-center gap-3 sm:gap-4"
-                  >
+                  {/* Quick Link Action */}
+                  <div className="flex items-center gap-3">
                     <a
                       href={currentSlide.link}
-                      className="inline-flex items-center gap-2 bg-[#0070AD] hover:bg-[#0084C7] text-white font-semibold text-xs sm:text-base px-5 sm:px-8 py-3 sm:py-4 rounded-xl shadow-[0_4px_24px_rgba(0,112,173,0.4)] hover:shadow-[0_8px_32px_rgba(0,112,173,0.6)] hover:scale-[1.02] transition-all duration-300 group"
+                      className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-[#38bdf8] hover:text-white transition-colors group"
                     >
-                      <span>{currentSlide.cta}</span>
-                      <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 group-hover:translate-x-1" />
+                      <span>Explore {currentSlide.category}</span>
+                      <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                     </a>
+                  </div>
+                </div>
 
-                    <a
-                      href="/contact"
-                      className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/25 backdrop-blur-md font-semibold text-xs sm:text-base px-5 sm:px-7 py-3 sm:py-4 rounded-xl transition-all duration-300 hover:scale-[1.02]"
-                    >
-                      Get in Touch
-                    </a>
-                  </motion.div>
+                {/* Card Bottom Bar: Tagline & Dash Indicators */}
+                <div className="relative z-10 w-full px-6 sm:px-10 md:px-14 lg:px-16 pb-6 sm:pb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                  {/* Bottom Left Tagline (Matches Screenshot) */}
+                  <div className="flex items-center gap-2 text-xs sm:text-sm font-display font-bold tracking-widest uppercase">
+                    <span className="text-white">ENGINEERING</span>
+                    <span className="text-[#F5A623]">THE CHANGE</span>
+                  </div>
+
+                  {/* Bottom Right Slide Indicators (Pill Dash Bars) */}
+                  <div className="flex items-center gap-2 sm:gap-2.5 self-end sm:self-auto">
+                    {slides.map((_, idx) => {
+                      const isActive = idx === currentIndex;
+                      return (
+                        <button
+                          key={idx}
+                          onClick={() => goToSlide(idx)}
+                          aria-label={`Go to slide ${idx + 1}`}
+                          className="relative h-1.5 rounded-full overflow-hidden transition-all duration-400 cursor-pointer"
+                          style={{
+                            width: isActive ? "32px" : "14px",
+                          }}
+                        >
+                          <div
+                            className={`w-full h-full transition-colors duration-300 ${
+                              isActive ? "bg-[#00A3E0]" : "bg-white/30 hover:bg-white/60"
+                            }`}
+                          />
+                          {isActive && !isPaused && (
+                            <motion.div
+                              key={`progress-${currentIndex}`}
+                              initial={{ width: "0%" }}
+                              animate={{ width: "100%" }}
+                              transition={{ duration: INTERVAL_MS / 1000, ease: "linear" }}
+                              className="absolute inset-y-0 left-0 bg-[#38bdf8] rounded-full shadow-[0_0_8px_#38bdf8]"
+                            />
+                          )}
+                        </button>
+                      );
+                    })}
+                  </div>
                 </div>
               </motion.div>
             </AnimatePresence>
-          </div>
 
-          {/* Mobile View: Infosys Style Interactive AI Search & 2x2 Feature Cards */}
-          <div className="w-full md:hidden mt-2">
-            <MobileHeroAssistant />
-          </div>
-        </div>
-
-        {/* Bottom Bar: Watermark, Arrows & 4.5s Progress Indicators */}
-        <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-white/15 mt-4">
-          {/* Engineering The Change Tagline */}
-          <div className="flex items-center gap-3">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#0070AD]" />
-            <p className="text-xs sm:text-sm font-display font-bold tracking-widest text-slate-300 uppercase">
-              Engineering <span className="text-[#00A3E0]">The Change</span>
-            </p>
-          </div>
-
-          {/* Slide Navigation Dots / Progress Bars & Arrows */}
-          <div className="flex items-center gap-4">
-            <button
-              onClick={handlePrev}
-              aria-label="Previous Slide"
-              className="p-2 rounded-full bg-white/10 hover:bg-white/25 text-white backdrop-blur-md border border-white/20 transition-all hover:scale-105"
-            >
-              <ChevronLeft className="w-4 h-4" />
-            </button>
-
-            <div className="flex items-center gap-2 sm:gap-2.5">
-              {slides.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setCurrentIndex(i)}
-                  aria-label={`Go to slide ${i + 1}`}
-                  className="relative h-1.5 rounded-full overflow-hidden transition-all duration-300"
-                  style={{ width: i === currentIndex ? "36px" : "12px" }}
-                >
-                  <div
-                    className={`absolute inset-0 ${
-                      i === currentIndex ? "bg-white/30" : "bg-white/20"
-                    }`}
-                  />
-                  {i === currentIndex && (
-                    <motion.div
-                      key={`progress-${currentIndex}`}
-                      initial={{ width: "0%" }}
-                      animate={{ width: "100%" }}
-                      transition={{ duration: 4.5, ease: "linear" }}
-                      className="absolute inset-y-0 left-0 bg-[#00A3E0] rounded-full"
-                    />
-                  )}
-                </button>
-              ))}
+            {/* Navigation Chevrons */}
+            <div className="absolute inset-y-0 -left-3 sm:-left-5 z-50 flex items-center pointer-events-none">
+              <button
+                onClick={handlePrev}
+                aria-label="Previous Slide"
+                className="pointer-events-auto p-2.5 rounded-full bg-slate-900/80 hover:bg-[#0070AD] text-white/80 hover:text-white backdrop-blur-md border border-white/20 shadow-lg transition-all hover:scale-110 active:scale-95 cursor-pointer"
+              >
+                <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+              </button>
             </div>
-
-            <button
-              onClick={handleNext}
-              aria-label="Next Slide"
-              className="p-2 rounded-full bg-white/10 hover:bg-white/25 text-white backdrop-blur-md border border-white/20 transition-all hover:scale-105"
-            >
-              <ChevronRight className="w-4 h-4" />
-            </button>
+            <div className="absolute inset-y-0 -right-3 sm:-right-5 z-50 flex items-center pointer-events-none">
+              <button
+                onClick={handleNext}
+                aria-label="Next Slide"
+                className="pointer-events-auto p-2.5 rounded-full bg-slate-900/80 hover:bg-[#0070AD] text-white/80 hover:text-white backdrop-blur-md border border-white/20 shadow-lg transition-all hover:scale-110 active:scale-95 cursor-pointer"
+              >
+                <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
+              </button>
+            </div>
           </div>
         </div>
-
       </div>
     </section>
   );
 };
 
 export default HeroSection;
+
+

@@ -1,316 +1,271 @@
-import { useState, useEffect, useCallback } from 'react';
-import { ArrowRight, ArrowUpRight, Sparkles, ChevronLeft, ChevronRight } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { ArrowRight, ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
-import image1 from '../assets/banner-2.jpeg';
-import image2 from '../assets/banner-3.jpeg';
-import image3 from '../assets/banner-1.jpeg';
 
-const insights = [
+// New high-definition generated images matching the reference aesthetic
+import analystImg from '../assets/insight_analyst.jpg';
+import agenticAiImg from '../assets/insight_agentic_ai.jpg';
+import mobilityImg from '../assets/insight_mobility.jpg';
+import voiceAiImg from '../assets/insight_voice_ai.jpg';
+import newsroomImg from '../assets/insight_newsroom.jpg';
+import execCollabImg from '../assets/insight_exec_collab.jpg';
+
+export interface InsightCardItem {
+  id: string;
+  title: string;
+  category: string;
+  type: string;
+  description: string;
+  readTime: string;
+  slug: string;
+  image: string;
+  accentColor: string;
+}
+
+const insightsData: InsightCardItem[] = [
   {
-    title: 'Pragmatic by Design: Engineering AI For the Real World',
-    description: 'Discover how AI is transforming product engineering with insights on scaling, trust, and innovation from industry leaders in this MITTR-Fastigo report.',
-    type: 'eBook',
-    image: image1,
-    slug: 'pragmatic-by-design-engineering-ai-real-world',
-    accent: '#0070AD',
-    glowColor: 'rgba(0, 112, 173, 0.22)'
+    id: 'analyst-recognitions',
+    title: 'Analyst Recognitions',
+    category: 'Industry Leadership',
+    type: 'Leadership Report',
+    description: 'Fastigo is recognised as a disruptive leader across enterprise AI systems, cloud platforms, and autonomous engineering.',
+    readTime: '5 min read',
+    slug: 'analyst-recognitions-enterprise-leader',
+    image: analystImg,
+    accentColor: '#F59E0B',
   },
   {
-    title: 'Navigating the Agentic AI Revolution - A Point of View',
-    description: 'Dive into our exclusive Point of View on how Agentic AI is transforming industries with its ability to make autonomous, intelligent decisions in real time.',
+    id: 'agentic-ai',
+    title: 'Agentic AI Revolution',
+    category: 'Autonomous Systems',
     type: 'Point of View',
-    image: image2,
+    description: 'How multi-agent architectures and goal-directed workflows are redefining enterprise operations and decision intelligence.',
+    readTime: '6 min read',
     slug: 'navigating-agentic-ai-revolution',
-    accent: '#6366F1',
-    glowColor: 'rgba(99, 102, 241, 0.22)'
+    image: agenticAiImg,
+    accentColor: '#8B5CF6',
   },
   {
-    title: 'How AI is Driving the Next Era of Mobility',
-    description: 'The mobility industry experts at Fastigo engaged in an extensive analysis of these trends, across three domains – Product Development Life Cycle, Software Development Life Cycle and User Experience.',
+    id: 'smart-mobility',
+    title: 'Smart Mobility & Transport',
+    category: 'Automotive & SDV',
     type: 'Whitepaper',
-    image: image3,
+    description: 'Accelerating Software-Defined Vehicles (SDVs), computer vision ADAS, and immersive in-cabin user experiences.',
+    readTime: '8 min read',
     slug: 'how-ai-driving-next-era-mobility',
-    accent: '#00A3E0',
-    glowColor: 'rgba(0, 163, 224, 0.22)'
+    image: mobilityImg,
+    accentColor: '#00A3FF',
+  },
+  {
+    id: 'voice-ai',
+    title: 'Enterprise Voice AI Agents',
+    category: 'Speech & NLP',
+    type: 'Case Study',
+    description: 'Architecting low-latency conversational voice models with enterprise guardrails, empathy, and deep CRM/ERP integrations.',
+    readTime: '5 min read',
+    slug: 'building-custom-voice-ai-agents-enterprise',
+    image: voiceAiImg,
+    accentColor: '#10B981',
+  },
+  {
+    id: 'newsroom',
+    title: 'Fastigo Newsroom',
+    category: 'Press & Media',
+    type: 'Global News',
+    description: 'Stay updated with Fastigo\'s latest breakthrough product launches, strategic enterprise alliances, and global summits.',
+    readTime: '3 min read',
+    slug: 'fastigo-global-newsroom-announcements',
+    image: newsroomImg,
+    accentColor: '#E11D48',
+  },
+  {
+    id: 'exec-insights',
+    title: 'Strategic Insights',
+    category: 'Business Transformation',
+    type: 'Executive Brief',
+    description: 'Actionable perspectives from C-suite leaders on scaling generative AI, enterprise cost-efficiency, and tech modernization.',
+    readTime: '7 min read',
+    slug: 'strategic-executive-insights-transformation',
+    image: execCollabImg,
+    accentColor: '#38BDF8',
   }
 ];
 
-const InsightCard = ({
-  item,
-  index = 0,
-}: {
-  item: typeof insights[0];
-  index?: number;
-}) => {
-  return (
-    <div
-      className="group relative flex flex-col rounded-[26px] bg-slate-50/70 p-2.5 sm:p-3 border border-slate-200/90 transition-all duration-500 cursor-pointer shadow-[0_10px_30px_-10px_rgba(0,112,173,0.08)] hover:border-[#0070AD]/40 h-full"
-      style={{
-        transition: "box-shadow 0.4s ease, border-color 0.4s ease, transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1)",
-      }}
-    >
-      {/* Dynamic Ambient Hover Glow Aura */}
-      <div
-        className="pointer-events-none absolute -inset-0.5 rounded-[28px] opacity-0 transition-opacity duration-500 group-hover:opacity-100 blur-xl -z-10"
-        style={{
-          background: `radial-gradient(circle at 50% 50%, ${item.glowColor}, transparent 70%)`,
-        }}
-      />
-
-      {/* Top Image Container with large rounded corners */}
-      <div className="relative w-full h-[220px] sm:h-[280px] lg:h-[300px] rounded-[20px] overflow-hidden bg-slate-900 shadow-inner">
-        <img
-          src={item.image}
-          alt={item.title}
-          className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-108"
-        />
-
-        {/* Ambient Top & Bottom Lighting Gradient */}
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/50 via-transparent to-black/10 pointer-events-none" />
-
-        {/* Specular Light Shimmer Reflection */}
-        <div className="absolute inset-0 pointer-events-none bg-gradient-to-tr from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-        {/* Badge */}
-        <div className="absolute top-3 left-3 sm:top-3.5 sm:left-3.5 z-10">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 sm:py-1.5 rounded-full text-xs font-semibold backdrop-blur-md bg-white/90 text-slate-800 border border-white/60 shadow-sm transition-transform duration-300 group-hover:scale-105">
-            <span
-              className="w-2 h-2 rounded-full animate-pulse"
-              style={{ backgroundColor: item.accent }}
-            />
-            {item.type}
-          </span>
-        </div>
-      </div>
-
-      {/* Nested / Docked White Content Box (Overlapping Bottom) */}
-      <div className="relative -mt-12 sm:-mt-20 mx-1 sm:mx-2 z-20 rounded-[20px] bg-white p-5 sm:p-7 shadow-[0_12px_32px_rgba(0,0,0,0.06)] border border-slate-100/90 transition-all duration-300 group-hover:shadow-[0_18px_40px_rgba(0,112,173,0.12)] group-hover:border-slate-200/90 flex flex-col justify-between flex-1">
-        <div>
-          <h3 className="text-base sm:text-lg lg:text-xl font-display font-bold text-[#0B192C] tracking-tight transition-colors duration-300 group-hover:text-[#0070AD] leading-snug line-clamp-2">
-            {item.title}
-          </h3>
-
-          <p className="mt-2.5 sm:mt-3 text-xs sm:text-sm leading-relaxed text-slate-600 font-body line-clamp-3">
-            {item.description}
-          </p>
-        </div>
-
-        {/* Action Link */}
-        <div className="mt-5 sm:mt-6 pt-2">
-          <Link
-            to={`/blog/${item.slug}`}
-            className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-[#0B192C] group/link hover:text-[#0070AD] transition-colors duration-200"
-          >
-            <span className="underline underline-offset-4 decoration-slate-300 group-hover/link:decoration-[#0070AD] transition-all">
-              Know More
-            </span>
-            <ArrowUpRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1 text-[#0070AD]" />
-          </Link>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const InsightsSection = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [direction, setDirection] = useState(1);
+const InsightsSection: React.FC = () => {
+  const scrollRef = useRef<HTMLDivElement>(null);
   const [isPaused, setIsPaused] = useState(false);
+  const [isUserInteracting, setIsUserInteracting] = useState(false);
 
-  const nextSlide = useCallback(() => {
-    setDirection(1);
-    setCurrentIndex((prev) => (prev + 1) % insights.length);
-  }, []);
+  // Auto-scroll loop with smooth requestAnimationFrame
+  useEffect(() => {
+    const container = scrollRef.current;
+    if (!container) return;
 
-  const prevSlide = useCallback(() => {
-    setDirection(-1);
-    setCurrentIndex((prev) => (prev - 1 + insights.length) % insights.length);
-  }, []);
+    let animationFrameId: number;
+    const speed = 0.85; // steady cinematic scroll speed
 
-  const goToSlide = (idx: number) => {
-    setDirection(idx > currentIndex ? 1 : -1);
-    setCurrentIndex(idx);
+    const step = () => {
+      if (!isPaused && !isUserInteracting && container) {
+        container.scrollLeft += speed;
+        // Seamless loop wrap: when scrolled past first half of duplicated list
+        if (container.scrollLeft >= container.scrollWidth / 2) {
+          container.scrollLeft = 0;
+        }
+      }
+      animationFrameId = requestAnimationFrame(step);
+    };
+
+    animationFrameId = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(animationFrameId);
+  }, [isPaused, isUserInteracting]);
+
+  // Manual scroll handler
+  const handleScroll = (direction: 'left' | 'right') => {
+    if (scrollRef.current) {
+      const scrollAmount = 360;
+      scrollRef.current.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth',
+      });
+    }
   };
 
-  // Auto-scroll every 5 seconds on mobile
-  useEffect(() => {
-    if (isPaused) return;
-    const timer = setInterval(() => {
-      nextSlide();
-    }, 5000);
-
-    return () => clearInterval(timer);
-  }, [isPaused, nextSlide, currentIndex]);
+  // Duplicate items for continuous infinite scroll
+  const displayItems = [...insightsData, ...insightsData];
 
   return (
-    <section className="py-14 sm:py-24 relative">
-      <div className="container mx-auto px-5 sm:px-4 max-w-[1240px] relative z-10">
-        
-        {/* Header Section */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-8 sm:mb-14 border-b border-slate-200/80 pb-4 sm:pb-6">
-          <div>
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50/80 border border-blue-100 text-[#0070AD] text-xs font-semibold uppercase tracking-wider mb-2.5 shadow-sm">
-              <Sparkles className="w-3.5 h-3.5 text-[#0070AD]" />
-              Thought Leadership
+    <section className="py-16 sm:py-24 relative overflow-hidden bg-slate-50/80 dark:bg-slate-950/90">
+      {/* Ambient background decoration */}
+      <div className="absolute top-1/2 -left-48 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/3 -right-48 w-96 h-96 bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
+
+      <div className="container mx-auto px-5 sm:px-6 max-w-[1360px] relative z-10 mb-8 sm:mb-12">
+        {/* Section Header with Title & Navigation Controls */}
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end border-b border-slate-200/80 dark:border-slate-800 pb-6 gap-6">
+          <div className="max-w-2xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-blue-50 text-[#0070AD] border border-blue-100 mb-3 dark:bg-blue-950/40 dark:text-blue-400 dark:border-blue-900/50">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#0070AD] animate-pulse" />
+              <span>Thought Leadership &amp; Perspectives</span>
             </div>
-            <div className="flex items-center justify-between gap-4 w-full">
-              <h2 className="text-[28px] sm:text-3xl md:text-[44px] font-display font-bold text-[#0E0A42] tracking-tight leading-tight">
-                Our Latest Insights
-              </h2>
-              {/* Mobile Slide Counter */}
-              <div className="md:hidden inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 font-mono">
-                <span className="text-[#0070AD] font-bold">0{currentIndex + 1}</span>
-                <span>/</span>
-                <span>0{insights.length}</span>
-              </div>
-            </div>
+            <h2 className="text-3xl sm:text-4xl md:text-[46px] font-display font-bold text-[#0E0A42] dark:text-white tracking-tight leading-tight">
+              Insights &amp; Innovations
+            </h2>
+            <p className="mt-2.5 text-sm sm:text-base text-slate-600 dark:text-slate-400 leading-relaxed font-body">
+              Explore deep-tech research, enterprise architectures, and strategic perspectives from Fastigo's technology leaders.
+            </p>
           </div>
 
-          <Link 
-            to="/blog" 
-            className="hidden sm:inline-flex items-center gap-2 text-sm font-semibold text-[#0070AD] hover:text-[#005a8c] transition-colors group mb-1"
-          >
-            <span>View All Insights</span>
-            <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-          </Link>
-        </div>
-
-        {/* Desktop Modern 3D Style Insights Grid (md and up) */}
-        <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          {insights.map((item, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 35 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6, delay: index * 0.15, ease: [0.22, 1, 0.36, 1] }}
-              whileHover={{ y: -10, scale: 1.025 }}
-              className="h-full"
+          {/* Controls: Left/Right Buttons + Pause/Play + View All */}
+          <div className="flex items-center gap-3">
+            {/* Auto-scroll toggle indicator */}
+            <button
+              onClick={() => setIsPaused(!isPaused)}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border border-slate-200 dark:border-slate-700 bg-white/80 dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors shadow-sm"
+              title={isPaused ? 'Resume auto-scroll' : 'Pause auto-scroll'}
+              aria-label={isPaused ? 'Resume auto-scroll' : 'Pause auto-scroll'}
             >
-              <InsightCard item={item} index={index} />
-            </motion.div>
+              {isPaused ? <Play className="w-3.5 h-3.5 text-green-600" /> : <Pause className="w-3.5 h-3.5 text-amber-500" />}
+              <span className="hidden sm:inline">{isPaused ? 'Paused' : 'Auto-Scroll'}</span>
+            </button>
+
+            {/* Prev / Next Nav Buttons */}
+            <div className="flex items-center gap-1.5 bg-white/80 dark:bg-slate-900 p-1 rounded-full border border-slate-200 dark:border-slate-700 shadow-sm">
+              <button
+                onClick={() => handleScroll('left')}
+                className="w-8 h-8 rounded-full flex items-center justify-center text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                aria-label="Scroll left"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => handleScroll('right')}
+                className="w-8 h-8 rounded-full flex items-center justify-center text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                aria-label="Scroll right"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* View All Link */}
+            <Link 
+              to="/blog" 
+              className="hidden md:inline-flex items-center gap-1.5 text-sm font-semibold text-[#0070AD] hover:text-[#005a8c] dark:text-sky-400 transition-colors group ml-2"
+            >
+              <span>View All</span>
+              <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      {/* Side-by-Side Auto-Scrolling Cards Carousel */}
+      <div 
+        className="w-full relative overflow-hidden"
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+        onTouchStart={() => setIsUserInteracting(true)}
+        onTouchEnd={() => setIsUserInteracting(false)}
+      >
+        <div
+          ref={scrollRef}
+          className="flex gap-5 sm:gap-6 overflow-x-auto scrollbar-none px-5 sm:px-8 pb-8 pt-2 scroll-smooth cursor-grab active:cursor-grabbing"
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        >
+          {displayItems.map((item, index) => (
+            <Link
+              key={`${item.id}-${index}`}
+              to={`/blog/${item.slug}`}
+              className="group relative flex-shrink-0 w-[285px] sm:w-[325px] md:w-[350px] h-[480px] sm:h-[530px] rounded-[24px] sm:rounded-[28px] overflow-hidden bg-slate-950 border border-slate-800/80 shadow-[0_12px_36px_rgba(0,0,0,0.18)] hover:shadow-[0_24px_54px_rgba(0,0,0,0.32)] transition-all duration-500 hover:-translate-y-2 select-none flex flex-col justify-end p-5 sm:p-6"
+            >
+              {/* Background Real Editorial Image with Cinematic Scale on Hover */}
+              <img
+                src={item.image}
+                alt={item.title}
+                className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+                loading="lazy"
+              />
+
+              {/* Gradient Vignette */}
+              <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/90 pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent pointer-events-none opacity-90 group-hover:opacity-95 transition-opacity" />
+
+              {/* Subtle Glowing Radial Highlights */}
+              <div 
+                className="absolute bottom-0 left-0 right-0 h-2/3 opacity-40 group-hover:opacity-60 transition-opacity duration-500 pointer-events-none"
+                style={{
+                  background: `radial-gradient(ellipse at bottom, ${item.accentColor}25 0%, transparent 70%)`
+                }}
+              />
+
+              {/* Bottom Content Area: Heading always visible, 3-line content reveals on hover */}
+              <div className="relative z-10">
+                <h3 className="text-2xl sm:text-[26px] font-display font-bold text-white tracking-tight leading-snug drop-shadow-md group-hover:text-sky-300 transition-colors duration-300">
+                  {item.title}
+                </h3>
+
+                {/* 3-line Content reveals on hover */}
+                <div className="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-all duration-400 ease-out">
+                  <div className="overflow-hidden">
+                    <p className="pt-2.5 text-[13px] sm:text-sm text-slate-200/90 font-normal leading-relaxed line-clamp-3 drop-shadow opacity-0 group-hover:opacity-100 transition-opacity duration-400 delay-75">
+                      {item.description}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </Link>
           ))}
         </div>
+      </div>
 
-        {/* Mobile Auto-Scrolling Carousel (< md) */}
-        <div
-          className="block md:hidden relative"
-          onTouchStart={() => setIsPaused(true)}
-          onTouchEnd={() => setIsPaused(false)}
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
+      {/* Mobile View All CTA */}
+      <div className="mt-6 text-center sm:hidden px-5">
+        <Link 
+          to="/blog" 
+          className="inline-flex items-center justify-center gap-2 w-full py-3 px-5 rounded-xl bg-blue-50 text-sm font-semibold text-[#0070AD] border border-blue-100 hover:bg-[#0070AD] hover:text-white transition-all duration-300 shadow-sm"
         >
-          <div className="relative overflow-hidden px-1 py-1 min-h-[440px]">
-            <AnimatePresence initial={false} custom={direction} mode="wait">
-              <motion.div
-                key={currentIndex}
-                custom={direction}
-                variants={{
-                  enter: (dir: number) => ({
-                    x: dir > 0 ? "100%" : "-100%",
-                    opacity: 0,
-                    scale: 0.95,
-                  }),
-                  center: {
-                    x: 0,
-                    opacity: 1,
-                    scale: 1,
-                    transition: {
-                      x: { type: "spring", stiffness: 280, damping: 28 },
-                      opacity: { duration: 0.35 },
-                    },
-                  },
-                  exit: (dir: number) => ({
-                    x: dir > 0 ? "-100%" : "100%",
-                    opacity: 0,
-                    scale: 0.95,
-                    transition: {
-                      x: { type: "spring", stiffness: 280, damping: 28 },
-                      opacity: { duration: 0.3 },
-                    },
-                  }),
-                }}
-                initial="enter"
-                animate="center"
-                exit="exit"
-                drag="x"
-                dragConstraints={{ left: 0, right: 0 }}
-                dragElastic={0.2}
-                onDragEnd={(_, { offset, velocity }) => {
-                  if (offset.x < -40 || velocity.x < -200) {
-                    nextSlide();
-                  } else if (offset.x > 40 || velocity.x > 200) {
-                    prevSlide();
-                  }
-                }}
-                className="w-full cursor-grab active:cursor-grabbing"
-              >
-                <InsightCard item={insights[currentIndex]} index={currentIndex} />
-              </motion.div>
-            </AnimatePresence>
-          </div>
-
-          {/* Controls & Auto-Scroll Pagination Indicators */}
-          <div className="flex items-center justify-between mt-4 px-2">
-            <button
-              onClick={prevSlide}
-              aria-label="Previous Insight"
-              className="p-2.5 rounded-full bg-white/95 border border-slate-200/90 shadow-sm text-slate-700 hover:text-[#0070AD] hover:border-[#0070AD]/40 active:scale-95 transition-all"
-            >
-              <ChevronLeft className="w-4 h-4" />
-            </button>
-
-            {/* Pagination Dots with 5-second progress animation */}
-            <div className="flex items-center gap-2">
-              {insights.map((item, idx) => {
-                const isActive = idx === currentIndex;
-                return (
-                  <button
-                    key={item.title}
-                    onClick={() => goToSlide(idx)}
-                    aria-label={`Go to insight ${item.title}`}
-                    className="relative h-2 rounded-full transition-all duration-300 overflow-hidden"
-                    style={{
-                      width: isActive ? "32px" : "8px",
-                      backgroundColor: isActive ? `${item.accent}30` : "#CBD5E1",
-                    }}
-                  >
-                    {isActive && (
-                      <motion.div
-                        key={`progress-insight-${currentIndex}-${isPaused}`}
-                        initial={{ width: "0%" }}
-                        animate={{ width: "100%" }}
-                        transition={{ duration: isPaused ? 0 : 5, ease: "linear" }}
-                        className="h-full rounded-full"
-                        style={{ backgroundColor: item.accent }}
-                      />
-                    )}
-                  </button>
-                );
-              })}
-            </div>
-
-            <button
-              onClick={nextSlide}
-              aria-label="Next Insight"
-              className="p-2.5 rounded-full bg-white/95 border border-slate-200/90 shadow-sm text-slate-700 hover:text-[#0070AD] hover:border-[#0070AD]/40 active:scale-95 transition-all"
-            >
-              <ChevronRight className="w-4 h-4" />
-            </button>
-          </div>
-        </div>
-        
-        {/* Mobile View All Button */}
-        <div className="mt-8 text-center sm:hidden">
-          <Link 
-            to="/blog" 
-            className="inline-flex items-center justify-center gap-2 w-full py-3.5 px-6 rounded-xl bg-blue-50 text-sm font-semibold text-[#0070AD] border border-blue-100 hover:bg-[#0070AD] hover:text-white transition-all duration-300 shadow-sm"
-          >
-            <span>View All Insights</span>
-            <ArrowRight className="w-4 h-4" />
-          </Link>
-        </div>
+          <span>View All Insights &amp; Articles</span>
+          <ArrowRight className="w-4 h-4" />
+        </Link>
       </div>
     </section>
   );
