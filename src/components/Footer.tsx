@@ -314,7 +314,7 @@ const Footer = () => {
                 </Link>
                 <span className="mx-3 text-slate-300">|</span>
                 <Link
-                  to="/admin/login"
+                  to="/admin"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-[#0070AD] transition-colors font-medium text-slate-400"

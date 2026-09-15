@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Lock, Mail, Eye, EyeOff, ShieldCheck, ArrowRight, AlertCircle, Sparkles } from 'lucide-react';
+import { Lock, Mail, Eye, EyeOff, ShieldCheck, ArrowRight, AlertCircle, Sparkles, PlayCircle } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import fastigoLogo from '@/assets/fastigo-logo.webp';
 
@@ -12,16 +12,28 @@ export const AdminLogin: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const { login } = useAuth();
+  const { login, isAuthenticated, isLoading } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || '/admin';
 
-  // Ensure any legacy localStorage keys are purged so new tabs always require fresh login
+  // If already authenticated, redirect straight to admin dashboard
   useEffect(() => {
-    localStorage.removeItem('fastigo_admin_token');
-    localStorage.removeItem('fastigo_admin_user');
-  }, []);
+    if (isAuthenticated) {
+      navigate(from, { replace: true });
+    }
+  }, [isAuthenticated, navigate, from]);
+
+  if (isLoading || isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-[#070d18] flex items-center justify-center p-4 font-body">
+        <div className="flex flex-col items-center gap-4 text-center">
+          <div className="w-10 h-10 border-4 border-[#0070AD] border-t-transparent rounded-full animate-spin" />
+          <p className="text-slate-400 text-sm font-medium">Verifying admin session...</p>
+        </div>
+      </div>
+    );
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,7 +44,12 @@ export const AdminLogin: React.FC = () => {
       await login(email, password);
       navigate(from, { replace: true });
     } catch (err: any) {
-      setError(err.message || 'Invalid email or password. Please try again.');
+      const msg = err?.message || '';
+      if (msg.includes('Failed to fetch') || msg.includes('NetworkError') || msg.includes('connection refused')) {
+        setError('Cannot reach backend server. You can start it via "npm run backend" or click below to enter Demo Mode.');
+      } else {
+        setError(msg || 'Invalid email or password. Please try again.');
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -42,6 +59,19 @@ export const AdminLogin: React.FC = () => {
     setEmail('admin@fastigo.co');
     setPassword('Fastigo@2026!');
     setError(null);
+  };
+
+  const handleDemoSignIn = async () => {
+    setError(null);
+    setIsSubmitting(true);
+    try {
+      await login('admin@fastigo.co', 'Fastigo@2026!');
+      navigate(from, { replace: true });
+    } catch (err: any) {
+      setError(err?.message || 'Login failed. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -86,10 +116,21 @@ export const AdminLogin: React.FC = () => {
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="mb-6 p-3.5 rounded-xl bg-rose-500/10 border border-rose-500/30 flex items-start gap-2.5 text-rose-400 text-xs"
+              className="mb-6 p-3.5 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs flex flex-col gap-2"
             >
-              <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
-              <span>{error}</span>
+              <div className="flex items-start gap-2.5">
+                <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
+                <span>{error}</span>
+              </div>
+              {error.includes('backend') && (
+                <button
+                  type="button"
+                  onClick={handleDemoSignIn}
+                  className="self-start mt-1 px-3 py-1 bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 font-medium rounded-lg text-xs transition-colors cursor-pointer border border-amber-500/30"
+                >
+                  Enter in Offline Demo Mode →
+                </button>
+              )}
             </motion.div>
           )}
 
@@ -129,7 +170,8 @@ export const AdminLogin: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors p-1"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors p-1 cursor-pointer"
+                  aria-label={showPassword ? "Hide password" : "Show password"}
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
@@ -163,13 +205,23 @@ export const AdminLogin: React.FC = () => {
             </div>
             <div className="bg-[#080f1e]/80 border border-slate-800 rounded-lg p-2.5 text-xs text-slate-300 font-mono flex items-center justify-between">
               <span>admin@fastigo.co / Fastigo@2026!</span>
-              <button
-                type="button"
-                onClick={handleQuickFill}
-                className="text-[11px] text-[#38bdf8] hover:underline font-sans font-semibold ml-2"
-              >
-                Auto-Fill
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={handleQuickFill}
+                  className="text-[11px] text-[#38bdf8] hover:underline font-sans font-semibold cursor-pointer"
+                >
+                  Auto-Fill
+                </button>
+                <span className="text-slate-600">|</span>
+                <button
+                  type="button"
+                  onClick={handleDemoSignIn}
+                  className="text-[11px] text-emerald-400 hover:underline font-sans font-semibold cursor-pointer flex items-center gap-1"
+                >
+                  <PlayCircle className="w-3 h-3" /> Quick Enter
+                </button>
+              </div>
             </div>
           </div>
 

@@ -13,6 +13,7 @@ import {
   Building,
 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
+import { isDemoModeActive } from '@/lib/api';
 import fastigoLogo from '@/assets/fastigo-logo.webp';
 
 interface AdminLayoutProps {
@@ -76,6 +77,11 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
             <span className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold tracking-wider uppercase bg-[#0070AD]/10 text-[#0070AD] border border-[#0070AD]/25 shadow-2xs">
               <ShieldCheck className="w-3.5 h-3.5 text-[#0070AD]" /> Admin Portal
             </span>
+            {isDemoModeActive() && (
+              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-amber-50 text-amber-700 border border-amber-300">
+                Demo Mode
+              </span>
+            )}
           </Link>
         </div>
 

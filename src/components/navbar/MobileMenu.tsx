@@ -563,6 +563,15 @@ const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
                 <Mail className="w-3.5 h-3.5 text-[#0070AD]" />
                 <span>Info@fastigo.co</span>
               </a>
+              <Link
+                to="/admin"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={handleLinkClick}
+                className="flex items-center gap-1 text-slate-500 hover:text-[#0070AD] transition-colors font-medium"
+              >
+                <span>Admin</span>
+              </Link>
               <div className="flex items-center gap-1.5 text-slate-600">
                 <Globe className="w-3.5 h-3.5 text-slate-400" />
                 <span className="font-semibold">Global (EN)</span>

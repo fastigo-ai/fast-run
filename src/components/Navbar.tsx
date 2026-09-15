@@ -8,7 +8,15 @@ import MegaMenu from "./navbar/MegaMenu";
 import ProductsMegaMenu from "./navbar/ProductsMegaMenu";
 import MobileMenu from "./navbar/MobileMenu";
 
-const mainNavItems = [
+interface MainNavItem {
+  name: string;
+  path?: string;
+  hasDropdown?: boolean;
+  target?: string;
+  rel?: string;
+}
+
+const mainNavItems: MainNavItem[] = [
   { name: "What we do", hasDropdown: true },
   { name: "Products", path: "/products", hasDropdown: true },
   { name: "Who we are", path: "/about" },
@@ -62,7 +70,7 @@ const Navbar = () => {
       aria-label="Main navigation"
     >
       <div className="container mx-auto px-4 lg:px-6">
-        <div className="flex h-[68px] sm:h-[76px] items-center justify-between">
+        <div className="flex h-[74px] sm:h-[84px] md:h-[90px] items-center justify-between">
           {/* Original Fastigo Logo */}
           <Link
             to="/"
@@ -70,24 +78,26 @@ const Navbar = () => {
               setIsMobileMenuOpen(false);
               closeMegaMenu();
             }}
-            className="flex items-center gap-2 shrink-0 group"
+            className="flex items-center gap-2 shrink-0 group py-1"
             aria-label="Fastigo Home"
           >
             <img
               src={fastigoLogo}
               alt="Fastigo Technology"
-              className="h-10 sm:h-14 w-auto object-contain transition-all duration-300 origin-left"
+              className="h-12 sm:h-16 md:h-[72px] lg:h-[78px] w-auto object-contain transition-all duration-300 origin-left hover:opacity-95"
             />
           </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-6 lg:gap-8 ml-auto mr-28 rounded-full border border-slate-200/70 bg-white/70 px-5 py-2 backdrop-blur-md shadow-sm">
-            {mainNavItems.map((item) => (
+            {mainNavItems.map((item: MainNavItem) => (
               <NavItem
                 key={item.name}
                 name={item.name}
                 path={item.path}
                 hasDropdown={item.hasDropdown}
+                target={item.target}
+                rel={item.rel}
                 className="text-[15px] font-medium tracking-normal"
                 isActive={activeDropdown === item.name}
                 onMouseEnter={

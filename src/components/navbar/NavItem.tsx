@@ -7,6 +7,8 @@ interface NavItemProps {
   hasDropdown?: boolean;
   isActive?: boolean;
   className?: string;
+  target?: string;
+  rel?: string;
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
   onClick?: () => void;
@@ -18,6 +20,8 @@ const NavItem = ({
   hasDropdown,
   isActive,
   className,
+  target,
+  rel,
   onMouseEnter,
   onMouseLeave,
   onClick,
@@ -38,9 +42,15 @@ const NavItem = ({
   );
 
   if (path && !hasDropdown) {
+    const isExternalOrAdmin = target === '_blank' || path === '/admin' || path.startsWith('/admin');
+    const effectiveTarget = target || (isExternalOrAdmin ? '_blank' : undefined);
+    const effectiveRel = rel || (effectiveTarget === '_blank' ? 'noopener noreferrer' : undefined);
+
     return (
       <Link
         to={path}
+        target={effectiveTarget}
+        rel={effectiveRel}
         className={baseClass}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}

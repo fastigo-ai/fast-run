@@ -1,26 +1,43 @@
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { servicesData } from '@/data/services';
 import { ArrowRight, CheckCircle2, MessageSquare } from 'lucide-react';
 import { SplitText } from '@/components/SplitText';
+import ArtificialIntelligencePage from './ArtificialIntelligencePage';
+import { GenericServicePage } from './services/GenericServicePage';
+import { servicesDetailedData } from './services/serviceDetailsData';
 
 const ServiceDetail = () => {
     const { serviceId } = useParams<{ serviceId: string }>();
-    const service = serviceId ? servicesData[serviceId] : null;
 
     // Scroll to top on mount or service change
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [serviceId]);
 
+    // Dedicated flagship modern experience for Artificial Intelligence
+    if (
+        serviceId === 'artificial-intelligence' ||
+        serviceId === 'ai'
+    ) {
+        return <ArtificialIntelligencePage />;
+    }
+
+    // Modern dedicated domain-specific service experiences
+    if (serviceId && servicesDetailedData[serviceId]) {
+        return <GenericServicePage service={servicesDetailedData[serviceId]} />;
+    }
+
+    const service = serviceId ? servicesData[serviceId] : null;
+
     if (!service) {
         return (
-            <div className="min-h-screen flex flex-col items-center justify-center bg-background text-[#0B192C] px-4 text-center">
+            <div className="min-h-screen flex flex-col items-center justify-center bg-white text-[#0B192C] px-4 text-center">
                 <h2 className="text-4xl font-display font-bold mb-4">Service Not Found</h2>
                 <p className="text-slate-500 mb-8 max-w-md">The service you are looking for might have been moved or renamed.</p>
-                <Link to="/" className="bg-[#0070AD] text-white px-8 py-3.5 rounded-xl font-semibold hover:bg-[#005c8f] transition-colors shadow-sm">
-                    Return to Homepage
+                <Link to="/services" className="bg-[#0070AD] text-white px-8 py-3.5 rounded-xl font-semibold hover:bg-[#005c8f] transition-colors shadow-sm">
+                    View All Services
                 </Link>
             </div>
         );
@@ -59,7 +76,7 @@ const ServiceDetail = () => {
                     className="absolute bottom-0 right-0 lg:right-1/4 w-[500px] md:w-[700px] h-[500px] md:h-[700px] bg-[#00A3E0]/10 rounded-full blur-[100px] mix-blend-multiply"
                 />
             </div>
-            
+
             {/* Breadcrumbs */}
             <div className="relative z-10 bg-white/70 backdrop-blur-md border-b border-slate-200/60 py-4">
                 <div className="container mx-auto px-4 max-w-[1200px]">
@@ -97,7 +114,7 @@ const ServiceDetail = () => {
                                 <p className="text-[17px] text-slate-600 font-body leading-relaxed mb-12">
                                     {service.description}
                                 </p>
-                                
+
                                 <div className="flex flex-wrap gap-4">
                                     <Link to="/contact">
                                         <button className="bg-[#0070AD] text-white px-8 py-4 rounded-full font-bold hover:bg-[#005a8c] hover:shadow-[0_8px_25px_rgba(0,112,173,0.3)] hover:-translate-y-0.5 transition-all flex items-center gap-2">
