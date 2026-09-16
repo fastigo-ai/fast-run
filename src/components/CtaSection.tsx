@@ -43,7 +43,7 @@ const CtaSection = () => {
                 <div
                     className="max-w-[1200px] relative rounded-3xl overflow-hidden border border-[#0070AD]/30 bg-[#041021] p-6 sm:p-10 md:p-16 flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12 shadow-[0_20px_50px_rgba(0,112,173,0.15)]"
                     style={{
-                        background: 'linear-gradient(135deg, #041021 0%, #0B192C 100%)',
+                        background: 'linear-gradient(135deg, #041021 0%, #0070ad 100%)',
                     }}
                 >
                     {/* Background Ambient Glow */}

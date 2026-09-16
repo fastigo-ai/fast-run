@@ -96,11 +96,102 @@ const fastigoModelPillars: FastigoPillar[] = [
 
 export const PillarsSection = () => {
   return (
-    <section className="py-14 sm:py-24 relative bg-[#0B192C] text-white overflow-hidden border-t border-b border-slate-800/80">
-      {/* Ambient background glow */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[450px] bg-gradient-to-tr from-[#0070AD]/15 via-[#6366F1]/12 to-emerald-500/10 blur-[130px] rounded-full" />
-        <div className="absolute inset-0 bg-[radial-gradient(#ffffff0a_1px,transparent_1px)] [background-size:24px_24px] opacity-40" />
+    <section className="py-16 sm:py-24 relative overflow-hidden bg-gradient-to-b from-[#F8FAFD] via-[#F1F6FB] to-[#F8FAFD] text-slate-900 border-t border-b border-sky-100/90">
+      {/* AI THEMED BACKGROUND CANVAS */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden select-none">
+        {/* Top & Bottom Cyber Border Laser Lights */}
+        <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[#0070AD]/30 to-transparent" />
+        <div className="absolute top-0 left-0 w-48 h-[2px] bg-gradient-to-r from-transparent via-[#00A3E0] to-transparent animate-beam-move" />
+        <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[#0070AD]/25 to-transparent" />
+
+        {/* Ambient AI Energy Glows */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[420px] bg-gradient-to-b from-[#00A3E0]/14 via-[#0070AD]/08 to-transparent blur-[130px] rounded-full" />
+        <div className="absolute top-1/2 -left-32 -translate-y-1/2 w-[500px] h-[500px] bg-sky-400/8 blur-[120px] rounded-full" />
+        <div className="absolute top-1/2 -right-32 -translate-y-1/2 w-[500px] h-[500px] bg-indigo-500/6 blur-[120px] rounded-full" />
+
+        {/* Precision AI Matrix Crosshair Grid */}
+        <svg
+          className="absolute inset-0 w-full h-full opacity-45"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <defs>
+            <pattern
+              id="ai-precision-grid"
+              width="64"
+              height="64"
+              patternUnits="userSpaceOnUse"
+            >
+              {/* Center Dot */}
+              <circle cx="32" cy="32" r="1" fill="#0070AD" fillOpacity="0.3" />
+              {/* Precision Crosshair Marker */}
+              <path
+                d="M 30 32 L 34 32 M 32 30 L 32 34"
+                stroke="#0070AD"
+                strokeWidth="0.6"
+                strokeOpacity="0.25"
+              />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#ai-precision-grid)" />
+        </svg>
+
+        {/* AI Circuit Buslines & Neural Synapse Paths */}
+        <svg
+          className="absolute inset-0 w-full h-full opacity-35"
+          viewBox="0 0 1440 900"
+          fill="none"
+          preserveAspectRatio="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          {/* Circuit Trace Left */}
+          <path
+            d="M -50 160 L 220 160 L 320 260 L 480 260"
+            stroke="url(#circuit-grad-1)"
+            strokeWidth="1.2"
+            strokeDasharray="4 4"
+          />
+          <circle cx="220" cy="160" r="3" fill="#00A3E0" />
+          <circle cx="320" cy="260" r="2.5" fill="#0070AD" />
+          <circle cx="480" cy="260" r="4" fill="#00A3E0" fillOpacity="0.8" />
+
+          {/* Circuit Trace Right */}
+          <path
+            d="M 1500 200 L 1220 200 L 1100 320 L 940 320"
+            stroke="url(#circuit-grad-2)"
+            strokeWidth="1.2"
+            strokeDasharray="4 4"
+          />
+          <circle cx="1220" cy="200" r="3" fill="#00A3E0" />
+          <circle cx="1100" cy="320" r="2.5" fill="#0070AD" />
+          <circle cx="940" cy="320" r="4" fill="#00A3E0" fillOpacity="0.8" />
+
+          {/* Low Circuit Bottom */}
+          <path
+            d="M 120 820 L 360 820 L 440 740 L 700 740"
+            stroke="url(#circuit-grad-1)"
+            strokeWidth="1"
+            strokeOpacity="0.4"
+          />
+          <path
+            d="M 1320 800 L 1140 800 L 1060 720 L 850 720"
+            stroke="url(#circuit-grad-2)"
+            strokeWidth="1"
+            strokeOpacity="0.4"
+          />
+
+          <defs>
+            <linearGradient id="circuit-grad-1" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#0070AD" stopOpacity="0.1" />
+              <stop offset="50%" stopColor="#00A3E0" stopOpacity="0.7" />
+              <stop offset="100%" stopColor="#0070AD" stopOpacity="0.2" />
+            </linearGradient>
+            <linearGradient id="circuit-grad-2" x1="100%" y1="0%" x2="0%" y2="0%">
+              <stop offset="0%" stopColor="#0070AD" stopOpacity="0.1" />
+              <stop offset="50%" stopColor="#00A3E0" stopOpacity="0.7" />
+              <stop offset="100%" stopColor="#0070AD" stopOpacity="0.2" />
+            </linearGradient>
+          </defs>
+        </svg>
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 max-w-[1400px] relative z-10">
@@ -112,17 +203,25 @@ export const PillarsSection = () => {
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="mb-10 sm:mb-14 text-center max-w-3xl mx-auto"
         >
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md text-xs font-semibold text-sky-400 mb-4 shadow-sm">
-            <Sparkles className="w-3.5 h-3.5 animate-pulse" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/90 border border-sky-200/90 text-xs font-semibold text-[#0070AD] mb-4 shadow-[0_2px_12px_rgba(0,112,173,0.08)] backdrop-blur-md">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#0070AD]" />
+            </span>
             <span>Fastigo Core Architectural Model</span>
+            <span className="text-slate-300 font-light">|</span>
+            <span className="text-[10px] font-mono font-medium text-sky-600 tracking-wider">AI MATRIX</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold tracking-tight leading-[1.15] text-white mb-4 drop-shadow-[0_2px_12px_rgba(255,255,255,0.1)]">
-            Where Innovation Meets Artificial Intelligence
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold tracking-tight leading-[1.15] text-[#0E0A42] mb-4">
+            Where Innovation Meets{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0070AD] via-[#00A3E0] to-[#0070AD]">
+              Artificial Intelligence
+            </span>
           </h2>
 
-          <p className="text-sm sm:text-base text-slate-300 font-normal leading-relaxed">
-            Discover the cornerstone pillars powering the fastigo intelligent ecosystem.
+          <p className="text-sm sm:text-base text-slate-600 font-normal leading-relaxed">
+            Discover the cornerstone pillars powering the Fastigo intelligent ecosystem.
           </p>
         </motion.div>
 
@@ -139,7 +238,7 @@ export const PillarsSection = () => {
             >
               <Link
                 to={pillar.path}
-                className="w-full block group relative rounded-[26px] overflow-hidden cursor-pointer bg-slate-950 border border-white/10 shadow-[0_12px_32px_rgba(0,0,0,0.55)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.85)] transition-all duration-500 hover:-translate-y-2"
+                className="w-full block group relative rounded-[26px] overflow-hidden cursor-pointer bg-slate-900 border border-slate-200/90 shadow-[0_10px_30px_rgba(0,112,173,0.08)] hover:shadow-[0_20px_45px_rgba(0,112,173,0.18)] transition-all duration-500 hover:-translate-y-2"
               >
                 {/* Outer Ambient Glow on Hover */}
                 <div

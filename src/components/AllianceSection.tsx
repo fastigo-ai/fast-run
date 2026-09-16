@@ -102,7 +102,7 @@ const AllianceSection = () => {
           <span className="mb-4 inline-block font-display text-sm font-bold tracking-widest text-[#0070AD]">
             STRATEGIC ALLIANCES
           </span>
-          <h2 className="mb-6 font-display text-4xl font-bold tracking-tight sm:text-5xl text-[#0B192C]">
+          <h2 className="mb-6 font-display text-4xl font-bold tracking-tight sm:text-5xl text-[#0070ad]">
             Our Technology <br />
             <span className="text-gradient-primary">Partners</span>
           </h2>
@@ -142,7 +142,7 @@ const AllianceSection = () => {
                       style={{ color: alliance.color }}
                     />
                   </div>
-                  <h3 className="mb-2 font-display text-base font-bold tracking-tight text-[#0B192C] transition-colors duration-300 group-hover:text-[#0070AD]">
+                  <h3 className="mb-2 font-display text-base font-bold tracking-tight text-[#0070ad] transition-colors duration-300 group-hover:text-[#0070AD]">
                     {alliance.name}
                   </h3>
                   <p className="font-body text-xs leading-relaxed text-slate-600">

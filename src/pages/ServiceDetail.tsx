@@ -33,7 +33,7 @@ const ServiceDetail = () => {
 
     if (!service) {
         return (
-            <div className="min-h-screen flex flex-col items-center justify-center bg-white text-[#0B192C] px-4 text-center">
+            <div className="min-h-screen flex flex-col items-center justify-center bg-white text-[#0070ad] px-4 text-center">
                 <h2 className="text-4xl font-display font-bold mb-4">Service Not Found</h2>
                 <p className="text-slate-500 mb-8 max-w-md">The service you are looking for might have been moved or renamed.</p>
                 <Link to="/services" className="bg-[#0070AD] text-white px-8 py-3.5 rounded-xl font-semibold hover:bg-[#005c8f] transition-colors shadow-sm">
@@ -85,7 +85,7 @@ const ServiceDetail = () => {
                         <span className="text-slate-300">/</span>
                         <span className="text-slate-500">Services</span>
                         <span className="text-slate-300">/</span>
-                        <span className="text-[#0B192C] font-medium">{service.title}</span>
+                        <span className="text-[#0070ad] font-medium">{service.title}</span>
                     </nav>
                 </div>
             </div>
@@ -104,10 +104,10 @@ const ServiceDetail = () => {
                                 <span className="inline-block px-4 py-1.5 rounded-lg bg-blue-50 text-[#0070AD] text-xs font-bold tracking-widest uppercase mb-6 border border-blue-100">
                                     Engineering Future
                                 </span>
-                                <div className="text-4xl md:text-5xl lg:text-6xl font-display font-bold leading-[1.1] mb-8 text-[#0B192C]">
-                                    <SplitText text={service.title} className="text-[#0B192C]" />
+                                <div className="text-4xl md:text-5xl lg:text-6xl font-display font-bold leading-[1.1] mb-8 text-[#0070ad]">
+                                    <SplitText text={service.title} className="text-[#0070ad]" />
                                 </div>
-                                <p className="text-xl md:text-2xl text-[#0B192C]/80 font-display font-medium leading-relaxed mb-8">
+                                <p className="text-xl md:text-2xl text-[#0070ad]/80 font-display font-medium leading-relaxed mb-8">
                                     {service.subtitle}
                                 </p>
                                 <div className="h-1 w-20 bg-[#0070AD] mb-10 rounded-full" />
@@ -139,7 +139,7 @@ const ServiceDetail = () => {
                                     alt={service.title}
                                     className="w-full h-full object-cover"
                                 />
-                                <div className="absolute inset-0 bg-gradient-to-t from-[#0B192C]/40 via-transparent to-transparent" />
+                                <div className="absolute inset-0 bg-gradient-to-t from-[#0070ad]/40 via-transparent to-transparent" />
                             </motion.div>
                         </div>
                     </div>
@@ -154,7 +154,7 @@ const ServiceDetail = () => {
                             <span className="text-xs font-bold tracking-widest text-[#0070AD] uppercase mb-3 block font-display">
                                 What We Deliver
                             </span>
-                            <h2 className="text-3xl md:text-4xl font-display font-bold text-[#0B192C] mb-6">
+                            <h2 className="text-3xl md:text-4xl font-display font-bold text-[#0E0A42] mb-6">
                                 Core Capabilities
                             </h2>
                             <p className="text-slate-600 font-body text-base sm:text-lg">
@@ -176,7 +176,7 @@ const ServiceDetail = () => {
                                 <div className="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center mb-6 group-hover:bg-[#0070AD] transition-colors">
                                     <CheckCircle2 className="w-6 h-6 text-[#0070AD] group-hover:text-white" />
                                 </div>
-                                <h4 className="text-lg font-display font-bold text-[#0B192C] mb-4 group-hover:text-[#0070AD] transition-colors">
+                                <h4 className="text-lg font-display font-bold text-[#0070ad] mb-4 group-hover:text-[#0070AD] transition-colors">
                                     {feature}
                                 </h4>
                                 <p className="text-sm text-slate-500 font-body leading-relaxed">

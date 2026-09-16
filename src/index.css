@@ -13,7 +13,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 215 60% 11%;
 
-    --primary: 202 100% 34%;
+    --primary: 201 100% 34%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 198 100% 44%;
@@ -22,30 +22,40 @@
     --muted: 210 20% 95%;
     --muted-foreground: 215 16% 47%;
 
-    --accent: 202 100% 96%;
-    --accent-foreground: 202 100% 34%;
+    --accent: 201 100% 96%;
+    --accent-foreground: 201 100% 34%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
     --border: 214 32% 91%;
     --input: 214 32% 91%;
-    --ring: 202 100% 34%;
+    --ring: 201 100% 34%;
 
     --radius: 0.75rem;
 
-    /* Custom Fastigo tokens - Infosys Theme Optimized */
-    --glow-primary: 202 100% 45%;
+    /* Brand Color Palette - Enhanced #0070ad */
+    --infosys-blue: #0070ad;
+    --infosys-blue-dark: #005a8c;
+    --infosys-blue-light: #EBF5FB;
+    --infosys-cyan: #00A3E0;
+    --infosys-heading: #0E0A42;
+    --infosys-body: #4A5568;
+    --infosys-muted: #718096;
+    --infosys-border: #E2E8F0;
+
+    /* Custom Fastigo tokens - #0070ad Optimized */
+    --glow-primary: 201 100% 34%;
     --glow-secondary: 198 100% 65%;
     --gradient-cyber: linear-gradient(135deg, rgba(0, 112, 173, 0.08), rgba(0, 163, 224, 0.08));
     --gradient-hero: linear-gradient(180deg, #f8fafc 0%, #edf4fa 100%);
-    --gradient-card: linear-gradient(145deg, rgba(255,255,255,0.96) 0%, rgba(244,248,252,0.94) 100%);
-    --shadow-glow: 0 10px 30px -5px rgba(0, 112, 173, 0.12);
-    --shadow-glow-intense: 0 18px 45px -5px rgba(0, 112, 173, 0.22);
+    --gradient-card: linear-gradient(145deg, rgba(255,255,255,0.98) 0%, rgba(246,249,252,0.96) 100%);
+    --shadow-glow: 0 10px 30px -5px rgba(0, 112, 173, 0.14);
+    --shadow-glow-intense: 0 18px 45px -5px rgba(0, 112, 173, 0.24);
 
-    --font-display: 'Geist', 'Plus Jakarta Sans', 'Inter', sans-serif;
-    --font-body: 'Geist', 'Inter', 'Plus Jakarta Sans', sans-serif;
-    --heading: 245 73% 15%;
+    --font-display: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-body: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --heading: 220 15% 14%;
   }
 }
 
@@ -56,7 +66,7 @@
 
   html, body, #root {
     min-height: 100%;
-    background: radial-gradient(circle at 10% 0%, rgba(0, 112, 173, 0.05), transparent 35%), linear-gradient(180deg, #f8fafc 0%, #eef4f9 100%);
+    background: #FFFFFF;
   }
 
   html {
@@ -64,11 +74,10 @@
   }
 
   body {
-    @apply bg-background text-foreground antialiased leading-relaxed;
-    background: radial-gradient(circle at 10% 0%, rgba(0, 112, 173, 0.05), transparent 35%), linear-gradient(180deg, #f8fafc 0%, #eef4f9 100%);
+    @apply bg-white antialiased leading-relaxed;
     font-family: var(--font-body);
     letter-spacing: -0.01em;
-    color: #0E0A42;
+    color: #4A5568;
   }
 
   ::selection {
@@ -77,8 +86,8 @@
   }
 
   a, button, input, textarea, select {
-    transition: color 250ms cubic-bezier(0.16, 1, 0.3, 1), background-color 250ms cubic-bezier(0.16, 1, 0.3, 1),
-      border-color 250ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 250ms cubic-bezier(0.16, 1, 0.3, 1), transform 250ms cubic-bezier(0.16, 1, 0.3, 1);
+    transition: color 300ms cubic-bezier(0.16, 1, 0.3, 1), background-color 300ms cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 300ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 300ms cubic-bezier(0.16, 1, 0.3, 1), transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   button:focus-visible, a:focus-visible, input:focus-visible,
@@ -87,14 +96,34 @@
     outline-offset: 3px;
   }
 
+  a {
+    color: #0070ad;
+  }
+
+  a:hover {
+    color: #005a8c;
+  }
+
+  button.btn-primary,
+  .btn-primary {
+    background-color: #0070ad;
+    color: #ffffff;
+  }
+
+  button.btn-primary:hover,
+  .btn-primary:hover {
+    background-color: #005a8c;
+  }
+
   img {
     image-rendering: auto;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply text-[#0E0A42] leading-[1.2];
+    color: #0E0A42;
     font-family: var(--font-display);
-    letter-spacing: -0.02em;
+    letter-spacing: -0.025em;
+    font-weight: 700;
   }
 }
 

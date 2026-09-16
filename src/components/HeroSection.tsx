@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import HeroAiBackground from "./HeroAiBackground";
 import banner1 from "../assets/AIPOWEREDENGINERRING.webp";
 import banner2 from "../assets/DIGITALMANUFACTURING.webp";
 import banner3 from "../assets/NEXT-GEN-MOBILITY.webp";
@@ -174,17 +175,28 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="relative w-full overflow-hidden bg-gradient-to-b from-[#eaf4fe] via-[#f1f8fd] to-[#f8fbfe] pt-24 sm:pt-32 pb-14 sm:pb-20">
-      {/* Background Decorative Ambient Mesh & Wave Glows */}
-      <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[850px] h-[350px] bg-gradient-to-r from-[#0070AD]/10 via-[#00A3E0]/15 to-[#38bdf8]/10 rounded-full blur-[110px] pointer-events-none" />
-      <div className="absolute top-0 inset-x-0 h-40 bg-[radial-gradient(ellipse_80%_60%_at_50%_-20%,rgba(0,112,173,0.12),transparent_70%)] pointer-events-none" />
+    <section className="relative w-full overflow-hidden pt-24 sm:pt-32 pb-14 sm:pb-20">
+      {/* Dynamic Animated AI Neural Background */}
+      <HeroAiBackground />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-[1240px] relative z-10">
+        {/* Main Heading Above Search Bar */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center max-w-4xl mx-auto mb-6 sm:mb-8"
+        >
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-display font-extrabold text-[#0E0A42] tracking-tight leading-[1.15]">
+            Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0070AD] via-[#00A3E0] to-[#0070AD]">AI Journey</span> Starts Here
+          </h1>
+        </motion.div>
+
         {/* 1. Top Floating AI Prompt Search Bar */}
         <motion.div
           initial={{ opacity: 0, y: -16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           className="w-full max-w-xl mx-auto mb-8 sm:mb-12"
         >
           <div className="flex items-center bg-white/90 backdrop-blur-2xl rounded-full pl-4 sm:pl-5 pr-1.5 sm:pr-2 py-1.5 sm:py-2 border border-sky-100/90 shadow-[0_12px_36px_rgba(0,112,173,0.1)] hover:shadow-[0_16px_44px_rgba(0,112,173,0.16)] hover:border-sky-200 transition-all duration-300">
@@ -204,7 +216,7 @@ const HeroSection = () => {
                   window.location.href = `/services?search=${encodeURIComponent(searchQuery)}`;
                 }
               }}
-              className="bg-[#0b1b38] hover:bg-[#0070AD] text-white px-5 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold tracking-wide shadow-sm hover:shadow-[0_4px_16px_rgba(0,112,173,0.4)] transition-all duration-300 shrink-0 cursor-pointer"
+              className="bg-[#0070ad] hover:bg-[#005a8c] text-white px-5 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold tracking-wide shadow-sm hover:shadow-[0_4px_16px_rgba(0,112,173,0.4)] transition-all duration-300 shrink-0 cursor-pointer"
             >
               Generate
             </button>

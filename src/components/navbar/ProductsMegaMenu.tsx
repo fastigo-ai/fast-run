@@ -72,7 +72,7 @@ const ProductsMegaMenu = ({ onClose }: ProductsMegaMenuProps) => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {productGroups.map((group) => (
                 <div key={group.title}>
-                  <h3 className="text-sm font-bold tracking-widest text-[#0B192C] uppercase mb-5 px-4 border-b border-slate-100 pb-2">
+                  <h3 className="text-sm font-bold tracking-widest text-[#0070ad] uppercase mb-5 px-4 border-b border-slate-100 pb-2">
                     {group.title}
                   </h3>
                   
@@ -100,7 +100,7 @@ const ProductsMegaMenu = ({ onClose }: ProductsMegaMenuProps) => {
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center justify-between mb-0.5">
                               <h4 className={`text-[15px] font-display font-semibold transition-colors duration-300 truncate ${
-                                isActive ? "text-[#0B192C]" : "text-slate-700"
+                                isActive ? "text-[#0070ad]" : "text-slate-700"
                               }`}>
                                 {product.title}
                               </h4>
@@ -140,7 +140,7 @@ const ProductsMegaMenu = ({ onClose }: ProductsMegaMenuProps) => {
               />
             </AnimatePresence>
             
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0B192C]/95 via-[#0B192C]/40 to-transparent pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0070ad]/95 via-[#0070ad]/40 to-transparent pointer-events-none" />
             
             <AnimatePresence mode="wait">
               <motion.div

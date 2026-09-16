@@ -12,13 +12,12 @@ import {
   Search,
   MapPin,
   Clock,
-  DollarSign,
+  IndianRupee,
   Sparkles,
   Layers,
   X,
   Send,
   Building,
-  ExternalLink,
 } from "lucide-react";
 import AnimatedBackground from "@/components/AnimatedBackground";
 import abstractBg from "@/assets/alliance_abstract.webp";
@@ -215,8 +214,8 @@ const DynamicJobCard = ({
             </span>
             {job.salary && (
               <span className="flex items-center gap-1.5 font-medium text-emerald-600">
-                <DollarSign className="w-4 h-4" />
-                {job.salary}
+                <IndianRupee className="w-4 h-4" />
+                {job.salary.replace(/\$/g, '₹').replace(/^₹\s*/, '')}
               </span>
             )}
           </div>
@@ -407,22 +406,6 @@ const Careers = () => {
                 >
                   Explore {jobs.length > 0 ? `${jobs.length} ` : ''}Open Positions
                 </motion.button>
-
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 }}
-                >
-                  <Link
-                    to="/admin"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-6 py-3.5 rounded-full font-semibold text-slate-300 hover:text-white border border-slate-700 hover:border-[#0070AD]/60 bg-slate-900/70 hover:bg-slate-800/90 backdrop-blur-md transition-all text-sm sm:text-base inline-flex items-center gap-2 group shadow-sm cursor-pointer"
-                  >
-                    <span>Recruiter / Admin Portal</span>
-                    <ExternalLink className="w-4 h-4 text-[#38bdf8] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                  </Link>
-                </motion.div>
               </div>
             </div>
           </div>
@@ -621,8 +604,8 @@ const Careers = () => {
                     </span>
                     {selectedJob.salary && (
                       <span className="flex items-center gap-1 font-medium text-emerald-600">
-                        <DollarSign className="w-4 h-4" />
-                        {selectedJob.salary}
+                        <IndianRupee className="w-4 h-4" />
+                        {selectedJob.salary.replace(/\$/g, '₹').replace(/^₹\s*/, '')}
                       </span>
                     )}
                   </div>

@@ -112,12 +112,12 @@ const Navbar = () => {
           <div className="hidden md:flex items-center gap-5">
             <a
               href="mailto:Info@fastigo.co"
-              className="text-[#0B192C] hover:text-[#0070AD] transition-colors p-1 inline-flex"
+              className="text-[#0070ad] hover:text-[#0070AD] transition-colors p-1 inline-flex"
             >
               <Mail className="h-[22px] w-[22px] stroke-[1.5]" />
             </a>
 
-            <div className="flex items-center gap-1 cursor-pointer text-[#0B192C] hover:text-[#0070AD] transition-colors border border-slate-200/80 rounded-full px-3 py-1.5 bg-white/80 backdrop-blur-md shadow-sm">
+            <div className="flex items-center gap-1 cursor-pointer text-[#0070ad] hover:text-[#0070AD] transition-colors border border-slate-200/80 rounded-full px-3 py-1.5 bg-white/80 backdrop-blur-md shadow-sm">
               <span className="text-[13px] font-body font-medium">EN</span>
               <ChevronDown className="h-3.5 w-3.5" />
             </div>

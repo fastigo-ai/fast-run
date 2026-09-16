@@ -260,7 +260,7 @@ const Services: React.FC = () => {
               Home
             </Link>
             <span className="text-slate-300">/</span>
-            <span className="text-[#0B192C] font-semibold">Services Directory</span>
+            <span className="text-[#0070ad] font-semibold">Services Directory</span>
           </nav>
         </div>
 
@@ -271,7 +271,7 @@ const Services: React.FC = () => {
             <span>Enterprise Services Directory</span>
           </div>
 
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold text-[#0B192C] mb-6 leading-tight">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold text-[#0E0A42] mb-6 leading-tight">
             Specialized Engineering for the{' '}
             <span className="animate-text-shimmer-light bg-clip-text text-transparent bg-gradient-to-r from-[#0070AD] via-[#00A3E0] to-[#0070AD] font-extrabold">
               Adaptive Enterprise
@@ -311,7 +311,7 @@ const Services: React.FC = () => {
                     </span>
                   </div>
 
-                  <h3 className="text-2xl font-display font-bold text-[#0B192C] mb-3 group-hover:text-[#0070AD] transition-colors">
+                  <h3 className="text-2xl font-display font-bold text-[#0070ad] mb-3 group-hover:text-[#0070AD] transition-colors">
                     {service.title}
                   </h3>
 
@@ -331,7 +331,7 @@ const Services: React.FC = () => {
 
                 <Link
                   to={`/services/${service.slug}`}
-                  className="w-full py-3.5 px-5 rounded-xl font-bold text-sm bg-slate-50 hover:bg-[#0070AD] text-[#0B192C] hover:text-white border border-slate-200/90 hover:border-[#0070AD] transition-all flex items-center justify-between group/link shadow-2xs cursor-pointer"
+                  className="w-full py-3.5 px-5 rounded-xl font-bold text-sm bg-slate-50 hover:bg-[#0070AD] text-[#0070ad] hover:text-white border border-slate-200/90 hover:border-[#0070AD] transition-all flex items-center justify-between group/link shadow-2xs cursor-pointer"
                 >
                   <span>Explore Practice</span>
                   <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
@@ -347,14 +347,14 @@ const Services: React.FC = () => {
             <span className="text-xs font-bold uppercase tracking-widest text-[#0070AD] font-mono block mb-2">
               Architecture &amp; Delivery
             </span>
-            <h2 className="text-2xl sm:text-3xl font-display font-bold text-[#0B192C]">
+            <h2 className="text-2xl sm:text-3xl font-display font-bold text-[#0E0A42]">
               Enterprise Engagement FAQ
             </h2>
           </div>
 
           <div className="space-y-6">
             <div className="p-6 rounded-2xl bg-white border border-slate-200/80 shadow-2xs">
-              <h3 className="text-base font-bold text-[#0B192C] mb-2">
+              <h3 className="text-base font-bold text-[#0070ad] mb-2">
                 How are multi-disciplinary practices staffed for enterprise engagements?
               </h3>
               <p className="text-sm text-slate-600 leading-relaxed">
@@ -363,7 +363,7 @@ const Services: React.FC = () => {
             </div>
 
             <div className="p-6 rounded-2xl bg-white border border-slate-200/80 shadow-2xs">
-              <h3 className="text-base font-bold text-[#0B192C] mb-2">
+              <h3 className="text-base font-bold text-[#0070ad] mb-2">
                 Can your teams modernize legacy on-premise systems with zero business interruption?
               </h3>
               <p className="text-sm text-slate-600 leading-relaxed">
@@ -372,7 +372,7 @@ const Services: React.FC = () => {
             </div>
 
             <div className="p-6 rounded-2xl bg-white border border-slate-200/80 shadow-2xs">
-              <h3 className="text-base font-bold text-[#0B192C] mb-2">
+              <h3 className="text-base font-bold text-[#0070ad] mb-2">
                 What security and compliance frameworks govern these practices?
               </h3>
               <p className="text-sm text-slate-600 leading-relaxed">

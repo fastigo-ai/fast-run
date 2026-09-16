@@ -102,7 +102,7 @@ const MegaMenu = ({ onClose }: MegaMenuProps) => {
                       }`}
                     >
                       <Icon className={`w-5 h-5 transition-colors ${isActive ? 'text-[#0070AD]' : 'text-slate-400 group-hover:text-slate-600'}`} />
-                      <span className={`text-[15px] font-display font-semibold transition-colors ${isActive ? 'text-[#0B192C]' : 'text-slate-600 group-hover:text-slate-900'}`}>
+                      <span className={`text-[15px] font-display font-semibold transition-colors ${isActive ? 'text-[#0070ad]' : 'text-slate-600 group-hover:text-slate-900'}`}>
                         {cat.name}
                       </span>
                     </Link>
@@ -114,7 +114,7 @@ const MegaMenu = ({ onClose }: MegaMenuProps) => {
 
           {/* Middle Column - Links Grid */}
           <div className="w-full md:w-[45%] p-8 py-10">
-            <h3 className="text-sm font-bold tracking-widest text-[#0B192C] uppercase mb-8">
+            <h3 className="text-sm font-bold tracking-widest text-[#0070ad] uppercase mb-8">
               {activeCategory} Directory
             </h3>
             <motion.div
@@ -163,7 +163,7 @@ const MegaMenu = ({ onClose }: MegaMenuProps) => {
               />
             </AnimatePresence>
             
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0B192C]/95 via-[#0B192C]/40 to-transparent pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0070ad]/95 via-[#0070ad]/40 to-transparent pointer-events-none" />
             
             <AnimatePresence mode="wait">
               <motion.div

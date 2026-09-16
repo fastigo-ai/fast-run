@@ -174,7 +174,7 @@ export const MobileHeroAssistant: React.FC = () => {
               <div className="w-9 h-9 rounded-lg bg-[#EEF2FF] border border-[#E0E7FF] flex items-center justify-center mb-2.5">
                 {card.icon}
               </div>
-              <h3 className="text-xs sm:text-sm font-semibold text-[#0B192C] leading-snug line-clamp-3">
+              <h3 className="text-xs sm:text-sm font-semibold text-[#0070ad] leading-snug line-clamp-3">
                 {card.title}
               </h3>
             </div>
@@ -182,7 +182,7 @@ export const MobileHeroAssistant: React.FC = () => {
             <div className="mt-3">
               <a
                 href={card.link}
-                className="text-[11px] sm:text-xs font-semibold text-[#0B192C] hover:text-[#0070AD] underline underline-offset-4 decoration-slate-300 hover:decoration-[#0070AD] transition-colors inline-block"
+                className="text-[11px] sm:text-xs font-semibold text-[#0070ad] hover:text-[#0070AD] underline underline-offset-4 decoration-slate-300 hover:decoration-[#0070AD] transition-colors inline-block"
               >
                 Know More
               </a>

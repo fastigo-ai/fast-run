@@ -92,7 +92,7 @@ const PortfolioDetail = () => {
                                 <span className="inline-block px-4 py-1 rounded-full bg-primary/10 text-primary text-xs font-display tracking-widest uppercase mb-6 border border-primary/20">
                                     {itemData.type} | {itemData.industry}
                                 </span>
-                                <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-foreground leading-tight mb-8">
+                                <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-[#0E0A42] leading-tight mb-8">
                                     {itemData.title}
                                 </h1>
                                 

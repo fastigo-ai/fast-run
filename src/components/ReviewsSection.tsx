@@ -87,7 +87,7 @@ const ReviewCard = ({ review }: { review: typeof reviews[0] }) => (
 
     {/* Background Watermark Quote */}
     <div className="absolute top-2 right-4 opacity-[0.03] group-hover:opacity-[0.07] transition-opacity pointer-events-none">
-      <Quote size={90} className="text-[#0B192C]" />
+      <Quote size={90} className="text-[#0070ad]" />
     </div>
 
     {/* Top Bar: Stars + Quote Icon */}
@@ -106,7 +106,7 @@ const ReviewCard = ({ review }: { review: typeof reviews[0] }) => (
     </div>
 
     {/* Quote Body */}
-    <p className="text-[#0B192C] font-body text-xs sm:text-[15px] leading-relaxed mb-4 sm:mb-6 flex-1 relative z-10 font-normal line-clamp-4 sm:line-clamp-none">
+    <p className="text-slate-700 font-body text-xs sm:text-[15px] leading-relaxed mb-4 sm:mb-6 flex-1 relative z-10 font-normal line-clamp-4 sm:line-clamp-none">
       "{review.quote}"
     </p>
 
@@ -123,7 +123,7 @@ const ReviewCard = ({ review }: { review: typeof reviews[0] }) => (
 
       <div className="overflow-hidden">
         <div className="flex items-center gap-1.5">
-          <h4 className="font-display font-bold text-sm sm:text-[15px] text-[#0B192C] tracking-tight truncate">
+          <h4 className="font-display font-bold text-sm sm:text-[15px] text-[#0070ad] tracking-tight truncate">
             {review.author}
           </h4>
           <CheckCircle2 className="w-3.5 h-3.5 text-[#0070AD] shrink-0" />
@@ -174,16 +174,13 @@ const MarqueeRow = ({
 );
 
 const ReviewsSection = () => {
-  const firstRow = reviews.slice(0, 5);
-  const secondRow = reviews.slice(4);
-
   return (
-    <section className="relative py-16 sm:py-28 border-t border-slate-200/60 overflow-hidden z-10">
+    <section className="relative py-16 sm:py-24 border-t border-slate-200/60 overflow-hidden z-10">
       
       {/* Background Ambient Glows */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-blue-100/30 rounded-full blur-[140px] pointer-events-none -z-10" />
 
-      <div className="container mx-auto px-4 max-w-[1240px] mb-10 sm:mb-16 relative z-20">
+      <div className="container mx-auto px-4 max-w-[1240px] mb-10 sm:mb-14 relative z-20">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 sm:gap-8">
           <div>
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50/80 border border-blue-100 text-[#0070AD] text-xs font-semibold uppercase tracking-wider mb-3 sm:mb-4 shadow-sm">
@@ -191,7 +188,7 @@ const ReviewsSection = () => {
               Proven Enterprise Impact
             </div>
 
-            <h2 className="text-2xl sm:text-4xl md:text-[46px] font-display font-bold text-[#0B192C] leading-[1.15] tracking-tight">
+            <h2 className="text-2xl sm:text-4xl md:text-[46px] font-display font-bold text-[#0E0A42] leading-[1.15] tracking-tight">
               <span>Engineering Trust</span><br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0070AD] via-[#0084C7] to-[#00A3E0]">
                 Through Results
@@ -208,14 +205,13 @@ const ReviewsSection = () => {
         </div>
       </div>
 
-      {/* Marquee Rows with Viewport Gradient Masks */}
-      <div className="relative space-y-4 sm:space-y-6">
+      {/* Single Marquee Layer of Cards with Viewport Gradient Masks */}
+      <div className="relative">
         {/* Left & Right Fade Masks for Seamless Marquee */}
         <div className="absolute inset-y-0 left-0 w-16 sm:w-40 bg-gradient-to-r from-background to-transparent z-20 pointer-events-none" />
         <div className="absolute inset-y-0 right-0 w-16 sm:w-40 bg-gradient-to-l from-background to-transparent z-20 pointer-events-none" />
 
-        <MarqueeRow items={firstRow} direction="left" speed={45} />
-        <MarqueeRow items={secondRow} direction="right" speed={55} />
+        <MarqueeRow items={reviews} direction="left" speed={50} />
       </div>
 
       {/* Industry Badges Footer */}

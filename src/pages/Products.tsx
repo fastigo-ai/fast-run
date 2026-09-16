@@ -45,7 +45,7 @@ const Products = () => {
               Fastigo Solutions
             </span>
             <div className="mb-6 font-display text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight flex flex-col items-center px-4">
-              <SplitText text="Enterprise-grade" className="text-[#0B192C]" />
+              <SplitText text="Enterprise-grade" className="text-[#0070ad]" />
               <SplitText text="products & infrastructure" className="text-transparent bg-clip-text bg-gradient-to-r from-[#0070AD] via-[#0084C7] to-[#00A3E0]" />
             </div>
             <p className="text-base md:text-lg lg:text-xl text-slate-600 max-w-3xl mx-auto px-4 leading-relaxed font-normal">
@@ -72,7 +72,7 @@ const Products = () => {
                       alt={product.title}
                       className="w-full h-[300px] sm:h-[400px] lg:h-[580px] object-cover transition-transform duration-700 group-hover:scale-105"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0B192C]/50 via-transparent to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0070ad]/50 via-transparent to-transparent" />
                   </motion.div>
                 </div>
 
@@ -88,7 +88,7 @@ const Products = () => {
                     <span className="inline-block px-3.5 py-1.5 rounded-full bg-blue-50 text-[#0070AD] border border-blue-100 text-xs font-semibold tracking-wider uppercase mb-4 lg:mb-6">
                       {product.subtitle}
                     </span>
-                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-semibold text-[#0B192C] leading-tight mb-4 lg:mb-6 tracking-tight">
+                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-semibold text-[#0E0A42] leading-tight mb-4 lg:mb-6 tracking-tight">
                       {product.title}
                     </h2>
                     <p className="text-base sm:text-lg text-slate-600 mb-6 lg:mb-8 leading-relaxed font-normal">

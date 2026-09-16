@@ -41,7 +41,7 @@ const CategoryDetail = () => {
 
     if (!itemData) {
         return (
-            <div className="min-h-screen flex flex-col items-center justify-center bg-background text-[#0B192C] px-4 text-center">
+            <div className="min-h-screen flex flex-col items-center justify-center bg-background text-[#0070ad] px-4 text-center">
                 <h2 className="text-4xl font-display font-bold mb-4">Content Not Found</h2>
                 <p className="text-slate-500 mb-8 max-w-md">The page you are looking for might be under development or has been moved.</p>
                 <Link to="/" className="bg-[#0070AD] text-white px-8 py-3.5 rounded-xl font-semibold hover:bg-[#005c8f] transition-colors shadow-sm">
@@ -61,7 +61,7 @@ const CategoryDetail = () => {
                         <span className="text-slate-300">/</span>
                         <span className="text-slate-500 capitalize">{category}</span>
                         <span className="text-slate-300">/</span>
-                        <span className="text-[#0B192C] font-medium">{itemData.title}</span>
+                        <span className="text-[#0070ad] font-medium">{itemData.title}</span>
                     </nav>
                 </div>
             </div>
@@ -80,10 +80,10 @@ const CategoryDetail = () => {
                                 <span className="inline-block px-4 py-1.5 rounded-lg bg-blue-50 text-[#0070AD] text-xs font-bold tracking-widest uppercase mb-6 border border-blue-100">
                                     {category?.replace('-', ' ')} Expertise
                                 </span>
-                                <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-[#0B192C] leading-[1.1] mb-8">
+                                <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-[#0E0A42] leading-[1.1] mb-8">
                                     {itemData.title}
                                 </h1>
-                                <p className="text-xl md:text-2xl text-[#0B192C]/80 font-display font-medium leading-relaxed mb-8">
+                                <p className="text-xl md:text-2xl text-[#0070ad]/80 font-display font-medium leading-relaxed mb-8">
                                     {itemData.subtitle}
                                 </p>
                                 <div className="h-1 w-20 bg-[#0070AD] mb-10 rounded-full" />
@@ -100,7 +100,7 @@ const CategoryDetail = () => {
                                         <ArrowRight className="w-5 h-5" />
                                     </button>
                                     <Link to="/contact">
-                                        <button className="bg-white border-2 border-slate-200 text-[#0B192C] px-8 py-4 rounded-full text-base font-bold hover:border-[#0070AD] hover:text-[#0070AD] transition-all">
+                                        <button className="bg-white border-2 border-slate-200 text-[#0070ad] px-8 py-4 rounded-full text-base font-bold hover:border-[#0070AD] hover:text-[#0070AD] transition-all">
                                             Strategic Roadmap
                                         </button>
                                     </Link>
@@ -121,7 +121,7 @@ const CategoryDetail = () => {
                                     alt={itemData.title}
                                     className="w-full h-[350px] lg:h-[500px] object-cover"
                                 />
-                                <div className="absolute inset-0 bg-gradient-to-t from-[#0B192C]/40 to-transparent" />
+                                <div className="absolute inset-0 bg-gradient-to-t from-[#0070ad]/40 to-transparent" />
                             </motion.div>
                         </div>
                     </div>
@@ -136,7 +136,7 @@ const CategoryDetail = () => {
                             <span className="text-xs font-bold tracking-widest text-[#0070AD] uppercase mb-3 block font-display">
                                 Strategic Capabilities
                             </span>
-                            <h2 className="text-3xl md:text-4xl font-display font-bold text-[#0B192C] mb-6">
+                            <h2 className="text-3xl md:text-4xl font-display font-bold text-[#0E0A42] mb-6">
                                 Delivering Measurable Impact
                             </h2>
                             <p className="text-slate-600 font-body text-base sm:text-lg">
@@ -158,7 +158,7 @@ const CategoryDetail = () => {
                                 <div className="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center mb-6 group-hover:bg-[#0070AD] transition-colors">
                                     <CheckCircle2 className="w-6 h-6 text-[#0070AD] group-hover:text-white" />
                                 </div>
-                                <h4 className="text-lg font-display font-bold text-[#0B192C] mb-4 tracking-tight leading-snug group-hover:text-[#0070AD] transition-colors">
+                                <h4 className="text-lg font-display font-bold text-[#0070ad] mb-4 tracking-tight leading-snug group-hover:text-[#0070AD] transition-colors">
                                     {feature}
                                 </h4>
                                 <p className="text-sm text-slate-500 font-body leading-relaxed">
@@ -175,7 +175,7 @@ const CategoryDetail = () => {
                 <div className="container mx-auto px-4 max-w-[1200px]">
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-8">
                         <div className="max-w-2xl">
-                            <h2 className="text-3xl md:text-4xl font-display font-bold text-[#0B192C] mb-6">
+                            <h2 className="text-3xl md:text-4xl font-display font-bold text-[#0E0A42] mb-6">
                                 Client Case Studies & Solutions
                             </h2>
                             <p className="text-slate-600 font-body text-base sm:text-lg">
@@ -200,7 +200,7 @@ const CategoryDetail = () => {
                                         alt={project.title}
                                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                                     />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-[#0B192C]/80 to-transparent" />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-[#0070ad]/80 to-transparent" />
                                     <div className="absolute top-4 right-4">
                                         <span className="text-[10px] font-display tracking-wider text-white bg-white/20 border border-white/20 backdrop-blur-md px-3 py-1 rounded-full uppercase">
                                             {project.sector}
@@ -212,7 +212,7 @@ const CategoryDetail = () => {
                                     <span className="text-xs font-display font-bold tracking-wider text-[#0070AD] uppercase">
                                         {project.category}
                                     </span>
-                                    <h3 className="mt-2 font-display text-xl font-bold text-[#0B192C] group-hover:text-[#0070AD] transition-colors line-clamp-2">
+                                    <h3 className="mt-2 font-display text-xl font-bold text-[#0070ad] group-hover:text-[#0070AD] transition-colors line-clamp-2">
                                         {project.title}
                                     </h3>
                                 </div>

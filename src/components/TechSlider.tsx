@@ -52,7 +52,7 @@ const TechSlider = () => {
               className="flex items-center gap-3 shrink-0 px-6 py-3 rounded-full border border-slate-200/80 bg-white/90 shadow-sm backdrop-blur-sm"
             >
               <tech.icon className="h-5 w-5 text-[#0070AD]" />
-              <span className="font-display text-sm font-bold tracking-wider text-[#0B192C] whitespace-nowrap">
+              <span className="font-display text-sm font-bold tracking-wider text-[#0070ad] whitespace-nowrap">
                 {tech.label}
               </span>
             </div>

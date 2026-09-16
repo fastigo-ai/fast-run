@@ -191,7 +191,7 @@ const BlogPost = () => {
                 {blog.segment.replace("-", " ")}
               </Badge>
 
-              <h1 className="text-4xl md:text-5xl lg:text-7xl font-extrabold text-foreground leading-[1.1] tracking-tight">
+              <h1 className="text-4xl md:text-5xl lg:text-7xl font-extrabold text-[#0E0A42] leading-[1.1] tracking-tight">
                 {blog.title}
               </h1>
 

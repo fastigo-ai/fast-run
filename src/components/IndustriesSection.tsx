@@ -103,7 +103,7 @@ const IndustriesSection = () => {
             INDUSTRIES WE SERVE
           </span>
 
-          <h2 className="mb-6 font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-tight text-[#0B192C]">
+          <h2 className="mb-6 font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-tight text-[#0070ad]">
             Deep Domain <br />
             <span className="text-gradient-primary">Expertise</span>
           </h2>
@@ -149,7 +149,7 @@ const IndustriesSection = () => {
                 </div>
 
                 {/* Title */}
-                <h3 className="mb-2 font-display text-sm sm:text-base font-bold tracking-tight text-[#0B192C] group-hover:text-[#0070AD] transition-colors duration-300">
+                <h3 className="mb-2 font-display text-sm sm:text-base font-bold tracking-tight text-[#0070ad] group-hover:text-[#0070AD] transition-colors duration-300">
                   {industry.title}
                 </h3>
 

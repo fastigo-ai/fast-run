@@ -68,7 +68,7 @@ const ProductSubscription = () => {
                 <span className="inline-block px-3.5 py-1 mb-6 rounded-full bg-blue-50/80 border border-blue-100 text-xs font-semibold uppercase tracking-widest text-[#0070AD] shadow-sm">
                   {product.subtitle}
                 </span>
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-[#0B192C] leading-[1.1] mb-6 tracking-tight">
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-[#0E0A42] leading-[1.1] mb-6 tracking-tight">
                   {product.title}
                 </h1>
                 <p className="text-lg md:text-xl text-slate-600 mb-8 leading-relaxed font-normal">
@@ -78,7 +78,7 @@ const ProductSubscription = () => {
                   <button className="bg-[#0070AD] text-white px-8 py-3.5 rounded-xl font-semibold hover:bg-[#005c8f] hover:shadow-lg hover:shadow-blue-600/20 transition-all duration-300">
                     Get Started Now
                   </button>
-                  <button className="bg-white text-[#0B192C] border border-slate-200 px-8 py-3.5 rounded-xl font-semibold hover:bg-slate-50 hover:border-slate-300 transition-all duration-300 shadow-sm">
+                  <button className="bg-white text-[#0070ad] border border-slate-200 px-8 py-3.5 rounded-xl font-semibold hover:bg-slate-50 hover:border-slate-300 transition-all duration-300 shadow-sm">
                     Book a Demo
                   </button>
                 </div>
@@ -105,7 +105,7 @@ const ProductSubscription = () => {
           {/* Pricing Section */}
           <section className="container mx-auto px-4 lg:px-8 mb-32">
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-display font-bold text-[#0B192C] mb-6">Simple, transparent pricing</h2>
+              <h2 className="text-3xl md:text-4xl font-display font-bold text-[#0E0A42] mb-6">Simple, transparent pricing</h2>
               
               <div className="flex items-center justify-center gap-4 mt-8">
                 <span className={`text-sm font-semibold ${!isAnnual ? 'text-slate-900' : 'text-slate-500'}`}>Monthly</span>
@@ -131,7 +131,7 @@ const ProductSubscription = () => {
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   className={`relative p-8 rounded-2xl border transition-all duration-300 ${
                     plan.isPopular 
-                      ? 'bg-[#0B192C] text-white border-[#0B192C] shadow-2xl shadow-blue-950/30 scale-105 z-10' 
+                      ? 'bg-[#0070ad] text-white border-[#0070ad] shadow-2xl shadow-blue-950/30 scale-105 z-10' 
                       : 'bg-white/80 backdrop-blur-xl border-slate-200/80 text-slate-800 shadow-lg hover:shadow-xl hover:border-[#0070AD]/30'
                   }`}
                 >
@@ -141,7 +141,7 @@ const ProductSubscription = () => {
                     </div>
                   )}
                   
-                  <h3 className={`text-xl font-display font-bold mb-2 ${plan.isPopular ? 'text-white' : 'text-[#0B192C]'}`}>
+                  <h3 className={`text-xl font-display font-bold mb-2 ${plan.isPopular ? 'text-white' : 'text-[#0070ad]'}`}>
                     {plan.name}
                   </h3>
                   <p className={`text-sm mb-6 h-10 ${plan.isPopular ? 'text-slate-300' : 'text-slate-500'}`}>
@@ -167,7 +167,7 @@ const ProductSubscription = () => {
                   <button className={`w-full py-3.5 rounded-xl font-semibold transition-all duration-300 ${
                     plan.isPopular 
                       ? 'bg-gradient-to-r from-[#0070AD] to-[#00A3E0] text-white hover:brightness-110 shadow-lg shadow-blue-500/20' 
-                      : 'bg-[#0B192C] text-white hover:bg-[#0070AD] hover:shadow-lg'
+                      : 'bg-[#0070ad] text-white hover:bg-[#0070AD] hover:shadow-lg'
                   }`}>
                     {plan.ctaText}
                   </button>
@@ -178,7 +178,7 @@ const ProductSubscription = () => {
 
           {/* Feature Comparison */}
           <section className="container mx-auto px-4 lg:px-8 mb-32 max-w-5xl">
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-[#0B192C] mb-10 text-center">Compare features</h2>
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-[#0E0A42] mb-10 text-center">Compare features</h2>
             <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xl overflow-hidden">
               <div className="overflow-x-auto">
                 <table className="w-full text-left border-collapse">
@@ -225,7 +225,7 @@ const ProductSubscription = () => {
 
           {/* FAQs */}
           <section className="container mx-auto px-4 lg:px-8 mb-32 max-w-3xl">
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-[#0B192C] mb-10 text-center">Frequently asked questions</h2>
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-[#0E0A42] mb-10 text-center">Frequently asked questions</h2>
             <Accordion type="single" collapsible className="w-full space-y-4">
               {product.faqs.map((faq, index) => (
                 <AccordionItem key={index} value={`item-${index}`} className="bg-white border border-slate-200/80 rounded-xl px-6 py-2 shadow-sm [&[data-state=open]]:shadow-md transition-shadow">
@@ -242,7 +242,7 @@ const ProductSubscription = () => {
 
           {/* CTA Section */}
           <section className="container mx-auto px-4 lg:px-8">
-            <div className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-[#041021] via-[#0B192C] to-[#041021] py-16 px-8 md:px-16 text-center shadow-2xl border border-slate-800">
+            <div className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-[#041021] via-[#0070ad] to-[#041021] py-16 px-8 md:px-16 text-center shadow-2xl border border-slate-800">
               <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1557683316-973673baf926?auto=format&fit=crop&q=80&w=2000')] opacity-10 bg-cover bg-center mix-blend-overlay"></div>
               <div className="absolute inset-0 bg-gradient-to-t from-[#041021] to-transparent"></div>
               
@@ -253,7 +253,7 @@ const ProductSubscription = () => {
                 <p className="text-lg text-slate-300 mb-10">
                   Join thousands of companies already using {product.title} to accelerate their growth.
                 </p>
-                <button className="bg-white text-[#0B192C] px-10 py-4 rounded-xl font-bold text-lg hover:bg-slate-100 hover:scale-105 transition-all duration-300 shadow-[0_0_40px_rgba(0,112,173,0.3)]">
+                <button className="bg-white text-[#0070ad] px-10 py-4 rounded-xl font-bold text-lg hover:bg-slate-100 hover:scale-105 transition-all duration-300 shadow-[0_0_40px_rgba(0,112,173,0.3)]">
                   Start Your Free Trial
                 </button>
                 <p className="mt-6 text-sm text-slate-400">No credit card required • 14-day free trial</p>

@@ -13,7 +13,7 @@ import {
   Eye,
   Clock,
   MapPin,
-  DollarSign,
+  IndianRupee,
   Layers,
   X,
   PlusCircle,
@@ -382,8 +382,8 @@ export const AdminJobs: React.FC = () => {
                     </span>
                     {job.salary && (
                       <span className="flex items-center gap-1 text-emerald-400 font-medium">
-                        <DollarSign className="w-3.5 h-3.5" />
-                        {job.salary}
+                        <IndianRupee className="w-3.5 h-3.5" />
+                        {job.salary.replace(/\$/g, '₹').replace(/^₹\s*/, '')}
                       </span>
                     )}
                   </div>

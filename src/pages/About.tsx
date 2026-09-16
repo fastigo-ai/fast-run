@@ -56,7 +56,7 @@ const About = () => {
                   <span className="font-display font-semibold tracking-wide uppercase text-sm">{aboutContent.hero.subtitle}</span>
                 </motion.div>
 
-                <div className="font-display text-4xl md:text-[46px] font-bold mb-8">
+                <div className="font-display text-4xl md:text-[46px] font-bold mb-8 text-[#0E0A42]">
                   <SplitText text={aboutContent.hero.title} />
                 </div>
 

@@ -101,7 +101,7 @@ const ServicesSection = () => {
           <span className="mb-4 inline-block font-display text-sm font-bold tracking-widest text-[#0070AD]">
             OUR EXPERTISE
           </span>
-          <h2 className="mb-6 font-display text-4xl font-bold tracking-tight sm:text-5xl text-[#0B192C]">
+          <h2 className="mb-6 font-display text-4xl font-bold tracking-tight sm:text-5xl text-[#0070ad]">
             Transforming Ideas Into <br />
             <span className="text-gradient-primary">Digital Reality</span>
           </h2>
@@ -133,7 +133,7 @@ const ServicesSection = () => {
                       <div className="inline-flex rounded-xl bg-blue-50 p-3.5 text-[#0070AD] transition-all duration-300 group-hover:bg-[#0070AD] group-hover:text-white group-hover:shadow-[0_4px_15px_rgba(0,112,173,0.3)]">
                         <service.icon className="h-6 w-6 transition-transform duration-300 group-hover:scale-110" />
                       </div>
-                      <h3 className="font-display text-xl font-bold tracking-tight text-[#0B192C] transition-colors duration-300 group-hover:text-[#0070AD]">
+                      <h3 className="font-display text-xl font-bold tracking-tight text-[#0070ad] transition-colors duration-300 group-hover:text-[#0070AD]">
                         {service.title}
                       </h3>
                     </div>
@@ -142,7 +142,7 @@ const ServicesSection = () => {
                     {service.image && (
                       <div className="mb-6 rounded-xl overflow-hidden border border-slate-200/60 aspect-[16/10] relative group-hover:border-[#0070AD]/30 transition-colors shrink-0">
                         <img src={service.image} alt={service.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#0B192C]/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#0070ad]/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                       </div>
                     )}
 
