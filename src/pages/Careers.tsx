@@ -22,6 +22,7 @@ import {
 import AnimatedBackground from "@/components/AnimatedBackground";
 import abstractBg from "@/assets/alliance_abstract.webp";
 import { api, Job, ApplicationInput } from "@/lib/api";
+import ResumeUploadArea from "@/components/ResumeUploadArea";
 
 // ----------------------------------------------------------------------
 // DATA: "Why Join Us"
@@ -273,6 +274,8 @@ const Careers = () => {
     portfolio: '',
     experience_years: '',
     message: '',
+    resume_url: '',
+    resume_name: '',
   });
 
   const fetchPublicJobs = async () => {
@@ -318,6 +321,7 @@ const Careers = () => {
       portfolio: formData.portfolio || undefined,
       experience_years: formData.experience_years || undefined,
       message: formData.message || undefined,
+      resume_url: formData.resume_url || undefined,
     };
 
     try {
@@ -331,6 +335,8 @@ const Careers = () => {
         portfolio: '',
         experience_years: '',
         message: '',
+        resume_url: '',
+        resume_name: '',
       });
     } catch (err: any) {
       setAppError(err.message || 'Submission failed. Please try again.');
@@ -832,6 +838,26 @@ const Careers = () => {
                       />
                     </div>
                   </div>
+
+                  {/* Cloudinary Resume / CV Upload Area */}
+                  <ResumeUploadArea
+                    value={formData.resume_url}
+                    fileName={formData.resume_name}
+                    onChange={(url, name) =>
+                      setFormData({
+                        ...formData,
+                        resume_url: url,
+                        resume_name: name,
+                      })
+                    }
+                    onRemove={() =>
+                      setFormData({
+                        ...formData,
+                        resume_url: '',
+                        resume_name: '',
+                      })
+                    }
+                  />
 
                   <div>
                     <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">

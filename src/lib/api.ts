@@ -313,6 +313,7 @@ const INITIAL_MOCK_APPS: CandidateApplication[] = [
     phone: "+91 98765 43210",
     linkedin: "https://linkedin.com/in/rohan-sharma-ai",
     portfolio: "https://github.com/rohan-ai",
+    resume_url: "https://res.cloudinary.com/fastigo-cloud/image/upload/v1710500000/resumes/Rohan_Sharma_Resume_AI_Intern.pdf",
     experience_years: "1 year",
     message: "I have built multiple autonomous agent workflows with LangChain and fine-tuned LLaMA-3 models on custom domain datasets. Excited to contribute to Fastigo!",
     status: "shortlisted",
@@ -327,6 +328,7 @@ const INITIAL_MOCK_APPS: CandidateApplication[] = [
     phone: "+91 98123 45678",
     linkedin: "https://linkedin.com/in/pooja-mehta-dev",
     portfolio: "https://poojamehta.dev",
+    resume_url: "https://res.cloudinary.com/fastigo-cloud/image/upload/v1710500000/resumes/Pooja_Mehta_Senior_FullStack_Resume.pdf",
     experience_years: "5 years",
     message: "5 years scaling React and FastAPI architectures. Spearheaded migration of legacy monolith to containerized microservices handling 2M requests/day.",
     status: "reviewed",
@@ -814,6 +816,29 @@ export const api = {
 
   // Applications
   applications: {
+    uploadResume: async (file: File): Promise<{ resume_url: string; file_name: string; message?: string }> => {
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const token = getAuthToken();
+      const headers: Record<string, string> = {};
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+
+      const response = await fetch(`${API_BASE_URL}/applications/upload-resume`, {
+        method: 'POST',
+        headers,
+        body: formData,
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.detail || errorData.message || 'Resume upload failed on server.');
+      }
+
+      return response.json();
+    },
     submit: async (data: ApplicationInput): Promise<CandidateApplication> => {
       return apiRequest<CandidateApplication>('/applications', {
         method: 'POST',

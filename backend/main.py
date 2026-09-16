@@ -63,6 +63,12 @@ app.include_router(apps_router, prefix="/api")
 app.include_router(stats_router, prefix="/api")
 app.include_router(contact_router, prefix="/api")
 
+# Static uploads directory for resumes & documents
+from fastapi.staticfiles import StaticFiles
+UPLOAD_DIR = _BACKEND_DIR / "uploads"
+UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+app.mount("/api/uploads", StaticFiles(directory=str(UPLOAD_DIR)), name="uploads")
+
 @app.get("/")
 async def root():
     return {

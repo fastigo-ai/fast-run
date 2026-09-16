@@ -43,5 +43,10 @@ class Settings(BaseSettings):
     DEFAULT_ADMIN_PASSWORD: str = "Fastigo@2026!"
     DEFAULT_ADMIN_NAME: str = "Fastigo Talent Admin"
 
+    # Cloudinary Credentials (reads from .env)
+    CLOUDINARY_CLOUD_NAME: str = ""
+    CLOUDINARY_API_KEY: str = ""
+    CLOUDINARY_API_SECRET: str = ""
+
 settings = Settings()
 
