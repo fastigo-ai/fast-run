@@ -83,12 +83,9 @@ export const Portfolio = () => {
                 <span>OUR PORTFOLIO // PROVEN VALUE</span>
               </motion.div>
 
-              {/* Kinetic Headline */}
+              {/* Main Headline */}
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-extrabold text-[#0E0A42] tracking-tight leading-[1.12] mb-6">
-                <span>Success Stories &amp; </span>
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0070AD] via-[#00A3E0] to-[#0070AD]">
-                  Case Studies
-                </span>
+                Success Stories &amp; Case Studies
               </h1>
 
               <motion.p
@@ -187,7 +184,7 @@ export const Portfolio = () => {
                           <div className="pt-4 border-t border-slate-100">
                             <Link 
                               to={`/portfolio/${project.id}`}
-                              className="inline-flex items-center gap-2 text-xs sm:text-sm text-[#0070AD] font-display font-bold tracking-wider uppercase group/link hover:text-[#005a8c] transition-colors"
+                              className="inline-flex items-center justify-between w-full px-4 py-2.5 rounded-xl bg-[#0070AD] hover:bg-[#005a8c] text-white text-xs sm:text-sm font-display font-bold tracking-wider uppercase group/link transition-all shadow-xs hover:shadow-md"
                             >
                               <span>VIEW CASE STUDY</span>
                               <ArrowRight className="h-4 w-4 transform transition-transform duration-300 group-hover/link:translate-x-1" />

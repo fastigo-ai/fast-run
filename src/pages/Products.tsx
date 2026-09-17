@@ -105,7 +105,7 @@ const Products = () => {
                     </ul>
 
                     <Link to={`/products/${product.id}`} className="inline-block">
-                      <button className="bg-transparent border border-[#0070AD] text-[#0070AD] hover:bg-[#0070AD] hover:text-white px-7 sm:px-8 py-3.5 sm:py-4 rounded-xl text-sm sm:text-base font-semibold tracking-wide transition-all duration-300 shadow-sm hover:shadow-md flex items-center gap-2 group">
+                      <button className="bg-[#0070AD] hover:bg-[#005a8c] text-white px-7 sm:px-8 py-3.5 sm:py-4 rounded-xl text-sm sm:text-base font-semibold tracking-wide transition-all duration-300 shadow-md hover:shadow-lg flex items-center gap-2 group cursor-pointer">
                         Learn more
                         <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
                       </button>

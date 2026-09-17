@@ -331,7 +331,7 @@ const Services: React.FC = () => {
 
                 <Link
                   to={`/services/${service.slug}`}
-                  className="w-full py-3.5 px-5 rounded-xl font-bold text-sm bg-slate-50 hover:bg-[#0070AD] text-[#0070ad] hover:text-white border border-slate-200/90 hover:border-[#0070AD] transition-all flex items-center justify-between group/link shadow-2xs cursor-pointer"
+                  className="w-full py-3.5 px-5 rounded-xl font-bold text-sm bg-[#0070AD] hover:bg-[#005a8c] text-white border border-[#0070AD] transition-all flex items-center justify-between group/link shadow-md hover:shadow-lg cursor-pointer"
                 >
                   <span>Explore Practice</span>
                   <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />

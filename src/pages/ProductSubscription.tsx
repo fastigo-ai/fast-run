@@ -164,11 +164,7 @@ const ProductSubscription = () => {
                     ))}
                   </ul>
                   
-                  <button className={`w-full py-3.5 rounded-xl font-semibold transition-all duration-300 ${
-                    plan.isPopular 
-                      ? 'bg-gradient-to-r from-[#0070AD] to-[#00A3E0] text-white hover:brightness-110 shadow-lg shadow-blue-500/20' 
-                      : 'bg-[#0070ad] text-white hover:bg-[#0070AD] hover:shadow-lg'
-                  }`}>
+                  <button className="w-full py-3.5 rounded-xl font-semibold transition-all duration-300 bg-[#0070AD] hover:bg-[#005a8c] text-white shadow-md hover:shadow-lg cursor-pointer">
                     {plan.ctaText}
                   </button>
                 </motion.div>
@@ -253,7 +249,7 @@ const ProductSubscription = () => {
                 <p className="text-lg text-slate-300 mb-10">
                   Join thousands of companies already using {product.title} to accelerate their growth.
                 </p>
-                <button className="bg-white text-[#0070ad] px-10 py-4 rounded-xl font-bold text-lg hover:bg-slate-100 hover:scale-105 transition-all duration-300 shadow-[0_0_40px_rgba(0,112,173,0.3)]">
+                <button className="bg-[#0070AD] text-white border border-white/20 px-10 py-4 rounded-xl font-bold text-lg hover:bg-[#005a8c] hover:scale-105 transition-all duration-300 shadow-[0_0_40px_rgba(0,112,173,0.4)] cursor-pointer">
                   Start Your Free Trial
                 </button>
                 <p className="mt-6 text-sm text-slate-400">No credit card required • 14-day free trial</p>

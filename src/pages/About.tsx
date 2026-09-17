@@ -56,9 +56,9 @@ const About = () => {
                   <span className="font-display font-semibold tracking-wide uppercase text-sm">{aboutContent.hero.subtitle}</span>
                 </motion.div>
 
-                <div className="font-display text-4xl md:text-[46px] font-bold mb-8 text-[#0E0A42]">
+                <h1 className="font-display text-4xl md:text-[46px] font-bold mb-8 text-[#0E0A42]">
                   <SplitText text={aboutContent.hero.title} />
-                </div>
+                </h1>
 
                 <motion.div
                   initial={{ opacity: 0, y: 30 }}
@@ -277,8 +277,8 @@ const About = () => {
           <div className="container mx-auto px-4 max-w-[800px] relative z-10">
             <h2 className="text-4xl md:text-6xl font-display font-bold mb-8 text-white">{aboutContent.cta.title}</h2>
             <p className="text-xl mb-12 text-slate-300">{aboutContent.cta.description}</p>
-            <Link to="/contact" className="inline-flex items-center gap-3 bg-white text-[#0070AD] px-10 py-5 rounded-2xl font-bold text-lg hover:bg-blue-50 transition-all shadow-[0_10px_35px_rgba(0,112,173,0.3)] hover:-translate-y-0.5">
-              <MessageSquare className="w-5 h-5 text-[#0070AD]" /> {aboutContent.cta.button}
+            <Link to="/contact" className="inline-flex items-center gap-3 bg-[#0070AD] hover:bg-[#005a8c] text-white px-10 py-5 rounded-2xl font-bold text-lg transition-all shadow-[0_10px_35px_rgba(0,112,173,0.3)] hover:-translate-y-0.5 border border-sky-400/30">
+              <MessageSquare className="w-5 h-5 text-white" /> {aboutContent.cta.button}
             </Link>
           </div>
         </section>

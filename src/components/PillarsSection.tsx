@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { 
   Sparkles,
@@ -7,7 +7,9 @@ import {
   Leaf,
   BrainCircuit,
   ShieldCheck,
-  Cpu
+  Cpu,
+  ChevronLeft,
+  ChevronRight
 } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -95,6 +97,37 @@ const fastigoModelPillars: FastigoPillar[] = [
 ];
 
 export const PillarsSection = () => {
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const handleScroll = () => {
+    if (!scrollContainerRef.current) return;
+    const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
+    const maxScroll = scrollWidth - clientWidth;
+    if (maxScroll <= 0) return;
+    const progress = scrollLeft / maxScroll;
+    const index = Math.round(progress * (fastigoModelPillars.length - 1));
+    setActiveIndex(Math.max(0, Math.min(index, fastigoModelPillars.length - 1)));
+  };
+
+  const handleScrollBy = (offset: number) => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: offset, behavior: "smooth" });
+    }
+  };
+
+  const scrollToCard = (index: number) => {
+    if (!scrollContainerRef.current) return;
+    const children = scrollContainerRef.current.children;
+    if (children[index]) {
+      (children[index] as HTMLElement).scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+        inline: "center",
+      });
+    }
+  };
+
   return (
     <section className="py-16 sm:py-24 relative overflow-hidden bg-gradient-to-b from-[#F8FAFD] via-[#F1F6FB] to-[#F8FAFD] text-white border-t border-[#081921] border-b border-sky-100/90">
       {/* 75% Top Split Background colored with #081921 (RGB: 8, 25, 33) */}
@@ -230,8 +263,41 @@ export const PillarsSection = () => {
           </p>
         </motion.div>
 
-        {/* 5-Card Pinterest-Style Masonry Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5 items-start">
+        {/* Mobile Swipe Navigation Controls */}
+        <div className="flex sm:hidden items-center justify-between px-1 mb-3 text-xs text-sky-200/80">
+          <span className="flex items-center gap-1.5 font-medium tracking-wide">
+            <span className="w-2 h-2 rounded-full bg-[#00A3E0] animate-ping" />
+            Swipe to explore pillars
+          </span>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => handleScrollBy(-280)}
+              aria-label="Scroll left"
+              className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 flex items-center justify-center text-white backdrop-blur-sm border border-white/15 transition-all shadow-sm"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+            <button
+              onClick={() => handleScrollBy(280)}
+              aria-label="Scroll right"
+              className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 flex items-center justify-center text-white backdrop-blur-sm border border-white/15 transition-all shadow-sm"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+
+        {/* 5-Card Layout: Side-Scroll Track on Mobile, Masonry Grid on Desktop */}
+        <div
+          ref={scrollContainerRef}
+          onScroll={handleScroll}
+          className="flex sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 sm:gap-5 overflow-x-auto sm:overflow-visible pb-4 sm:pb-0 px-4 sm:px-0 -mx-4 sm:mx-0 snap-x snap-mandatory sm:snap-none scrollbar-none items-start touch-pan-x"
+          style={{
+            scrollbarWidth: "none",
+            msOverflowStyle: "none",
+            WebkitOverflowScrolling: "touch",
+          }}
+        >
           {fastigoModelPillars.map((pillar, index) => (
             <motion.div
               key={pillar.id}
@@ -239,7 +305,7 @@ export const PillarsSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.5, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
-              className="w-full h-full"
+              className="w-[82vw] max-w-[310px] sm:w-full sm:max-w-none shrink-0 sm:shrink snap-center sm:snap-align-none h-full"
             >
               <Link
                 to={pillar.path}
@@ -284,6 +350,22 @@ export const PillarsSection = () => {
                 </div>
               </Link>
             </motion.div>
+          ))}
+        </div>
+
+        {/* Mobile Pagination Indicator Dots */}
+        <div className="flex sm:hidden justify-center items-center gap-1.5 mt-4">
+          {fastigoModelPillars.map((pillar, idx) => (
+            <button
+              key={pillar.id}
+              onClick={() => scrollToCard(idx)}
+              aria-label={`Go to ${pillar.title}`}
+              className={`h-1.5 rounded-full transition-all duration-300 ${
+                activeIndex === idx
+                  ? "w-6 bg-[#00A3E0]"
+                  : "w-1.5 bg-white/30 hover:bg-white/50"
+              }`}
+            />
           ))}
         </div>
       </div>

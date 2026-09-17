@@ -190,9 +190,7 @@ const ReviewsSection = () => {
 
             <h2 className="text-2xl sm:text-4xl md:text-[46px] font-display font-bold text-[#0E0A42] leading-[1.15] tracking-tight">
               <span>Engineering Trust</span><br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0070AD] via-[#0084C7] to-[#00A3E0]">
-                Through Results
-              </span>
+              <span>Through Results</span>
             </h2>
           </div>
 

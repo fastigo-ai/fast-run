@@ -253,9 +253,9 @@ const Blog: React.FC = () => {
                 <span>FASTIGO PUBLICATIONS &amp; RESEARCH</span>
               </motion.div>
               
-              {/* Kinetic Animated Heading */}
+              {/* Main Heading */}
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-display font-extrabold text-[#0E0A42] mb-5 tracking-tight leading-[1.12]">
-                Insights &amp; <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0070AD] via-[#00A3E0] to-[#0070AD]">Innovations</span>
+                Insights &amp; Innovations
               </h1>
               
               {/* Subtext Description */}
@@ -311,7 +311,7 @@ const Blog: React.FC = () => {
                     className={`text-xs font-semibold px-4 py-1.5 rounded-full transition-all duration-200 ${
                       selectedTag === tag
                         ? "bg-[#0070AD] text-white shadow-md shadow-sky-500/20"
-                        : "bg-white border border-slate-200 text-slate-600 hover:text-[#0070AD] hover:border-sky-300 shadow-2xs"
+                        : "bg-white border border-[#0070AD]/30 text-[#0070AD] hover:bg-[#0070AD] hover:text-white shadow-2xs"
                     }`}
                   >
                     {tag === "all" ? "All Topics" : tag}
@@ -526,7 +526,7 @@ const Blog: React.FC = () => {
                   <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }} className="inline-block">
                     <Link
                       to="/contact"
-                      className="inline-flex items-center gap-2.5 px-8 py-4 bg-gradient-to-r from-[#0070AD] to-[#00A3E0] text-white font-semibold rounded-xl hover:shadow-lg hover:shadow-[#0070AD]/25 transition-all duration-300 shadow-md group"
+                      className="inline-flex items-center gap-2.5 px-8 py-4 bg-[#0070AD] hover:bg-[#005a8c] text-white font-semibold rounded-xl hover:shadow-lg hover:shadow-[#0070AD]/25 transition-all duration-300 shadow-md group cursor-pointer"
                     >
                       <span>Initiate Executive Consultation</span>
                       <ArrowRight className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" />
