@@ -101,8 +101,8 @@ const MegaMenu = ({ onClose }: MegaMenuProps) => {
                         isActive ? 'bg-slate-50/80 border border-slate-200/60 shadow-sm' : 'hover:bg-slate-50/50'
                       }`}
                     >
-                      <Icon className={`w-5 h-5 transition-colors ${isActive ? 'text-[#0070AD]' : 'text-slate-400 group-hover:text-slate-600'}`} />
-                      <span className={`text-[15px] font-display font-semibold transition-colors ${isActive ? 'text-[#0070ad]' : 'text-slate-600 group-hover:text-slate-900'}`}>
+                      <Icon className={`w-5 h-5 transition-colors ${isActive ? 'text-[#0070AD]' : 'text-slate-400 group-hover:text-[#0E0A42]'}`} />
+                      <span className={`text-[15px] font-display font-semibold transition-colors ${isActive ? 'text-[#0E0A42]' : 'text-[#0E0A42]/80 group-hover:text-[#0E0A42]'}`}>
                         {cat.name}
                       </span>
                     </Link>
@@ -114,7 +114,7 @@ const MegaMenu = ({ onClose }: MegaMenuProps) => {
 
           {/* Middle Column - Links Grid */}
           <div className="w-full md:w-[45%] p-8 py-10">
-            <h3 className="text-sm font-bold tracking-widest text-[#0070ad] uppercase mb-8">
+            <h3 className="text-sm font-bold tracking-widest text-[#0E0A42] uppercase mb-8">
               {activeCategory} Directory
             </h3>
             <motion.div
@@ -137,7 +137,7 @@ const MegaMenu = ({ onClose }: MegaMenuProps) => {
                           '#'
                         }
                         onClick={onClose}
-                        className="block py-2 text-[14px] font-body text-slate-700 hover:text-[#0070AD] transition-colors font-medium hover:translate-x-1 duration-200"
+                        className="block py-2 text-[14px] font-body text-[#0E0A42]/85 hover:text-[#0070AD] transition-colors font-medium hover:translate-x-1 duration-200"
                       >
                         {item}
                       </Link>

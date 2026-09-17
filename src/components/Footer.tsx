@@ -291,28 +291,28 @@ const Footer = () => {
             <div className="flex flex-wrap items-center justify-center gap-5 sm:gap-6">
               
               {/* Policies */}
-              <div className="flex items-center text-xs sm:text-[13px] text-slate-500">
+              <div className="flex flex-wrap items-center justify-center gap-x-2 sm:gap-x-3 gap-y-1 text-xs sm:text-[13px] text-slate-500 text-center">
                 <Link
                   to="/privacy-policy"
                   className="hover:text-[#0070AD] transition-colors"
                 >
                   Privacy Policy
                 </Link>
-                <span className="mx-3 text-slate-300">|</span>
+                <span className="text-slate-300">|</span>
                 <Link
                   to="/terms-of-service"
                   className="hover:text-[#0070AD] transition-colors"
                 >
                   Terms of Service
                 </Link>
-                <span className="mx-3 text-slate-300">|</span>
+                <span className="text-slate-300">|</span>
                 <Link
                   to="/cookies"
                   className="hover:text-[#0070AD] transition-colors"
                 >
                   Cookies
                 </Link>
-                <span className="mx-3 text-slate-300">|</span>
+                <span className="text-slate-300">|</span>
                 <Link
                   to="/admin"
                   target="_blank"

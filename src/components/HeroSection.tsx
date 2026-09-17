@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
-import HeroAiBackground from "./HeroAiBackground";
 import banner1 from "../assets/AIPOWEREDENGINERRING.webp";
 import banner2 from "../assets/DIGITALMANUFACTURING.webp";
 import banner3 from "../assets/NEXT-GEN-MOBILITY.webp";
@@ -111,16 +110,7 @@ const HeroSection = () => {
     setTimeout(() => setIsShuffling(false), 620);
   };
 
-  // Auto-play timer with 5-second interval
-  useEffect(() => {
-    if (isPaused) return;
-
-    const timer = setInterval(() => {
-      handleNext();
-    }, INTERVAL_MS);
-
-    return () => clearInterval(timer);
-  }, [handleNext, isPaused]);
+  // Auto-play timer removed to prevent automatic moving animation
 
   // Touch swipe support
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -176,9 +166,6 @@ const HeroSection = () => {
 
   return (
     <section className="relative w-full overflow-hidden pt-24 sm:pt-32 pb-14 sm:pb-20">
-      {/* Dynamic Animated AI Neural Background */}
-      <HeroAiBackground />
-
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-[1240px] relative z-10">
         {/* Main Heading Above Search Bar */}
         <motion.div
@@ -238,7 +225,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, scale: 0.88 }}
             animate={{ opacity: 0.7, scale: 0.92, y: -26 }}
             transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute -top-6 inset-x-8 sm:inset-x-12 h-[350px] sm:h-[430px] md:h-[480px] lg:h-[500px] rounded-3xl bg-[#061226]/90 border border-slate-800/70 shadow-md pointer-events-none overflow-hidden z-0"
+            className="absolute -top-6 inset-x-8 sm:inset-x-12 h-[380px] sm:h-[430px] md:h-[480px] lg:h-[500px] rounded-3xl bg-[#061226]/90 border border-slate-800/70 shadow-md pointer-events-none overflow-hidden z-0"
           >
             <div className="absolute inset-0 bg-[#061226]/95" />
           </motion.div>
@@ -249,7 +236,7 @@ const HeroSection = () => {
             initial={{ opacity: 0.6, scale: 0.94, y: -20 }}
             animate={{ opacity: 0.92, scale: 0.96, y: -13 }}
             transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute -top-3 inset-x-4 sm:inset-x-6 h-[350px] sm:h-[430px] md:h-[480px] lg:h-[500px] rounded-3xl bg-[#071733] border border-slate-700/60 shadow-lg pointer-events-none overflow-hidden z-10"
+            className="absolute -top-3 inset-x-4 sm:inset-x-6 h-[380px] sm:h-[430px] md:h-[480px] lg:h-[500px] rounded-3xl bg-[#071733] border border-slate-700/60 shadow-lg pointer-events-none overflow-hidden z-10"
           >
             <img
               src={nextSlide.image}
@@ -257,16 +244,16 @@ const HeroSection = () => {
               className="absolute right-0 top-0 h-full w-3/5 object-cover opacity-25 filter blur-[1px]"
             />
             <div className="absolute inset-0 bg-gradient-to-r from-[#071733] via-[#071733]/90 to-transparent" />
-            <div className="relative z-10 p-6 sm:p-10 opacity-40 flex items-center gap-3">
+            <div className="relative z-10 p-5 sm:p-10 opacity-40 flex items-center gap-3">
               <span className="w-2 h-2 rounded-full bg-[#00A3E0]" />
-              <span className="font-display text-lg sm:text-2xl font-bold text-white">
+              <span className="font-display text-base sm:text-2xl font-bold text-white">
                 {nextSlide.title}
               </span>
             </div>
           </motion.div>
 
           {/* Active Front Card & Shuffling Deck Container */}
-          <div className="relative z-30 w-full h-[360px] sm:h-[430px] md:h-[480px] lg:h-[500px]">
+          <div className="relative z-30 w-full h-[390px] sm:h-[430px] md:h-[480px] lg:h-[500px]">
             <AnimatePresence mode="popLayout" custom={direction}>
               <motion.div
                 key={currentSlide.id}
@@ -280,12 +267,9 @@ const HeroSection = () => {
               >
                 {/* Background Image on Right */}
                 <div className="absolute right-0 top-0 bottom-0 w-full md:w-[68%] lg:w-[62%] h-full pointer-events-none overflow-hidden">
-                  <motion.img
+                  <img
                     src={currentSlide.image}
                     alt={currentSlide.title}
-                    initial={{ scale: 1.06 }}
-                    animate={{ scale: 1 }}
-                    transition={{ duration: 5, ease: "easeOut" }}
                     className="w-full h-full object-cover object-center"
                   />
                   {/* Seamless Fade Gradient from dark navy on left into image */}
@@ -294,17 +278,17 @@ const HeroSection = () => {
                 </div>
 
                 {/* Card Top & Middle Content (Left Column) */}
-                <div className="relative z-10 flex-1 flex flex-col justify-center px-6 sm:px-10 md:px-14 lg:px-16 pt-8 pb-4 max-w-2xl">
+                <div className="relative z-10 flex-1 flex flex-col justify-center px-5 sm:px-10 md:px-14 lg:px-16 pt-6 sm:pt-8 pb-3 sm:pb-4 max-w-2xl">
                   {/* Blue Accent Dot + Title */}
-                  <div className="flex items-center gap-3 sm:gap-3.5 mb-3 sm:mb-4">
+                  <div className="flex items-center gap-2.5 sm:gap-3.5 mb-2.5 sm:mb-4">
                     <span className="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-[#00A3E0] shadow-[0_0_12px_#00A3E0] shrink-0" />
-                    <h2 className="font-display text-3xl sm:text-5xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight">
+                    <h2 className="font-display text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight">
                       {currentSlide.title}
                     </h2>
                   </div>
 
                   {/* Subtitle Description */}
-                  <p className="text-sm sm:text-base md:text-lg text-slate-300 font-body leading-relaxed max-w-xl mb-6">
+                  <p className="text-xs sm:text-base md:text-lg text-slate-300 font-body leading-relaxed max-w-xl mb-4 sm:mb-6 line-clamp-3 sm:line-clamp-none">
                     {currentSlide.subtitle}
                   </p>
 
@@ -315,21 +299,21 @@ const HeroSection = () => {
                       className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-[#38bdf8] hover:text-white transition-colors group"
                     >
                       <span>Explore {currentSlide.category}</span>
-                      <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                      <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform group-hover:translate-x-1" />
                     </a>
                   </div>
                 </div>
 
                 {/* Card Bottom Bar: Tagline & Dash Indicators */}
-                <div className="relative z-10 w-full px-6 sm:px-10 md:px-14 lg:px-16 pb-6 sm:pb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                  {/* Bottom Left Tagline (Matches Screenshot) */}
-                  <div className="flex items-center gap-2 text-xs sm:text-sm font-display font-bold tracking-widest uppercase">
+                <div className="relative z-10 w-full px-5 sm:px-10 md:px-14 lg:px-16 pb-5 sm:pb-8 flex flex-row items-center justify-between gap-3 sm:gap-4">
+                  {/* Bottom Left Tagline */}
+                  <div className="flex items-center gap-1.5 sm:gap-2 text-[11px] sm:text-sm font-display font-bold tracking-widest uppercase">
                     <span className="text-white">ENGINEERING</span>
                     <span className="text-[#F5A623]">THE CHANGE</span>
                   </div>
 
                   {/* Bottom Right Slide Indicators (Pill Dash Bars) */}
-                  <div className="flex items-center gap-2 sm:gap-2.5 self-end sm:self-auto">
+                  <div className="flex items-center gap-1.5 sm:gap-2.5">
                     {slides.map((_, idx) => {
                       const isActive = idx === currentIndex;
                       return (
@@ -339,7 +323,7 @@ const HeroSection = () => {
                           aria-label={`Go to slide ${idx + 1}`}
                           className="relative h-1.5 rounded-full overflow-hidden transition-all duration-400 cursor-pointer"
                           style={{
-                            width: isActive ? "32px" : "14px",
+                            width: isActive ? "28px" : "10px",
                           }}
                         >
                           <div
@@ -347,15 +331,6 @@ const HeroSection = () => {
                               isActive ? "bg-[#00A3E0]" : "bg-white/30 hover:bg-white/60"
                             }`}
                           />
-                          {isActive && !isPaused && (
-                            <motion.div
-                              key={`progress-${currentIndex}`}
-                              initial={{ width: "0%" }}
-                              animate={{ width: "100%" }}
-                              transition={{ duration: INTERVAL_MS / 1000, ease: "linear" }}
-                              className="absolute inset-y-0 left-0 bg-[#38bdf8] rounded-full shadow-[0_0_8px_#38bdf8]"
-                            />
-                          )}
                         </button>
                       );
                     })}
@@ -365,20 +340,20 @@ const HeroSection = () => {
             </AnimatePresence>
 
             {/* Navigation Chevrons */}
-            <div className="absolute inset-y-0 -left-3 sm:-left-5 z-50 flex items-center pointer-events-none">
+            <div className="absolute inset-y-0 left-1 sm:-left-5 z-50 flex items-center pointer-events-none">
               <button
                 onClick={handlePrev}
                 aria-label="Previous Slide"
-                className="pointer-events-auto p-2.5 rounded-full bg-slate-900/80 hover:bg-[#0070AD] text-white/80 hover:text-white backdrop-blur-md border border-white/20 shadow-lg transition-all hover:scale-110 active:scale-95 cursor-pointer"
+                className="pointer-events-auto p-2 sm:p-2.5 rounded-full bg-slate-900/85 hover:bg-[#0070AD] text-white/90 hover:text-white backdrop-blur-md border border-white/20 shadow-lg transition-all hover:scale-110 active:scale-95 cursor-pointer"
               >
                 <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
               </button>
             </div>
-            <div className="absolute inset-y-0 -right-3 sm:-right-5 z-50 flex items-center pointer-events-none">
+            <div className="absolute inset-y-0 right-1 sm:-right-5 z-50 flex items-center pointer-events-none">
               <button
                 onClick={handleNext}
                 aria-label="Next Slide"
-                className="pointer-events-auto p-2.5 rounded-full bg-slate-900/80 hover:bg-[#0070AD] text-white/80 hover:text-white backdrop-blur-md border border-white/20 shadow-lg transition-all hover:scale-110 active:scale-95 cursor-pointer"
+                className="pointer-events-auto p-2 sm:p-2.5 rounded-full bg-slate-900/85 hover:bg-[#0070AD] text-white/90 hover:text-white backdrop-blur-md border border-white/20 shadow-lg transition-all hover:scale-110 active:scale-95 cursor-pointer"
               >
                 <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
               </button>

@@ -42,7 +42,7 @@ const fastigoModelPillars: FastigoPillar[] = [
     accent: "#00A3E0",
     glowColor: "rgba(0, 163, 224, 0.35)",
     code: "FASTIGO // MOBILITY",
-    heightClass: "h-[450px] lg:h-[480px] xl:h-[500px]",
+    heightClass: "h-[420px] sm:h-[470px] lg:h-[510px] xl:h-[530px]",
   },
   {
     id: "fastigo-sustainability",
@@ -54,7 +54,7 @@ const fastigoModelPillars: FastigoPillar[] = [
     accent: "#10B981",
     glowColor: "rgba(16, 185, 129, 0.35)",
     code: "FASTIGO // SUSTAINABILITY",
-    heightClass: "h-[400px] lg:h-[430px] xl:h-[440px]",
+    heightClass: "h-[420px] sm:h-[470px] lg:h-[510px] xl:h-[530px]",
   },
   {
     id: "fastigo-ai-analytics",
@@ -66,7 +66,7 @@ const fastigoModelPillars: FastigoPillar[] = [
     accent: "#6366F1",
     glowColor: "rgba(99, 102, 241, 0.35)",
     code: "FASTIGO // AI_DATA",
-    heightClass: "h-[470px] lg:h-[510px] xl:h-[530px]",
+    heightClass: "h-[420px] sm:h-[470px] lg:h-[510px] xl:h-[530px]",
   },
   {
     id: "fastigo-cybersecurity",
@@ -78,7 +78,7 @@ const fastigoModelPillars: FastigoPillar[] = [
     accent: "#F59E0B",
     glowColor: "rgba(245, 158, 11, 0.35)",
     code: "FASTIGO // SECURITY",
-    heightClass: "h-[410px] lg:h-[440px] xl:h-[450px]",
+    heightClass: "h-[420px] sm:h-[470px] lg:h-[510px] xl:h-[530px]",
   },
   {
     id: "fastigo-iot-engineering",
@@ -90,13 +90,21 @@ const fastigoModelPillars: FastigoPillar[] = [
     accent: "#A855F7",
     glowColor: "rgba(168, 85, 247, 0.35)",
     code: "FASTIGO // IOT_TWIN",
-    heightClass: "h-[440px] lg:h-[470px] xl:h-[490px]",
+    heightClass: "h-[420px] sm:h-[470px] lg:h-[510px] xl:h-[530px]",
   },
 ];
 
 export const PillarsSection = () => {
   return (
-    <section className="py-16 sm:py-24 relative overflow-hidden bg-gradient-to-b from-[#F8FAFD] via-[#F1F6FB] to-[#F8FAFD] text-slate-900 border-t border-b border-sky-100/90">
+    <section className="py-16 sm:py-24 relative overflow-hidden bg-gradient-to-b from-[#F8FAFD] via-[#F1F6FB] to-[#F8FAFD] text-white border-t border-[#081921] border-b border-sky-100/90">
+      {/* 75% Top Split Background colored with #081921 (RGB: 8, 25, 33) */}
+      <div 
+        className="absolute top-0 inset-x-0 h-[75%] pointer-events-none" 
+        style={{ backgroundColor: "#081921" }} 
+      />
+      {/* 75% Split Laser Accent Line */}
+      <div className="absolute top-[75%] inset-x-0 h-px bg-gradient-to-r from-transparent via-[#00A3E0]/30 to-transparent pointer-events-none z-[1]" />
+
       {/* AI THEMED BACKGROUND CANVAS */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden select-none">
         {/* Top & Bottom Cyber Border Laser Lights */}
@@ -105,7 +113,7 @@ export const PillarsSection = () => {
         <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[#0070AD]/25 to-transparent" />
 
         {/* Ambient AI Energy Glows */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[420px] bg-gradient-to-b from-[#00A3E0]/14 via-[#0070AD]/08 to-transparent blur-[130px] rounded-full" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[420px] bg-gradient-to-b from-[#00A3E0]/20 via-[#0070AD]/10 to-transparent blur-[130px] rounded-full" />
         <div className="absolute top-1/2 -left-32 -translate-y-1/2 w-[500px] h-[500px] bg-sky-400/8 blur-[120px] rounded-full" />
         <div className="absolute top-1/2 -right-32 -translate-y-1/2 w-[500px] h-[500px] bg-indigo-500/6 blur-[120px] rounded-full" />
 
@@ -122,13 +130,13 @@ export const PillarsSection = () => {
               patternUnits="userSpaceOnUse"
             >
               {/* Center Dot */}
-              <circle cx="32" cy="32" r="1" fill="#0070AD" fillOpacity="0.3" />
+              <circle cx="32" cy="32" r="1" fill="#00A3E0" fillOpacity="0.4" />
               {/* Precision Crosshair Marker */}
               <path
                 d="M 30 32 L 34 32 M 32 30 L 32 34"
-                stroke="#0070AD"
+                stroke="#00A3E0"
                 strokeWidth="0.6"
-                strokeOpacity="0.25"
+                strokeOpacity="0.3"
               />
             </pattern>
           </defs>
@@ -203,24 +211,21 @@ export const PillarsSection = () => {
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="mb-10 sm:mb-14 text-center max-w-3xl mx-auto"
         >
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/90 border border-sky-200/90 text-xs font-semibold text-[#0070AD] mb-4 shadow-[0_2px_12px_rgba(0,112,173,0.08)] backdrop-blur-md">
+          <div className="inline-flex items-center justify-center flex-wrap gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/20 text-xs font-semibold text-white mb-4 shadow-[0_2px_16px_rgba(0,0,0,0.3)] backdrop-blur-md max-w-full text-center">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#0070AD]" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-sky-400" />
             </span>
-            <span>Fastigo Core Architectural Model</span>
-            <span className="text-slate-300 font-light">|</span>
-            <span className="text-[10px] font-mono font-medium text-sky-600 tracking-wider">AI MATRIX</span>
+            <span className="text-white">Fastigo Core Architectural Model</span>
+            <span className="text-white font-light">|</span>
+            <span className="text-[10px] font-mono font-medium text-white tracking-wider">AI MATRIX</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold tracking-tight leading-[1.15] text-[#0E0A42] mb-4">
-            Where Innovation Meets{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0070AD] via-[#00A3E0] to-[#0070AD]">
-              Artificial Intelligence
-            </span>
+          <h2 className="text-2xl sm:text-4xl md:text-5xl font-display font-extrabold tracking-tight leading-[1.15] text-white mb-4 drop-shadow-sm">
+            Where Innovation Meets Artificial Intelligence
           </h2>
 
-          <p className="text-sm sm:text-base text-slate-600 font-normal leading-relaxed">
+          <p className="text-sm sm:text-base text-white font-normal leading-relaxed drop-shadow-sm px-2">
             Discover the cornerstone pillars powering the Fastigo intelligent ecosystem.
           </p>
         </motion.div>
@@ -238,7 +243,7 @@ export const PillarsSection = () => {
             >
               <Link
                 to={pillar.path}
-                className="w-full block group relative rounded-[26px] overflow-hidden cursor-pointer bg-slate-900 border border-slate-200/90 shadow-[0_10px_30px_rgba(0,112,173,0.08)] hover:shadow-[0_20px_45px_rgba(0,112,173,0.18)] transition-all duration-500 hover:-translate-y-2"
+                className="w-full block group relative rounded-[26px] overflow-hidden cursor-pointer bg-slate-900 border border-white/15 shadow-[0_12px_32px_rgba(0,0,0,0.35)] hover:shadow-[0_24px_50px_rgba(0,163,224,0.25)] transition-all duration-500 hover:-translate-y-2"
               >
                 {/* Outer Ambient Glow on Hover */}
                 <div
@@ -263,14 +268,14 @@ export const PillarsSection = () => {
 
                   {/* BOTTOM: Main Heading always visible, Content reveals on hover */}
                   <div className="relative z-20">
-                    <h3 className="text-2xl sm:text-[26px] font-display font-bold text-white tracking-tight leading-snug drop-shadow-md group-hover:text-sky-300 transition-colors duration-300">
+                    <h3 className="text-xl sm:text-2xl lg:text-[26px] font-display font-bold text-white tracking-tight leading-snug drop-shadow-md transition-colors duration-300">
                       {pillar.title}
                     </h3>
 
-                    {/* Content reveals on hover */}
-                    <div className="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-all duration-400 ease-out">
+                    {/* Content visible on mobile, reveals on hover on desktop */}
+                    <div className="grid grid-rows-[1fr] sm:grid-rows-[0fr] sm:group-hover:grid-rows-[1fr] transition-all duration-400 ease-out">
                       <div className="overflow-hidden">
-                        <p className="pt-2.5 text-[13px] sm:text-sm text-slate-200/90 font-normal leading-relaxed line-clamp-3 drop-shadow opacity-0 group-hover:opacity-100 transition-opacity duration-400 delay-75">
+                        <p className="pt-2 text-xs sm:text-sm text-white/90 sm:text-white font-normal leading-relaxed line-clamp-2 sm:line-clamp-3 drop-shadow opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-400 delay-75">
                           {pillar.description}
                         </p>
                       </div>

@@ -1,4 +1,3 @@
-import AnimatedBackground from "@/components/AnimatedBackground";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 
@@ -17,11 +16,6 @@ const Index = () => {
 
   return (
     <div className="relative min-h-screen w-full overflow-x-hidden bg-background">
-      {/* Navbar */}
-
-      {/* Background */}
-      <AnimatedBackground />
-
       {/* Grid pattern overlay */}
       <div className="fixed inset-0 grid-pattern pointer-events-none z-0" />
 

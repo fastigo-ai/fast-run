@@ -129,9 +129,9 @@ const ProductSubscription = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className={`relative p-8 rounded-2xl border transition-all duration-300 ${
+                  className={`relative p-6 sm:p-8 rounded-2xl border transition-all duration-300 ${
                     plan.isPopular 
-                      ? 'bg-[#0070ad] text-white border-[#0070ad] shadow-2xl shadow-blue-950/30 scale-105 z-10' 
+                      ? 'bg-[#0070ad] text-white border-[#0070ad] shadow-2xl shadow-blue-950/30 md:scale-105 z-10' 
                       : 'bg-white/80 backdrop-blur-xl border-slate-200/80 text-slate-800 shadow-lg hover:shadow-xl hover:border-[#0070AD]/30'
                   }`}
                 >

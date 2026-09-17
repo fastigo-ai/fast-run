@@ -112,12 +112,12 @@ const Navbar = () => {
           <div className="hidden md:flex items-center gap-5">
             <a
               href="mailto:Info@fastigo.co"
-              className="text-[#0070ad] hover:text-[#0070AD] transition-colors p-1 inline-flex"
+              className="text-[#0E0A42] hover:text-[#0070AD] transition-colors p-1 inline-flex"
             >
               <Mail className="h-[22px] w-[22px] stroke-[1.5]" />
             </a>
 
-            <div className="flex items-center gap-1 cursor-pointer text-[#0070ad] hover:text-[#0070AD] transition-colors border border-slate-200/80 rounded-full px-3 py-1.5 bg-white/80 backdrop-blur-md shadow-sm">
+            <div className="flex items-center gap-1 cursor-pointer text-[#0E0A42] hover:text-[#0070AD] transition-colors border border-slate-200/80 rounded-full px-3 py-1.5 bg-white/80 backdrop-blur-md shadow-sm">
               <span className="text-[13px] font-body font-medium">EN</span>
               <ChevronDown className="h-3.5 w-3.5" />
             </div>
@@ -143,14 +143,14 @@ const Navbar = () => {
                   setIsSearchOpen((prev) => !prev);
                 }
               }}
-              className="w-10 h-10 rounded-full border border-slate-200/90 bg-white/90 shadow-sm flex items-center justify-center text-slate-700 hover:text-[#0070AD] hover:border-[#0070AD]/40 active:scale-95 transition-all duration-300"
+              className="w-11 h-11 rounded-full border border-slate-200/90 bg-white/90 shadow-sm flex items-center justify-center text-[#0E0A42] hover:text-[#0070AD] hover:border-[#0070AD]/40 active:scale-95 transition-all duration-300 touch-manipulation"
               aria-label="Search or Ask AI"
             >
               <Search className="h-4 w-4" />
             </button>
 
             <button
-              className="w-10 h-10 rounded-full border border-slate-200/90 bg-white/90 shadow-sm flex items-center justify-center text-slate-700 hover:text-[#0070AD] hover:border-[#0070AD]/40 active:scale-95 transition-all duration-300"
+              className="w-11 h-11 rounded-full border border-slate-200/90 bg-white/90 shadow-sm flex items-center justify-center text-[#0E0A42] hover:text-[#0070AD] hover:border-[#0070AD]/40 active:scale-95 transition-all duration-300 touch-manipulation"
               onClick={() => {
                 setIsMobileMenuOpen((prev) => !prev);
                 setActiveDropdown(null);
@@ -177,7 +177,7 @@ const Navbar = () => {
                     exit={{ rotate: -90, opacity: 0 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <Menu className="h-5 w-5 text-slate-800" />
+                    <Menu className="h-5 w-5 text-[#0E0A42]" />
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -195,11 +195,11 @@ const Navbar = () => {
             exit={{ opacity: 0, height: 0 }}
             className="border-t border-border bg-background overflow-hidden"
           >
-            <div className="container mx-auto px-6 py-4">
+            <div className="container mx-auto px-4 sm:px-6 py-3 sm:py-4">
               <input
                 type="text"
                 placeholder="Search Fastigo..."
-                className="w-full bg-transparent text-foreground placeholder:text-muted-foreground text-lg outline-none font-body"
+                className="w-full bg-transparent text-foreground placeholder:text-muted-foreground text-base sm:text-lg outline-none font-body"
                 autoFocus
               />
             </div>

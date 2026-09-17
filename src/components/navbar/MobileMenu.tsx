@@ -219,7 +219,7 @@ const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
           transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-          className="md:hidden fixed top-[62px] sm:top-[76px] inset-x-0 bottom-0 z-[999] bg-white flex flex-col justify-between overflow-hidden shadow-2xl h-[calc(100dvh-62px)] sm:h-[calc(100dvh-76px)]"
+          className="md:hidden fixed top-[74px] sm:top-[84px] inset-x-0 bottom-0 z-[999] bg-white flex flex-col justify-between overflow-hidden shadow-2xl h-[calc(100dvh-74px)] sm:h-[calc(100dvh-84px)]"
         >
           {/* Scrollable Content Container */}
           <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-4 space-y-3 bg-[#F8FAFC]">
@@ -232,7 +232,7 @@ const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search solutions, products, services..."
-                  className="bg-transparent text-[14px] w-full outline-none text-[#0E0A42] placeholder:text-slate-400 font-body"
+                  className="bg-transparent text-base w-full outline-none text-[#0E0A42] placeholder:text-slate-400 font-body"
                 />
                 {searchQuery && (
                   <button
@@ -349,7 +349,7 @@ const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
                                       <Link
                                         to={subcat.path}
                                         onClick={handleLinkClick}
-                                        className="flex items-center gap-2 text-[14px] font-semibold text-slate-800 hover:text-[#0070AD] transition-colors"
+                                        className="flex items-center gap-2 text-[14px] font-semibold text-[#0E0A42] hover:text-[#0070AD] transition-colors"
                                       >
                                         <SubIcon className="w-4 h-4 text-[#0070AD]" />
                                         <span>{subcat.title}</span>
