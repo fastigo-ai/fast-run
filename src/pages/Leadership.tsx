@@ -37,14 +37,6 @@ const boardOfDirectors: Leader[] = [
     bio: "Akhil Singh is an IITian and technology entrepreneur, currently serving as the Founder & CEO of Fastigo Technology Pvt. Ltd., and leading the innovation behind Dora AI. With a deep passion for Artificial Intelligence, Cloud Computing, Cybersecurity, and Digital Transformation, he operates at the intersection of cutting-edge technology and real-world business challenges. His journey from IIT to founding Fastigo has been driven by a singular mission — to empower businesses with smarter, scalable, and secure technology solutions. Under his leadership, Fastigo has delivered high-impact digital services across industries, enabling organizations to modernize operations, strengthen security frameworks, and unlock sustainable growth. Fastigo’s core expertise under Akhil’s direction spans AI/ML implementation, secure cloud infrastructure, enterprise DevOps, and end-to-end cybersecurity frameworks. His strategic vision and execution-driven leadership continue to position Fastigo as a forward-thinking technology partner for the digital age.",
     image: "", // Image column empty as requested
     linkedin: "https://www.linkedin.com/in/akhil-singh-160a8733a/",
-    tags: [
-      "Artificial Intelligence",
-      "Cloud Infrastructure",
-      "Cybersecurity",
-      "Digital Transformation",
-      "Enterprise DevOps",
-      "Dora AI",
-    ],
     governanceRole: "Executive Board // Managing Director",
   },
   {
@@ -275,12 +267,6 @@ const Leadership = () => {
               transition={{ duration: 0.6 }}
               className="text-center max-w-3xl mx-auto"
             >
-              {/* Eyebrow Badge */}
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-sky-200 bg-sky-50/90 text-[#0070AD] text-xs font-bold tracking-wider uppercase mb-5 backdrop-blur-md shadow-2xs">
-                <Sparkles className="w-3.5 h-3.5 text-[#0070AD]" />
-                <span>BOARD OF DIRECTORS &amp; INVESTOR RELATIONS</span>
-              </div>
-
               {/* Main Heading */}
               <h1 className="mb-5 font-display text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-[#0E0A42] leading-[1.14]">
                 Our Leadership &amp; Investors
@@ -321,10 +307,6 @@ const Leadership = () => {
             <div className="relative overflow-hidden rounded-[28px] p-8 sm:p-12 bg-gradient-to-br from-sky-50/95 via-white to-sky-100/50 border border-sky-200/90 shadow-[0_16px_40px_rgba(0,112,173,0.08)]">
               <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
                 <div className="max-w-2xl text-center lg:text-left">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-100 text-[#0070AD] text-xs font-bold uppercase tracking-wider mb-3.5">
-                    <Globe2 className="w-3.5 h-3.5" />
-                    <span>Institutional Governance &amp; Shareholder Value</span>
-                  </div>
                   <h3 className="text-2xl sm:text-3xl font-display font-extrabold text-[#0E0A42] mb-3">
                     Building Sustainable Value Through Disciplined Innovation
                   </h3>

@@ -7,6 +7,7 @@ import banner3 from "../assets/NEXT-GEN-MOBILITY.webp";
 import banner4 from "../assets/healthCare.webp";
 import banner5 from "../assets/Edtech.webp";
 import banner6 from "../assets/HRMS.webp";
+import heroBgWave from "../assets/hero-wave-bg.png";
 
 const slides = [
   {
@@ -165,7 +166,39 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="relative w-full overflow-hidden pt-24 sm:pt-32 pb-14 sm:pb-20">
+    <section className="relative w-full overflow-hidden pt-24 sm:pt-32 pb-14 sm:pb-20 bg-gradient-to-b from-white via-[#F4F9FD] to-[#EDF6FC]/60">
+      {/* Background Graphic Layer with Lighter Tone & 2nd Session Harmony */}
+      <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden select-none">
+        {/* The Wave Graphic Asset - Softened & lightened with crystalline luminosity */}
+        <img
+          src={heroBgWave}
+          alt=""
+          role="presentation"
+          className="w-full h-full object-cover object-[center_30%] md:object-[75%_35%] opacity-70 brightness-[1.06] saturate-[0.85] transition-all duration-700"
+        />
+
+        {/* Soft luminous white veil to keep colors airy, light and clean */}
+        <div className="absolute inset-0 bg-gradient-to-b from-white/75 via-white/25 to-white/70" />
+
+        {/* Delicate cyan & sky wash matching 2nd session's AI energy palette */}
+        <div className="absolute inset-0 bg-gradient-to-tr from-[#00A3E0]/[0.03] via-transparent to-sky-200/[0.12]" />
+
+        {/* Ambient AI Energy Glows - subtle and airy */}
+        <div className="absolute -top-20 left-1/4 w-[500px] h-[500px] bg-[#00A3E0]/[0.05] rounded-full blur-3xl" />
+        <div className="absolute top-1/3 -right-20 w-[600px] h-[600px] bg-sky-300/[0.10] rounded-full blur-3xl" />
+        <div className="absolute bottom-6 left-1/3 w-[450px] h-[300px] bg-[#0070AD]/[0.03] rounded-full blur-2xl" />
+
+        {/* Precision AI Matrix Dot Grid matching 2nd session */}
+        <div className="absolute inset-0 bg-[radial-gradient(#00A3E0_0.75px,transparent_0.75px)] [background-size:32px_32px] opacity-[0.07]" />
+
+        {/* Top Seamless Fade (blends with navbar) */}
+        <div className="absolute top-0 inset-x-0 h-28 bg-gradient-to-b from-white/95 via-white/60 to-transparent" />
+
+        {/* Bottom Seamless Transition into 2nd Session */}
+        <div className="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-white via-white/80 to-transparent" />
+        <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[#00A3E0]/25 to-transparent" />
+      </div>
+
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-[1240px] relative z-10">
         {/* Main Heading Above Search Bar */}
         <motion.div

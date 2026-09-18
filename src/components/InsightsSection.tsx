@@ -143,10 +143,6 @@ const InsightsSection: React.FC = () => {
         {/* Section Header with Title & Navigation Controls */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end border-b border-slate-200/80 dark:border-slate-800 pb-6 gap-6">
           <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-blue-50 text-[#0070AD] border border-blue-100 mb-3 dark:bg-blue-950/40 dark:text-blue-400 dark:border-blue-900/50">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#0070AD] animate-pulse" />
-              <span>Thought Leadership &amp; Perspectives</span>
-            </div>
             <h2 className="text-3xl sm:text-4xl md:text-[46px] font-display font-bold text-[#0E0A42] dark:text-white tracking-tight leading-tight">
               Insights &amp; Innovations
             </h2>

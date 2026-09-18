@@ -74,15 +74,6 @@ export const Portfolio = () => {
               transition={{ duration: 0.7 }}
               className="text-center max-w-4xl mx-auto"
             >
-              {/* Eyebrow Badge */}
-              <motion.div
-                whileHover={{ scale: 1.03 }}
-                className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-sky-200 bg-sky-50/90 text-[#0070AD] text-xs font-bold tracking-wider uppercase mb-6 backdrop-blur-md shadow-sm"
-              >
-                <Layers className="w-3.5 h-3.5 text-[#0070AD] animate-pulse" />
-                <span>OUR PORTFOLIO // PROVEN VALUE</span>
-              </motion.div>
-
               {/* Main Headline */}
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-extrabold text-[#0E0A42] tracking-tight leading-[1.12] mb-6">
                 Success Stories &amp; Case Studies

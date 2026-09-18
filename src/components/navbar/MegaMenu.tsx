@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Building2, Layers, Lightbulb, Handshake, LucideIcon } from 'lucide-react';
 import { useState } from 'react';
 import { getSlug } from '@/data/services';
+import { allianceLogosMap } from '@/components/icons/AllianceLogos';
 
 type CategoryKey = 'Industries' | 'Services' | 'Research & Innovation' | 'Alliances';
 
@@ -27,8 +28,8 @@ const categoryItems: Record<CategoryKey, string[][]> = {
     ['Natural Language Processing', 'Computer Vision', 'Robotic Process Automation', 'Generative AI', '5G & Beyond'],
   ],
   Alliances: [
-    ['Microsoft', 'AWS', 'Google Cloud', 'SAP', 'Salesforce'],
-    ['Oracle', 'ServiceNow', 'Adobe', 'Pega', 'Cisco'],
+    ['Microsoft', 'Salesforce', 'AWS'],
+    ['OpenAI', 'Anthropic', 'ElevenLabs'],
   ],
 };
 
@@ -126,23 +127,31 @@ const MegaMenu = ({ onClose }: MegaMenuProps) => {
             >
               {activeItems.map((column, colIdx) => (
                 <ul key={colIdx} className="space-y-1.5">
-                  {column.map((item) => (
-                    <li key={item}>
-                      <Link
-                        to={
-                          activeCategory === 'Services' ? `/services/${getSlug(item)}` :
-                          activeCategory === 'Industries' ? `/industries/${getSlug(item)}` :
-                          activeCategory === 'Research & Innovation' ? `/research/${getSlug(item)}` :
-                          activeCategory === 'Alliances' ? `/alliances/${getSlug(item)}` :
-                          '#'
-                        }
-                        onClick={onClose}
-                        className="block py-2 text-[14px] font-body text-[#0E0A42]/85 hover:text-[#0070AD] transition-colors font-medium hover:translate-x-1 duration-200"
-                      >
-                        {item}
-                      </Link>
-                    </li>
-                  ))}
+                  {column.map((item) => {
+                    const LogoComponent = activeCategory === 'Alliances' ? allianceLogosMap[item] : null;
+                    return (
+                      <li key={item}>
+                        <Link
+                          to={
+                            activeCategory === 'Services' ? `/services/${getSlug(item)}` :
+                            activeCategory === 'Industries' ? `/industries/${getSlug(item)}` :
+                            activeCategory === 'Research & Innovation' ? `/research/${getSlug(item)}` :
+                            activeCategory === 'Alliances' ? `/alliances/${getSlug(item)}` :
+                            '#'
+                          }
+                          onClick={onClose}
+                          className="flex items-center gap-2.5 py-2 text-[14px] font-body text-[#0E0A42]/85 hover:text-[#0070AD] transition-colors font-medium hover:translate-x-1 duration-200 group/item"
+                        >
+                          {LogoComponent && (
+                            <span className="w-5 h-5 flex items-center justify-center shrink-0 transition-transform duration-200 group-hover/item:scale-115">
+                              <LogoComponent className="w-4 h-4" />
+                            </span>
+                          )}
+                          <span>{item}</span>
+                        </Link>
+                      </li>
+                    );
+                  })}
                 </ul>
               ))}
             </motion.div>

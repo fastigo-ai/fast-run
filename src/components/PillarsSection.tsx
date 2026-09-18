@@ -244,16 +244,6 @@ export const PillarsSection = () => {
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="mb-10 sm:mb-14 text-center max-w-3xl mx-auto"
         >
-          <div className="inline-flex items-center justify-center flex-wrap gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/20 text-xs font-semibold text-white mb-4 shadow-[0_2px_16px_rgba(0,0,0,0.3)] backdrop-blur-md max-w-full text-center">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-sky-400" />
-            </span>
-            <span className="text-white">Fastigo Core Architectural Model</span>
-            <span className="text-white font-light">|</span>
-            <span className="text-[10px] font-mono font-medium text-white tracking-wider">AI MATRIX</span>
-          </div>
-
           <h2 className="text-2xl sm:text-4xl md:text-5xl font-display font-extrabold tracking-tight leading-[1.15] text-white mb-4 drop-shadow-sm">
             Where Innovation Meets Artificial Intelligence
           </h2>

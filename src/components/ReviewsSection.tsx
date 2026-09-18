@@ -183,11 +183,6 @@ const ReviewsSection = () => {
       <div className="container mx-auto px-4 max-w-[1240px] mb-10 sm:mb-14 relative z-20">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 sm:gap-8">
           <div>
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50/80 border border-blue-100 text-[#0070AD] text-xs font-semibold uppercase tracking-wider mb-3 sm:mb-4 shadow-sm">
-              <ShieldCheck className="w-3.5 h-3.5 text-[#0070AD]" />
-              Proven Enterprise Impact
-            </div>
-
             <h2 className="text-2xl sm:text-4xl md:text-[46px] font-display font-bold text-[#0E0A42] leading-[1.15] tracking-tight">
               <span>Engineering Trust</span><br />
               <span>Through Results</span>

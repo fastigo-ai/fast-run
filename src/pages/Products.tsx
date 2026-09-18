@@ -41,9 +41,6 @@ const Products = () => {
           
           {/* Hero Section */}
           <div className="container mx-auto px-4 max-w-[1200px] text-center mb-20 lg:mb-32">
-            <span className="mb-4 inline-block font-display text-xs sm:text-sm font-semibold tracking-widest text-[#0070AD] uppercase bg-blue-50/80 px-3.5 py-1.5 rounded-full border border-blue-100">
-              Fastigo Solutions
-            </span>
             <div className="mb-6 font-display text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight flex flex-col items-center px-4">
               <SplitText text="Enterprise-grade" className="text-[#0070ad]" />
               <SplitText text="products & infrastructure" className="text-transparent bg-clip-text bg-gradient-to-r from-[#0070AD] via-[#0084C7] to-[#00A3E0]" />
@@ -85,9 +82,6 @@ const Products = () => {
                     transition={{ duration: 0.7, delay: 0.2 }}
                     className="px-2 sm:px-0"
                   >
-                    <span className="inline-block px-3.5 py-1.5 rounded-full bg-blue-50 text-[#0070AD] border border-blue-100 text-xs font-semibold tracking-wider uppercase mb-4 lg:mb-6">
-                      {product.subtitle}
-                    </span>
                     <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-semibold text-[#0E0A42] leading-tight mb-4 lg:mb-6 tracking-tight">
                       {product.title}
                     </h2>

@@ -266,11 +266,6 @@ const Services: React.FC = () => {
 
         {/* Directory Header */}
         <div className="text-center max-w-3xl mx-auto mb-20">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-sky-200 bg-sky-50 text-[#0070AD] text-xs font-bold uppercase tracking-wider mb-6 shadow-xs">
-            <Sparkles className="w-3.5 h-3.5 text-[#0070AD]" />
-            <span>Enterprise Services Directory</span>
-          </div>
-
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold text-[#0E0A42] mb-6 leading-tight">
             Specialized Engineering for the{' '}
             <span className="animate-text-shimmer-light bg-clip-text text-transparent bg-gradient-to-r from-[#0070AD] via-[#00A3E0] to-[#0070AD] font-extrabold">

@@ -244,15 +244,6 @@ const Blog: React.FC = () => {
               transition={{ duration: 0.7 }}
               className="text-center max-w-3xl mx-auto"
             >
-              {/* Eyebrow Badge */}
-              <motion.div
-                whileHover={{ scale: 1.03 }}
-                className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-sky-200 bg-sky-50/90 text-[#0070AD] text-xs font-bold tracking-wider uppercase mb-5 backdrop-blur-md shadow-sm"
-              >
-                <Brain className="w-3.5 h-3.5 text-[#0070AD]" />
-                <span>FASTIGO PUBLICATIONS &amp; RESEARCH</span>
-              </motion.div>
-              
               {/* Main Heading */}
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-display font-extrabold text-[#0E0A42] mb-5 tracking-tight leading-[1.12]">
                 Insights &amp; Innovations
@@ -514,9 +505,6 @@ const Blog: React.FC = () => {
                 <div className="absolute bottom-0 left-0 w-64 h-64 bg-sky-200/30 rounded-full blur-3xl pointer-events-none" />
 
                 <div className="relative z-10">
-                  <span className="inline-block px-3.5 py-1 rounded-full bg-sky-100/80 border border-sky-200 text-[#0070AD] text-xs font-bold uppercase tracking-wider mb-4">
-                    Fastigo Advisory &amp; Solutions
-                  </span>
                   <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-extrabold text-[#0E0A42] mb-4 tracking-tight">
                     Ready to Transform Your Enterprise with AI?
                   </h2>

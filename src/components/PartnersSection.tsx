@@ -94,14 +94,6 @@ const PartnersSection = () => {
           
           {/* Left Column: Heading, Subtitle & Ecosystem Badge */}
           <div className="lg:col-span-5 max-w-lg mx-auto lg:mx-0 text-center lg:text-left">
-            {/* Eyebrow Pill */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#EEECFC] mb-5 sm:mb-6 shadow-2xs">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#4F46E5]" />
-              <span className="font-mono text-xs font-bold tracking-widest text-[#4F46E5] uppercase">
-                OUR ECOSYSTEM
-              </span>
-            </div>
-
             {/* Main Heading */}
             <h2 className="font-display text-4xl sm:text-5xl lg:text-[54px] font-extrabold text-[#0E0A42] tracking-tight leading-[1.08] mb-5 sm:mb-6">
               Partners in{" "}

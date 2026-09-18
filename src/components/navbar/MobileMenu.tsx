@@ -21,6 +21,7 @@ import {
   LucideIcon,
 } from 'lucide-react';
 import { getSlug } from '@/data/services';
+import { allianceLogosMap } from '@/components/icons/AllianceLogos';
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -96,7 +97,7 @@ const mobileNavData: NavSection[] = [
         path: '/alliances',
         icon: Handshake,
         basePath: '/alliances',
-        items: ['Microsoft', 'AWS', 'Google Cloud', 'SAP', 'Salesforce'],
+        items: ['Microsoft', 'Salesforce', 'AWS', 'OpenAI', 'Anthropic', 'ElevenLabs'],
       },
     ],
   },
@@ -381,17 +382,23 @@ const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
                                           className="px-3 pb-2.5 pt-1 border-t border-slate-100 bg-slate-50/60"
                                         >
                                           <div className="grid grid-cols-1 gap-1">
-                                            {subcat.items.map((item) => (
-                                              <Link
-                                                key={item}
-                                                to={`${subcat.basePath}/${getSlug(item)}`}
-                                                onClick={handleLinkClick}
-                                                className="py-1.5 px-2 text-xs font-medium text-slate-600 hover:text-[#0070AD] hover:bg-blue-50/50 rounded-lg transition-colors flex items-center justify-between group"
-                                              >
-                                                <span>{item}</span>
-                                                <ArrowRight className="w-3 h-3 text-slate-300 group-hover:text-[#0070AD] group-hover:translate-x-0.5 transition-transform" />
-                                              </Link>
-                                            ))}
+                                            {subcat.items.map((item) => {
+                                              const LogoComponent = subcat.title === 'Alliances' ? allianceLogosMap[item] : null;
+                                              return (
+                                                <Link
+                                                  key={item}
+                                                  to={`${subcat.basePath}/${getSlug(item)}`}
+                                                  onClick={handleLinkClick}
+                                                  className="py-1.5 px-2 text-xs font-medium text-slate-600 hover:text-[#0070AD] hover:bg-blue-50/50 rounded-lg transition-colors flex items-center justify-between group"
+                                                >
+                                                  <div className="flex items-center gap-2">
+                                                    {LogoComponent && <LogoComponent className="w-3.5 h-3.5 shrink-0" />}
+                                                    <span>{item}</span>
+                                                  </div>
+                                                  <ArrowRight className="w-3 h-3 text-slate-300 group-hover:text-[#0070AD] group-hover:translate-x-0.5 transition-transform" />
+                                                </Link>
+                                              );
+                                            })}
                                             <Link
                                               to={subcat.path}
                                               onClick={handleLinkClick}
