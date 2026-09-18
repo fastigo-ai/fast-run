@@ -1,14 +1,10 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
 
 interface PartnerItem {
   name: string;
   subtitle: string;
-  website: string;
   iconBg: string;
-  arrowBg: string;
-  arrowColor: string;
   icon: React.ReactNode;
   positionClass: string;
   floatDuration: number;
@@ -18,65 +14,55 @@ interface PartnerItem {
 const partnersData: PartnerItem[] = [
   {
     name: "Anthropic",
-    subtitle: "Safer, more helpful AI systems.",
-    website: "https://www.anthropic.com",
-    iconBg: "bg-[#FAEDE5]",
-    arrowBg: "bg-[#FAEDE5]",
-    arrowColor: "text-[#CC785C]",
+    subtitle: "Safer, more helpful AI systems & Claude.",
+    iconBg: "bg-white border border-stone-200/90 shadow-xs",
     positionClass: "lg:top-0 lg:left-2",
     floatDuration: 4.2,
     floatDelay: 0,
     icon: (
       <svg
-        className="w-7 h-7 sm:w-8 sm:h-8 text-[#CC785C]"
+        className="w-7 h-7 sm:w-8 sm:h-8 text-[#191919]"
         viewBox="0 0 24 24"
         fill="currentColor"
-        aria-hidden="true"
+        aria-label="Anthropic"
       >
-        <path d="M17.3041 3.541h-3.6718l6.696 16.918H24Zm-10.6082 0L0 20.459h3.7442l1.3693-3.5527h7.0052l1.3693 3.5528h3.7442L10.5363 3.5409Zm-.3712 10.2232 2.2914-5.9456 2.2914 5.9456Z" />
+        <path d="M13.992 3.5h3.044l6.964 17h-3.082l-1.574-3.908H12.65L11.077 20.5H8L13.992 3.5zm3.929 10.743L16.48 9.873l-1.442 4.37h2.883zM0 20.5l5.992-17h3.045L3.045 20.5H0z" />
       </svg>
     ),
   },
   {
-    name: "ChatGPT",
-    subtitle: "More intelligent conversations.",
-    website: "https://chatgpt.com",
-    iconBg: "bg-[#10A37F]",
-    arrowBg: "bg-[#E6F8F3]",
-    arrowColor: "text-[#10A37F]",
+    name: "OpenAI",
+    subtitle: "Frontier AI research & intelligent models.",
+    iconBg: "bg-white border border-slate-200/90 shadow-xs",
     positionClass: "lg:top-[152px] lg:left-8",
     floatDuration: 4.8,
     floatDelay: 0.6,
     icon: (
       <svg
-        className="w-7 h-7 sm:w-8 sm:h-8 text-white"
+        className="w-7 h-7 sm:w-8 sm:h-8 text-[#000000]"
         viewBox="0 0 24 24"
         fill="currentColor"
-        aria-hidden="true"
+        aria-label="OpenAI"
       >
-        <path d="M9.205 8.658v-2.26c0-.19.072-.333.238-.428l4.543-2.616c.619-.357 1.356-.523 2.117-.523 2.854 0 4.662 2.212 4.662 4.566 0 .167 0 .357-.024.547l-4.71-2.759a.797.797 0 00-.856 0l-5.97 3.473zm10.609 8.8V12.06c0-.333-.143-.57-.429-.737l-5.97-3.473 1.95-1.118a.433.433 0 01.476 0l4.543 2.617c1.309.76 2.189 2.378 2.189 3.948 0 1.808-1.07 3.473-2.76 4.163zM7.802 12.703l-1.95-1.142c-.167-.095-.239-.238-.239-.428V5.899c0-2.545 1.95-4.472 4.591-4.472 1 0 1.927.333 2.712.928L8.23 5.067c-.285.166-.428.404-.428.737v6.898zM12 15.128l-2.795-1.57v-3.33L12 8.658l2.795 1.57v3.33L12 15.128zm1.796 7.23c-1 0-1.927-.332-2.712-.927l4.686-2.712c.285-.166.428-.404.428-.737v-6.898l1.974 1.142c.167.095.238.238.238.428v5.233c0 2.545-1.974 4.472-4.614 4.472zm-5.637-5.303l-4.544-2.617c-1.308-.761-2.188-2.378-2.188-3.948A4.482 4.482 0 014.21 6.327v5.423c0 .333.143.571.428.738l5.947 3.449-1.95 1.118a.432.432 0 01-.476 0zm-.262 3.9c-2.688 0-4.662-2.021-4.662-4.519 0-.19.024-.38.047-.57l4.686 2.71c.286.167.571.167.856 0l5.97-3.448v2.26c0 .19-.07.333-.237.428l-4.543 2.616c-.619.357-1.356.523-2.117.523zm5.899 2.83a5.947 5.947 0 005.827-4.756C22.287 18.339 24 15.84 24 13.296c0-1.665-.713-3.282-1.998-4.448.119-.5.19-.999.19-1.498 0-3.401-2.759-5.947-5.946-5.947-.642 0-1.26.095-1.88.31A5.962 5.962 0 0010.205 0a5.947 5.947 0 00-5.827 4.757C1.713 5.447 0 7.945 0 10.49c0 1.666.713 3.283 1.998 4.448-.119.5-.19 1-.19 1.499 0 3.401 2.759 5.946 5.946 5.946.642 0 1.26-.095 1.88-.309a5.96 5.96 0 004.162 1.713z" />
+        <path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1683a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4947zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1683a.0757.0757 0 0 1-.071 0l-4.8303-2.7866A4.504 4.504 0 0 1 2.3408 7.8956zm16.0993 3.8558L12.6073 8.3829l2.02-1.1683a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.6815zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L8.907 9.2297V6.8974a.0662.0662 0 0 1 .0331-.0615L13.92 3.9678a4.4992 4.4992 0 0 1 6.5308 4.7597zM9.6075 12.8718L6.8633 11.288l2.7442-1.5838 2.7441 1.5838-2.7441 1.5838zm1.4428-2.6171l2.7441-1.5838 2.7442 1.5838-2.7442 1.5838-2.7441-1.5838zm-1.4428 5.0345l-2.7442-1.5838v-3.1676l2.7442 1.5838v3.1676zm5.4883 0l-2.7442-1.5838v-3.1676l2.7442 1.5838v3.1676z" />
       </svg>
     ),
   },
   {
     name: "ElevenLabs",
-    subtitle: "Realistic voice. Infinite possibilities.",
-    website: "https://elevenlabs.io",
-    iconBg: "bg-[#EBF3FE]",
-    arrowBg: "bg-[#EBF3FE]",
-    arrowColor: "text-[#1D68EE]",
+    subtitle: "Realistic voice AI & speech synthesis.",
+    iconBg: "bg-white border border-slate-200/90 shadow-xs",
     positionClass: "lg:top-[74px] lg:right-0",
     floatDuration: 4.5,
     floatDelay: 1.1,
     icon: (
       <svg
-        className="w-6 h-6 text-[#1D68EE]"
+        className="w-7 h-7 sm:w-8 sm:h-8 text-[#000000]"
         viewBox="0 0 24 24"
         fill="currentColor"
-        aria-hidden="true"
+        aria-label="ElevenLabs"
       >
-        <rect x="5" y="3" width="4.8" height="18" rx="2.4" />
-        <rect x="14.2" y="3" width="4.8" height="18" rx="2.4" />
+        <path d="M4.5 2a2.5 2.5 0 0 0-2.5 2.5v15A2.5 2.5 0 0 0 4.5 22h1A2.5 2.5 0 0 0 8 19.5v-15A2.5 2.5 0 0 0 5.5 2h-1zm14 0a2.5 2.5 0 0 0-2.5 2.5v15a2.5 2.5 0 0 0 2.5 2.5h1a2.5 2.5 0 0 0 2.5-2.5v-15A2.5 2.5 0 0 0 19.5 2h-1z" />
       </svg>
     ),
   },
@@ -163,11 +149,8 @@ const PartnersSection = () => {
             {/* Floating Cards Stage */}
             <div className="relative w-full flex flex-col gap-4 lg:block lg:h-[330px]">
               {partnersData.map((partner) => (
-                <motion.a
+                <motion.div
                   key={partner.name}
-                  href={partner.website}
-                  target="_blank"
-                  rel="noopener noreferrer"
                   animate={{
                     y: [0, -8, 0],
                   }}
@@ -178,34 +161,26 @@ const PartnersSection = () => {
                     ease: "easeInOut",
                     delay: partner.floatDelay,
                   }}
-                  whileHover={{ y: -12, scale: 1.03 }}
-                  whileTap={{ scale: 0.98 }}
-                  className={`relative lg:absolute ${partner.positionClass} z-20 w-full sm:w-[320px] lg:w-[320px] mx-auto lg:mx-0 p-3.5 sm:p-4 rounded-[24px] bg-white/95 backdrop-blur-xl border border-white/90 shadow-[0_12px_36px_rgba(15,23,42,0.07)] hover:shadow-[0_20px_45px_rgba(0,112,173,0.14)] hover:border-slate-200 transition-all duration-300 flex items-center justify-between gap-3.5 group cursor-pointer`}
+                  whileHover={{ y: -10, scale: 1.02 }}
+                  className={`relative lg:absolute ${partner.positionClass} z-20 w-full sm:w-[320px] lg:w-[320px] mx-auto lg:mx-0 p-3.5 sm:p-4 rounded-[24px] bg-white/95 backdrop-blur-xl border border-white/90 shadow-[0_12px_36px_rgba(15,23,42,0.07)] hover:shadow-[0_20px_45px_rgba(0,112,173,0.12)] hover:border-slate-200 transition-all duration-300 flex items-center gap-3.5 select-none`}
                 >
-                  {/* Left: Icon Rounded Box */}
+                  {/* Left: Icon Rounded Box with original logo */}
                   <div
-                    className={`w-14 h-14 sm:w-16 sm:h-16 rounded-[18px] ${partner.iconBg} flex items-center justify-center p-2.5 shrink-0 shadow-2xs group-hover:scale-105 transition-transform duration-300`}
+                    className={`w-14 h-14 sm:w-16 sm:h-16 rounded-[18px] ${partner.iconBg} flex items-center justify-center p-2.5 shrink-0 shadow-2xs`}
                   >
                     {partner.icon}
                   </div>
 
                   {/* Middle: Brand Name & Subtitle */}
-                  <div className="flex-1 min-w-0 pr-2">
-                    <h3 className="font-display font-bold text-lg sm:text-[19px] text-[#0E0A42] leading-tight mb-1 group-hover:text-[#0070AD] transition-colors">
+                  <div className="flex-1 min-w-0 pr-1">
+                    <h3 className="font-display font-bold text-lg sm:text-[19px] text-[#0E0A42] leading-tight mb-1">
                       {partner.name}
                     </h3>
                     <p className="text-xs sm:text-[13px] text-slate-500 font-medium leading-snug truncate">
                       {partner.subtitle}
                     </p>
                   </div>
-
-                  {/* Right: Circular Arrow Action Button */}
-                  <div
-                    className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full ${partner.arrowBg} ${partner.arrowColor} flex items-center justify-center shrink-0 shadow-2xs group-hover:scale-110 transition-all duration-300`}
-                  >
-                    <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5" />
-                  </div>
-                </motion.a>
+                </motion.div>
               ))}
             </div>
 
