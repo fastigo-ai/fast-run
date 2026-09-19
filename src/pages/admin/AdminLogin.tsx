@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Lock, Mail, Eye, EyeOff, ShieldCheck, ArrowRight, AlertCircle, Sparkles, PlayCircle } from 'lucide-react';
+import { Lock, Mail, Eye, EyeOff, ShieldCheck, ArrowRight, AlertCircle } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import fastigoLogo from '@/assets/fastigo-logo.webp';
 
 export const AdminLogin: React.FC = () => {
-  const [email, setEmail] = useState('admin@fastigo.co');
-  const [password, setPassword] = useState('Fastigo@2026!');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -46,29 +46,10 @@ export const AdminLogin: React.FC = () => {
     } catch (err: any) {
       const msg = err?.message || '';
       if (msg.includes('Failed to fetch') || msg.includes('NetworkError') || msg.includes('connection refused')) {
-        setError('Cannot reach backend server. You can start it via "npm run backend" or click below to enter Demo Mode.');
+        setError('Cannot reach backend server. Please verify the backend service is running.');
       } else {
         setError(msg || 'Invalid email or password. Please try again.');
       }
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const handleQuickFill = () => {
-    setEmail('admin@fastigo.co');
-    setPassword('Fastigo@2026!');
-    setError(null);
-  };
-
-  const handleDemoSignIn = async () => {
-    setError(null);
-    setIsSubmitting(true);
-    try {
-      await login('admin@fastigo.co', 'Fastigo@2026!');
-      navigate(from, { replace: true });
-    } catch (err: any) {
-      setError(err?.message || 'Login failed. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -122,15 +103,6 @@ export const AdminLogin: React.FC = () => {
                 <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
                 <span>{error}</span>
               </div>
-              {error.includes('backend') && (
-                <button
-                  type="button"
-                  onClick={handleDemoSignIn}
-                  className="self-start mt-1 px-3 py-1 bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 font-medium rounded-lg text-xs transition-colors cursor-pointer border border-amber-500/30"
-                >
-                  Enter in Offline Demo Mode →
-                </button>
-              )}
             </motion.div>
           )}
 
@@ -197,33 +169,6 @@ export const AdminLogin: React.FC = () => {
             </button>
           </form>
 
-          {/* Quick Demo Credentials Info */}
-          <div className="mt-6 pt-5 border-t border-slate-800/80 text-center">
-            <div className="inline-flex items-center gap-1 text-[11px] text-slate-400 mb-2">
-              <Sparkles className="w-3 h-3 text-[#38bdf8]" />
-              <span>Default Credentials:</span>
-            </div>
-            <div className="bg-[#080f1e]/80 border border-slate-800 rounded-lg p-2.5 text-xs text-slate-300 font-mono flex items-center justify-between">
-              <span>admin@fastigo.co / Fastigo@2026!</span>
-              <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={handleQuickFill}
-                  className="text-[11px] text-[#38bdf8] hover:underline font-sans font-semibold cursor-pointer"
-                >
-                  Auto-Fill
-                </button>
-                <span className="text-slate-600">|</span>
-                <button
-                  type="button"
-                  onClick={handleDemoSignIn}
-                  className="text-[11px] text-emerald-400 hover:underline font-sans font-semibold cursor-pointer flex items-center gap-1"
-                >
-                  <PlayCircle className="w-3 h-3" /> Quick Enter
-                </button>
-              </div>
-            </div>
-          </div>
 
           <div className="mt-4 text-center">
             <Link
