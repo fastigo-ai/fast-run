@@ -3,7 +3,14 @@
  * Includes automatic fallback to Local / Demo Mode when backend is offline
  */
 
-export const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
+const getApiBaseUrl = (): string => {
+  const envUrl = (import.meta.env.VITE_API_URL || '').trim();
+  if (!envUrl) return '/api';
+  const cleanUrl = envUrl.replace(/\/+$/, '');
+  return cleanUrl.endsWith('/api') ? cleanUrl : `${cleanUrl}/api`;
+};
+
+export const API_BASE_URL = getApiBaseUrl();
 
 export type JobStatus = 'published' | 'draft' | 'closed';
 export type ApplicationStatus = 'pending' | 'reviewed' | 'shortlisted' | 'rejected' | 'hired';
