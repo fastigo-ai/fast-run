@@ -27,6 +27,7 @@ const Products = lazy(() => import("./pages/Products"));
 const ProductSubscription = lazy(() => import("./pages/ProductSubscription"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const Leadership = lazy(() => import("./pages/Leadership"));
+const AkhilProfilePage = lazy(() => import("./pages/AkhilProfilePage"));
 const Careers = lazy(() => import("./pages/Careers"));
 const IndustriesSection = lazy(() => import("./components/IndustriesSection"));
 const ResearchSection = lazy(() => import("./components/ResearchSection"));
@@ -77,6 +78,8 @@ const AnimatedRoutes = memo(() => {
           <Route path="/research" element={<PageWrapper><ResearchSection /></PageWrapper>} />
           <Route path="/alliances" element={<PageWrapper><AllianceSection /></PageWrapper>} />
           <Route path="/leadership" element={<PageWrapper><Leadership /></PageWrapper>} />
+          <Route path="/leadership/akhil-singh" element={<PageWrapper><AkhilProfilePage /></PageWrapper>} />
+          <Route path="/profile/akhil-singh" element={<PageWrapper><AkhilProfilePage /></PageWrapper>} />
           <Route path="/investors" element={<PageWrapper><Leadership /></PageWrapper>} />
           <Route path="/careers" element={<PageWrapper><Careers /></PageWrapper>} />
 

@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { SEOHead } from "@/components/SEOHead";
+import AkhilProfileModal from "@/components/AkhilProfileModal";
 import Lalit from "@/assets/lalit4.webp";
 
 interface Leader {
@@ -61,6 +62,7 @@ const boardOfDirectors: Leader[] = [
 
 const LeaderCard = ({ leader, index }: { leader: Leader; index: number }) => {
   const [expanded, setExpanded] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
 
   return (
     <motion.div
@@ -133,25 +135,40 @@ const LeaderCard = ({ leader, index }: { leader: Leader; index: number }) => {
             </button>
           </div>
 
-          {/* Verified Credential & LinkedIn Action */}
+          {/* Verified Credential & Action Buttons */}
           <div className="mt-7 pt-5 border-t border-slate-200/80 flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center gap-2 text-xs text-slate-500 font-medium">
               <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
               <span>{leader.governanceRole}</span>
             </div>
 
-            <motion.a
-              whileHover={{ scale: 1.04 }}
-              whileTap={{ scale: 0.97 }}
-              href={leader.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#0070AD] hover:bg-[#005a8c] text-white border border-[#0070AD] transition-all duration-300 text-xs font-semibold shadow-sm hover:shadow-md group/btn cursor-pointer"
-            >
-              <Linkedin className="h-4 w-4 transition-colors" />
-              <span>Connect on LinkedIn</span>
-              <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
-            </motion.a>
+            <div className="flex flex-wrap items-center gap-3">
+              {leader.name === "Akhil Singh" && (
+                <motion.button
+                  whileHover={{ scale: 1.04 }}
+                  whileTap={{ scale: 0.97 }}
+                  onClick={() => setIsProfileOpen(true)}
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#0070AD] via-[#008fcf] to-[#00A3E0] hover:from-[#005a8c] hover:to-[#0070AD] text-white font-semibold text-xs shadow-md hover:shadow-lg hover:shadow-sky-500/25 transition-all duration-300 group/profilebtn cursor-pointer"
+                >
+                  <Sparkles className="h-4 w-4 text-cyan-200 animate-pulse" />
+                  <span>View Executive Profile</span>
+                  <ChevronRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover/profilebtn:translate-x-0.5" />
+                </motion.button>
+              )}
+
+              <motion.a
+                whileHover={{ scale: 1.04 }}
+                whileTap={{ scale: 0.97 }}
+                href={leader.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#0070AD] hover:bg-[#005a8c] text-white border border-[#0070AD] transition-all duration-300 text-xs font-semibold shadow-sm hover:shadow-md group/btn cursor-pointer"
+              >
+                <Linkedin className="h-4 w-4 transition-colors" />
+                <span>Connect on LinkedIn</span>
+                <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
+              </motion.a>
+            </div>
           </div>
         </div>
 
@@ -179,7 +196,12 @@ const LeaderCard = ({ leader, index }: { leader: Leader; index: number }) => {
             </div>
           ) : (
             /* Empty Image Column as Requested: Elegant Minimalist Executive Frame */
-            <div className="relative z-10 w-full h-full flex flex-col items-center justify-center text-center p-6 sm:p-8">
+            <div
+              onClick={leader.name === "Akhil Singh" ? () => setIsProfileOpen(true) : undefined}
+              className={`relative z-10 w-full h-full flex flex-col items-center justify-center text-center p-6 sm:p-8 ${
+                leader.name === "Akhil Singh" ? "cursor-pointer group/frame" : ""
+              }`}
+            >
               <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-3xl bg-white/90 backdrop-blur-xl border border-sky-200/90 shadow-[0_16px_36px_rgba(0,112,173,0.12)] flex items-center justify-center group-hover:scale-105 group-hover:border-[#0070AD]/50 transition-all duration-500">
                 <span className="font-display text-3xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-tr from-[#0E0A42] via-[#0070AD] to-[#00A3E0] tracking-wider">
                   {leader.name
@@ -188,9 +210,12 @@ const LeaderCard = ({ leader, index }: { leader: Leader; index: number }) => {
                     .join("")}
                 </span>
               </div>
-              <div className="mt-5 flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/80 border border-sky-200/80 text-[11px] font-bold text-[#0070AD] uppercase tracking-wider shadow-2xs">
+              <div className="mt-5 flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/80 border border-sky-200/80 text-[11px] font-bold text-[#0070AD] uppercase tracking-wider shadow-2xs group-hover/frame:bg-sky-50 group-hover/frame:border-[#0070AD]/50 transition-all">
                 <ShieldCheck className="w-3.5 h-3.5 text-[#0070AD]" />
                 <span>Executive Profile</span>
+                {leader.name === "Akhil Singh" && (
+                  <span className="text-[10px] text-sky-600 font-normal ml-0.5">(Click to view)</span>
+                )}
               </div>
               <p className="mt-2 text-xs text-slate-400 font-medium">
                 Fastigo Technology Pvt. Ltd.
@@ -202,6 +227,14 @@ const LeaderCard = ({ leader, index }: { leader: Leader; index: number }) => {
           <div className="absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-white/30 to-transparent pointer-events-none" />
         </div>
       </div>
+
+      {/* Akhil Singh Profile Modal */}
+      {leader.name === "Akhil Singh" && (
+        <AkhilProfileModal
+          isOpen={isProfileOpen}
+          onClose={() => setIsProfileOpen(false)}
+        />
+      )}
     </motion.div>
   );
 };
