@@ -1,3 +1,4 @@
+import os
 import sys
 from pathlib import Path
 from contextlib import asynccontextmanager
@@ -47,10 +48,18 @@ allowed_origins = [
     "http://127.0.0.1:3000",
 ]
 
+# Support custom frontend origins via ALLOWED_ORIGINS env var (comma-separated)
+custom_origins = os.getenv("ALLOWED_ORIGINS", "")
+if custom_origins:
+    for o in custom_origins.split(","):
+        cleaned = o.strip()
+        if cleaned and cleaned not in allowed_origins:
+            allowed_origins.append(cleaned)
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=allowed_origins,
-    allow_origin_regex=r"^https?://(localhost|127\.0\.0\.1)(:\d+)?$",
+    allow_origin_regex=r"^https?://(localhost|127\.0\.0\.1|.*\.vercel\.app|.*\.onrender\.com)(:\d+)?$",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
