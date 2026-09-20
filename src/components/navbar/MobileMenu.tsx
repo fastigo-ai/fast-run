@@ -149,7 +149,7 @@ const mobileNavData: NavSection[] = [
     icon: BookOpen,
   },
   {
-    name: 'Leadership & Investors',
+    name: 'Leadership',
     path: '/leadership',
     icon: CheckCircle2,
   },

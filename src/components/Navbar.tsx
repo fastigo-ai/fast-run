@@ -22,8 +22,6 @@ const mainNavItems: MainNavItem[] = [
   { name: "Who we are", path: "/about" },
   { name: "Portfolio", path: "/portfolio" },
   { name: "Blog", path: "/blog" },
-  { name: "Investors", path: "/leadership" },
-  
 ];
 
 const Navbar = () => {
