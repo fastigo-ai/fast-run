@@ -88,7 +88,7 @@ export const aboutContent = {
   ],
   team: {
     title: "Our Team",
-    description: "A team of 51 to 200 passionate technologists, AI specialists, and business consultants united by a belief in transformative technology.",
+    description: "A team of 200+ passionate technologists, AI specialists, and business consultants united by a belief in transformative technology.",
     founders: [
       {
         name: "Akhil Singh",
@@ -100,7 +100,7 @@ export const aboutContent = {
         role: "CMO",
         bio: "Lalit Kumar Sirsu is a dynamic leader serving as Chief Marketing Officer (CMO), spearheading strategic growth initiatives across the Government PSU sector."
       },
-       {
+      {
         name: "Vinod Pal",
         role: "CMO",
         bio: "Vinod Pal is a dynamic leader serving as Chief Marketing Officer (CMO), spearheading strategic growth initiatives across the Government PSU sector."
@@ -110,8 +110,8 @@ export const aboutContent = {
         role: "CO-founder",
         bio: "Manish, Promoter leading strategic growth, investments, partnerships, and long-term business expansion."
       },
-      
-     
+
+
     ],
     culture: "Our team brings together deep expertise across AI, cloud, and cybersecurity with a culture that values curiosity, collaboration, and continuous learning."
   },

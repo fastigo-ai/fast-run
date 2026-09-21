@@ -11,7 +11,6 @@ import {
   Lightbulb,
   Heart,
   Shield,
-  Users,
   MessageSquare,
   ArrowRight,
   CheckCircle2,
@@ -419,7 +418,7 @@ const About = () => {
       <section className="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-[#F8FAFD] via-white to-[#F8FAFD] border-b border-slate-200/80">
         <div className="container mx-auto max-w-[1240px]">
           
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 mb-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
             {/* Left Description Column */}
             <div className="lg:col-span-6">
               <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#0E0A42] tracking-tight mb-5">
@@ -452,51 +451,6 @@ const About = () => {
                 </div>
               </div>
             </div>
-          </div>
-
-          {/* 4 Executive Leadership Bio Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
-            {aboutContent.team.founders.map((founder, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 25 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.45, delay: idx * 0.1 }}
-                className="bg-white rounded-2xl p-7 sm:p-9 border border-slate-200/90 shadow-[0_4px_24px_rgba(0,112,173,0.05)] hover:shadow-[0_16px_36px_rgba(0,112,173,0.12)] hover:border-[#0070AD]/40 transition-all duration-300 flex flex-col justify-between"
-              >
-                <div>
-                  <div className="flex items-center justify-between gap-4 mb-4">
-                    <div className="flex items-center gap-3.5">
-                      <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-[#0070AD] to-[#00A3E0] text-white font-display font-extrabold text-lg flex items-center justify-center shadow-sm">
-                        {founder.name.charAt(0)}
-                      </div>
-                      <div>
-                        <h3 className="font-display text-xl font-bold text-[#0E0A42]">
-                          {founder.name}
-                        </h3>
-                        <div className="text-[#0070AD] font-semibold text-xs uppercase tracking-wide">
-                          {founder.role}
-                        </div>
-                      </div>
-                    </div>
-                    <Users className="w-5 h-5 text-slate-300" />
-                  </div>
-
-                  <p className="text-slate-600 text-sm leading-relaxed italic border-l-2 border-[#0070AD]/40 pl-4 py-1 mt-4">
-                    "{founder.bio}"
-                  </p>
-                </div>
-
-                <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-                  <span className="flex items-center gap-1.5 text-emerald-600 font-medium">
-                    <CheckCircle2 className="w-3.5 h-3.5" />
-                    Verified Leadership
-                  </span>
-                  <span className="font-mono text-[11px]">FASTIGO CORE</span>
-                </div>
-              </motion.div>
-            ))}
           </div>
 
         </div>
