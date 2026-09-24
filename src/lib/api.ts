@@ -626,8 +626,8 @@ let refreshPromise: Promise<{ access_token: string; token_type: string; refresh_
 async function apiRequest<T>(endpoint: string, options: RequestInit & { _isRetry?: boolean } = {}): Promise<T> {
   const token = getAuthToken();
 
-  // If already in offline demo session, route directly to mock handler
-  if (token && token.startsWith('demo_')) {
+  // If already in offline demo session, route directly to mock handler (except for login attempts)
+  if (token && token.startsWith('demo_') && !endpoint.includes('/auth/login')) {
     return handleMockRequest<T>(endpoint, options);
   }
 
@@ -637,7 +637,7 @@ async function apiRequest<T>(endpoint: string, options: RequestInit & { _isRetry
     headers.set('Content-Type', 'application/json');
   }
   
-  if (token) {
+  if (token && !endpoint.includes('/auth/login')) {
     headers.set('Authorization', `Bearer ${token}`);
   }
 

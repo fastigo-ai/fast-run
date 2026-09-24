@@ -3,6 +3,7 @@ import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Lock, Mail, Eye, EyeOff, ShieldCheck, ArrowRight, AlertCircle } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
+import { clearAuthToken } from '@/lib/api';
 import fastigoLogo from '@/assets/fastigo-logo.webp';
 
 export const AdminLogin: React.FC = () => {
@@ -45,9 +46,11 @@ export const AdminLogin: React.FC = () => {
     const cleanPassword = password.trim();
 
     try {
+      clearAuthToken();
       await login(cleanEmail, cleanPassword);
       navigate(from, { replace: true });
     } catch (err: any) {
+      console.error('Sign-in attempt failed:', err);
       const msg = err?.message || '';
       if (
         msg.includes('Failed to fetch') ||
