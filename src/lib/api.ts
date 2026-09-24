@@ -197,26 +197,57 @@ async function apiRequest<T>(endpoint: string, options: RequestInit & { _isRetry
     headers.set('Authorization', `Bearer ${token}`);
   }
 
-  let response: Response;
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => {
-    controller.abort();
-  }, 15000);
+  // Primary URL candidate, with automatic fallback support in development
+  const primaryUrl = `${API_BASE_URL}${endpoint}`;
+  const candidateUrls: string[] = [primaryUrl];
 
-  try {
-    response = await fetch(`${API_BASE_URL}${endpoint}`, {
-      ...options,
-      signal: options.signal || controller.signal,
-      credentials: 'include',
-      headers,
-    });
-  } catch (networkError: any) {
-    if (networkError.name === 'AbortError') {
-      throw new Error('Server request timed out. Please check your network or try again.');
+  // In development, if primary target is Render, automatically fallback to local backend on 8000 or relative /api
+  if (import.meta.env.DEV) {
+    if (primaryUrl.includes('onrender.com')) {
+      candidateUrls.push(`http://127.0.0.1:8000/api${endpoint}`);
+      candidateUrls.push(`/api${endpoint}`);
+    } else {
+      candidateUrls.push(`https://fast-run.onrender.com/api${endpoint}`);
     }
-    throw new Error(`Unable to reach Fastigo server at ${API_BASE_URL}${endpoint}. Please check backend service status.`);
-  } finally {
-    clearTimeout(timeoutId);
+  }
+
+  let response: Response | null = null;
+  let usedUrl = primaryUrl;
+
+  for (let i = 0; i < candidateUrls.length; i++) {
+    const targetUrl = candidateUrls[i];
+    const controller = new AbortController();
+    // Allow up to 45s for Render free-tier cold-start wakeup, 15s for local
+    const timeoutMs = targetUrl.includes('onrender.com') ? 45000 : 15000;
+    const timeoutId = setTimeout(() => {
+      controller.abort();
+    }, timeoutMs);
+
+    try {
+      response = await fetch(targetUrl, {
+        ...options,
+        signal: options.signal || controller.signal,
+        credentials: 'include',
+        headers,
+      });
+      usedUrl = targetUrl;
+      clearTimeout(timeoutId);
+      break;
+    } catch (networkError: any) {
+      clearTimeout(timeoutId);
+      if (i < candidateUrls.length - 1) {
+        console.warn(`Connection to ${targetUrl} failed (${networkError?.message || networkError}). Trying next backend candidate...`);
+        continue;
+      }
+      if (networkError.name === 'AbortError') {
+        throw new Error('Server took too long to respond. The cloud service may be waking up from idle mode (cold start). Please try again in a few moments.');
+      }
+      throw new Error(`Unable to reach Fastigo server at ${targetUrl}. Please ensure the backend service is running.`);
+    }
+  }
+
+  if (!response) {
+    throw new Error(`Unable to reach Fastigo server at ${primaryUrl}.`);
   }
 
   // Handle Token Expiry & Automatic Refresh on 401 Unauthorized
@@ -224,7 +255,8 @@ async function apiRequest<T>(endpoint: string, options: RequestInit & { _isRetry
     try {
       if (!refreshPromise) {
         const storedRefreshToken = getRefreshToken();
-        refreshPromise = fetch(`${API_BASE_URL}/auth/refresh`, {
+        const refreshBase = usedUrl.substring(0, usedUrl.lastIndexOf('/api') + 4);
+        refreshPromise = fetch(`${refreshBase}/auth/refresh`, {
           method: 'POST',
           credentials: 'include',
           headers: { 'Content-Type': 'application/json' },
@@ -251,7 +283,7 @@ async function apiRequest<T>(endpoint: string, options: RequestInit & { _isRetry
 
         // Retry original request with newly acquired access token
         headers.set('Authorization', `Bearer ${refreshed.access_token}`);
-        const retryResponse = await fetch(`${API_BASE_URL}${endpoint}`, {
+        const retryResponse = await fetch(usedUrl, {
           ...options,
           _isRetry: true,
           credentials: 'include',
