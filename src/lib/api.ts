@@ -400,12 +400,12 @@ function handleMockRequest<T>(endpoint: string, options: RequestInit = {}): T {
     const email = (body.email || '').trim().toLowerCase();
     const password = (body.password || '').trim();
 
-    if (email === 'admin@fastigo.co' && (password === 'Fastigo@2026!' || password === 'admin123')) {
+    if (email === 'admin@fastigo.co' && password === 'Fastigo@2026!') {
       const demoToken = 'demo_token_fastigo_admin_' + Date.now();
       const demoUser: AdminUser = {
         id: 'demo-admin-001',
         email: 'admin@fastigo.co',
-        name: 'Fastigo Talent Admin (Demo Mode)',
+        name: 'Fastigo Talent Admin',
         role: 'admin',
       };
       setAuthToken(demoToken);
