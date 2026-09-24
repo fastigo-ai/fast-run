@@ -156,13 +156,25 @@ async def upload_resume(file: UploadFile = File(...)):
                 api_secret=api_secret,
                 secure=True
             )
-            upload_result = cloudinary.uploader.upload(
-                content,
-                folder="fastigo_resumes",
-                resource_type="auto",
-                use_filename=True,
-                unique_filename=True,
-            )
+            target_resource_type = "image" if ext in {".png", ".jpg", ".jpeg", ".webp"} else "auto"
+            try:
+                upload_result = cloudinary.uploader.upload(
+                    content,
+                    folder="fastigo_resumes",
+                    resource_type=target_resource_type,
+                    use_filename=True,
+                    unique_filename=True,
+                )
+            except Exception as auto_err:
+                print(f"Cloudinary auto upload notice ({auto_err}), retrying as raw resource...")
+                upload_result = cloudinary.uploader.upload(
+                    content,
+                    folder="fastigo_resumes",
+                    resource_type="raw",
+                    public_id=f"{timestamp_prefix}_{clean_filename}",
+                    overwrite=True,
+                )
+
             secure_url = upload_result.get("secure_url") or upload_result.get("url")
             public_id = upload_result.get("public_id", "")
             return {
@@ -221,9 +233,6 @@ async def submit_application(app_in: ApplicationCreate):
         "status": ApplicationStatus.PENDING.value,
         "created_at": now
     })
-
-    # Always persist in FALLBACK_APPLICATIONS for immediate visibility
-    FALLBACK_APPLICATIONS.insert(0, app_dict)
 
     # Increment applications count in jobs
     from backend.routes.jobs import FALLBACK_JOBS
@@ -325,6 +334,26 @@ async def delete_application(
         try:
             db = get_db()
             query = {"$or": [{"_id": ObjectId(app_id)}, {"id": app_id}]} if ObjectId.is_valid(app_id) else {"$or": [{"_id": app_id}, {"id": app_id}]}
+            app_doc = await db.applications.find_one(query)
+            if app_doc and app_doc.get("resume_url"):
+                resume_url = app_doc.get("resume_url", "")
+                if "res.cloudinary.com" in resume_url and "fastigo_resumes" in resume_url:
+                    try:
+                        parts = resume_url.split("fastigo_resumes/")
+                        if len(parts) > 1:
+                            pub_id = "fastigo_resumes/" + parts[1].split(".")[0]
+                            cloudinary.config(
+                                cloud_name=settings.CLOUDINARY_CLOUD_NAME,
+                                api_key=settings.CLOUDINARY_API_KEY,
+                                api_secret=settings.CLOUDINARY_API_SECRET,
+                                secure=True
+                            )
+                            cloudinary.uploader.destroy(pub_id, resource_type="raw")
+                            cloudinary.uploader.destroy(pub_id, resource_type="image")
+                            print(f"Cleaned up Cloudinary resume asset: {pub_id}")
+                    except Exception as ce:
+                        print(f"Cloudinary destroy notice: {ce}")
+
             res = await db.applications.delete_one(query)
             print(f"MongoDB delete_one count for {app_id}: {res.deleted_count}")
         except Exception as e:
