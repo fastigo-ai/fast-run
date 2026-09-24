@@ -21,6 +21,10 @@
   ],
   "rewrites": [
     {
+      "source": "/api",
+      "destination": "https://fast-run.onrender.com/api"
+    },
+    {
       "source": "/api/(.*)",
       "destination": "https://fast-run.onrender.com/api/$1"
     },

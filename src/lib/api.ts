@@ -5,14 +5,13 @@
 
 const getApiBaseUrl = (): string => {
   const envUrl = (import.meta.env.VITE_API_URL || '').trim();
-  if (envUrl) {
+  // Only override if explicitly pointing to a custom local address
+  if (envUrl && !envUrl.includes('onrender.com') && envUrl !== '/api') {
     const cleanUrl = envUrl.replace(/\/+$/, '');
     return cleanUrl.endsWith('/api') ? cleanUrl : `${cleanUrl}/api`;
   }
-  // If in production without explicit VITE_API_URL in hosting dashboard, connect to Render cloud backend
-  if (import.meta.env.PROD) {
-    return 'https://fast-run.onrender.com/api';
-  }
+  // Use same-origin '/api' in both local dev (Vite proxy) and production (Vercel rewrite)
+  // to completely eliminate cross-origin CORS preflight errors!
   return '/api';
 };
 
@@ -201,13 +200,15 @@ async function apiRequest<T>(endpoint: string, options: RequestInit & { _isRetry
   const primaryUrl = `${API_BASE_URL}${endpoint}`;
   const candidateUrls: string[] = [primaryUrl];
 
-  // In development, if primary target is Render, automatically fallback to local backend on 8000 or relative /api
-  if (import.meta.env.DEV) {
-    if (primaryUrl.includes('onrender.com')) {
+  if (primaryUrl.startsWith('/api')) {
+    if (import.meta.env.DEV) {
       candidateUrls.push(`http://127.0.0.1:8000/api${endpoint}`);
-      candidateUrls.push(`/api${endpoint}`);
-    } else {
-      candidateUrls.push(`https://fast-run.onrender.com/api${endpoint}`);
+    }
+    candidateUrls.push(`https://fast-run.onrender.com/api${endpoint}`);
+  } else if (primaryUrl.includes('onrender.com')) {
+    candidateUrls.push(`/api${endpoint}`);
+    if (import.meta.env.DEV) {
+      candidateUrls.push(`http://127.0.0.1:8000/api${endpoint}`);
     }
   }
 
