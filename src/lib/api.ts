@@ -5,9 +5,15 @@
 
 const getApiBaseUrl = (): string => {
   const envUrl = (import.meta.env.VITE_API_URL || '').trim();
-  if (!envUrl) return '/api';
-  const cleanUrl = envUrl.replace(/\/+$/, '');
-  return cleanUrl.endsWith('/api') ? cleanUrl : `${cleanUrl}/api`;
+  if (envUrl) {
+    const cleanUrl = envUrl.replace(/\/+$/, '');
+    return cleanUrl.endsWith('/api') ? cleanUrl : `${cleanUrl}/api`;
+  }
+  // If in production without explicit VITE_API_URL in hosting dashboard, connect to Render cloud backend
+  if (import.meta.env.PROD) {
+    return 'https://fast-run.onrender.com/api';
+  }
+  return '/api';
 };
 
 export const API_BASE_URL = getApiBaseUrl();

@@ -21,6 +21,10 @@
   ],
   "rewrites": [
     {
+      "source": "/api/(.*)",
+      "destination": "https://fast-run.onrender.com/api/$1"
+    },
+    {
       "source": "/robots.txt",
       "destination": "/robots.txt"
     },
