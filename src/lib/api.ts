@@ -194,7 +194,7 @@ async function apiRequest<T>(endpoint: string, options: RequestInit & { _isRetry
   }
   
   if (token && !endpoint.includes('/auth/login')) {
-    headers.set('Authorization', Bearer );
+    headers.set('Authorization', `Bearer ${token}`);
   }
 
   let response: Response;
@@ -204,7 +204,7 @@ async function apiRequest<T>(endpoint: string, options: RequestInit & { _isRetry
   }, 15000);
 
   try {
-    response = await fetch(${API_BASE_URL}, {
+    response = await fetch(`${API_BASE_URL}${endpoint}`, {
       ...options,
       signal: options.signal || controller.signal,
       credentials: 'include',
@@ -214,7 +214,7 @@ async function apiRequest<T>(endpoint: string, options: RequestInit & { _isRetry
     if (networkError.name === 'AbortError') {
       throw new Error('Server request timed out. Please check your network or try again.');
     }
-    throw new Error(Unable to reach Fastigo server at . Please check backend service status.);
+    throw new Error(`Unable to reach Fastigo server at ${API_BASE_URL}${endpoint}. Please check backend service status.`);
   } finally {
     clearTimeout(timeoutId);
   }
@@ -224,7 +224,7 @@ async function apiRequest<T>(endpoint: string, options: RequestInit & { _isRetry
     try {
       if (!refreshPromise) {
         const storedRefreshToken = getRefreshToken();
-        refreshPromise = fetch(${API_BASE_URL}/auth/refresh, {
+        refreshPromise = fetch(`${API_BASE_URL}/auth/refresh`, {
           method: 'POST',
           credentials: 'include',
           headers: { 'Content-Type': 'application/json' },
@@ -250,8 +250,8 @@ async function apiRequest<T>(endpoint: string, options: RequestInit & { _isRetry
         }
 
         // Retry original request with newly acquired access token
-        headers.set('Authorization', Bearer );
-        const retryResponse = await fetch(${API_BASE_URL}, {
+        headers.set('Authorization', `Bearer ${refreshed.access_token}`);
+        const retryResponse = await fetch(`${API_BASE_URL}${endpoint}`, {
           ...options,
           _isRetry: true,
           credentials: 'include',
