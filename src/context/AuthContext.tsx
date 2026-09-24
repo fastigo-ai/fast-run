@@ -7,6 +7,7 @@ interface AuthContextType {
   isAuthenticated: boolean;
   isLoading: boolean;
   login: (email: string, password: string) => Promise<void>;
+  demoLogin: () => void;
   logout: () => Promise<void> | void;
 }
 
@@ -66,14 +67,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const login = async (email: string, password: string) => {
-    setIsLoading(true);
-    try {
-      const res = await api.auth.login(email, password);
-      setUser(res.admin);
-      setToken(res.access_token);
-    } finally {
-      setIsLoading(false);
-    }
+    const res = await api.auth.login(email, password);
+    setUser(res.admin);
+    setToken(res.access_token);
+  };
+
+  const demoLogin = () => {
+    const demoToken = 'demo_token_fastigo_admin_' + Date.now();
+    const demoUser: AdminUser = {
+      id: 'demo-admin-001',
+      email: 'admin@fastigo.co',
+      name: 'Fastigo Talent Admin (Demo Mode)',
+      role: 'admin',
+    };
+    setAuthToken(demoToken);
+    setAuthUser(demoUser);
+    setUser(demoUser);
+    setToken(demoToken);
   };
 
   const logout = async () => {
@@ -90,6 +100,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         isAuthenticated: !!token && !!user,
         isLoading,
         login,
+        demoLogin,
         logout,
       }}
     >

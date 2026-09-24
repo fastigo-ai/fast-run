@@ -14,6 +14,15 @@ if str(_root_dir) not in sys.path:
 if str(_current_dir) not in sys.path:
     sys.path.insert(0, str(_current_dir))
 
+# Configure public DNS resolvers to prevent Windows SRV record lookup timeouts
+try:
+    import dns.resolver
+    resolver = dns.resolver.Resolver(configure=True)
+    resolver.nameservers = ['8.8.8.8', '1.1.1.1', '8.8.4.4']
+    dns.resolver.default_resolver = resolver
+except Exception:
+    pass
+
 try:
     from backend.config import settings
     from backend.auth import get_password_hash
@@ -148,13 +157,36 @@ def generate_slug(title: str) -> str:
 
 async def init_database(existing_db=None):
     should_close = False
+    client = None
     if existing_db is not None:
         db = existing_db
     else:
-        client = AsyncIOMotorClient(settings.MONGO_URI)
-        db = client[settings.DB_NAME]
-        should_close = True
-        print(f"Connecting to MongoDB: {settings.MONGO_URI}, DB: {settings.DB_NAME}")
+        print(f"Connecting to MongoDB: {settings.MONGO_URI[:35]}..., DB: {settings.DB_NAME}")
+        try:
+            client = AsyncIOMotorClient(
+                settings.MONGO_URI,
+                serverSelectionTimeoutMS=2500,
+                connectTimeoutMS=2500,
+                socketTimeoutMS=2500,
+            )
+            await asyncio.wait_for(client.admin.command('ping'), timeout=2.5)
+            db = client[settings.DB_NAME]
+            should_close = True
+        except Exception as e:
+            print(f"[WARN] Primary MongoDB connection failed: {e}. Trying local fallback...")
+            try:
+                client = AsyncIOMotorClient(
+                    "mongodb://127.0.0.1:27017",
+                    serverSelectionTimeoutMS=2500,
+                    connectTimeoutMS=2500,
+                    socketTimeoutMS=2500,
+                )
+                await asyncio.wait_for(client.admin.command('ping'), timeout=2.5)
+                db = client[settings.DB_NAME]
+                should_close = True
+            except Exception as e2:
+                print(f"[ERROR] Could not connect to any MongoDB instance: {e2}")
+                return
 
     # 1. Initialize Admin Account
     try:

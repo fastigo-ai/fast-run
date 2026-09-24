@@ -96,6 +96,12 @@ async def connect_to_mongo():
             await db_instance.db.applications.create_index("created_at")
             await db_instance.db.applications.create_index("job_id")
             await db_instance.db.contacts.create_index("created_at")
+            await db_instance.db.access_tokens.create_index("token", unique=True)
+            await db_instance.db.access_tokens.create_index("email")
+            await db_instance.db.access_tokens.create_index("expires_at", expireAfterSeconds=0)
+            await db_instance.db.refresh_tokens.create_index("token", unique=True)
+            await db_instance.db.refresh_tokens.create_index("email")
+            await db_instance.db.refresh_tokens.create_index("expires_at", expireAfterSeconds=0)
         except Exception as e:
             print(f"Index creation notice: {e}")
 

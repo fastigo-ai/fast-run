@@ -24,7 +24,8 @@ export const AdminLogin: React.FC = () => {
     }
   }, [isAuthenticated, navigate, from]);
 
-  if (isLoading || isAuthenticated) {
+  // Only render full-screen spinner on initial app-mount authentication check
+  if (isLoading) {
     return (
       <div className="min-h-screen bg-[#070d18] flex items-center justify-center p-4 font-body">
         <div className="flex flex-col items-center gap-4 text-center">
@@ -40,12 +41,22 @@ export const AdminLogin: React.FC = () => {
     setError(null);
     setIsSubmitting(true);
 
+    const cleanEmail = email.trim().toLowerCase();
+    const cleanPassword = password.trim();
+
     try {
-      await login(email, password);
+      await login(cleanEmail, cleanPassword);
       navigate(from, { replace: true });
     } catch (err: any) {
       const msg = err?.message || '';
-      if (msg.includes('Failed to fetch') || msg.includes('NetworkError') || msg.includes('connection refused')) {
+      if (
+        msg.includes('Failed to fetch') ||
+        msg.includes('NetworkError') ||
+        msg.includes('connection refused') ||
+        msg.includes('timed out') ||
+        msg.includes('timeout') ||
+        msg.includes('aborted')
+      ) {
         setError('Cannot reach backend server. Please verify the backend service is running.');
       } else {
         setError(msg || 'Invalid email or password. Please try again.');
@@ -73,7 +84,7 @@ export const AdminLogin: React.FC = () => {
         {/* Card */}
         <div className="rounded-3xl bg-[#0b1426]/90 border border-slate-800/90 shadow-2xl p-6 sm:p-8 backdrop-blur-2xl">
           {/* Logo & Header */}
-          <div className="text-center mb-8">
+          <div className="text-center mb-6">
             <Link to="/" className="inline-block group mb-4">
               <div className="bg-white px-5 py-2.5 rounded-2xl shadow-xl border border-white/40 inline-block group-hover:scale-105 transition-transform">
                 <img
@@ -101,7 +112,7 @@ export const AdminLogin: React.FC = () => {
             >
               <div className="flex items-start gap-2.5">
                 <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
-                <span>{error}</span>
+                <span className="leading-relaxed">{error}</span>
               </div>
             </motion.div>
           )}
@@ -169,13 +180,12 @@ export const AdminLogin: React.FC = () => {
             </button>
           </form>
 
-
-          <div className="mt-4 text-center">
+          <div className="mt-5 pt-4 border-t border-slate-800/80 text-center">
             <Link
               to="/careers"
-              className="text-xs text-slate-400 hover:text-[#38bdf8] transition-colors"
+              className="text-xs text-slate-400 hover:text-[#38bdf8] transition-colors inline-flex items-center gap-1"
             >
-              ← Back to Fastigo Public Website
+              ← Back to Fastigo Public Careers
             </Link>
           </div>
         </div>

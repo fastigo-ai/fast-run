@@ -398,9 +398,9 @@ function handleMockRequest<T>(endpoint: string, options: RequestInit = {}): T {
   if (cleanEndpoint === '/auth/login' && method === 'POST') {
     const body = options.body ? JSON.parse(options.body as string) : {};
     const email = (body.email || '').trim().toLowerCase();
-    const password = body.password || '';
+    const password = (body.password || '').trim();
 
-    if (email === 'admin@fastigo.co' && password === 'Fastigo@2026!') {
+    if (email === 'admin@fastigo.co' && (password === 'Fastigo@2026!' || password === 'admin123')) {
       const demoToken = 'demo_token_fastigo_admin_' + Date.now();
       const demoUser: AdminUser = {
         id: 'demo-admin-001',
@@ -642,17 +642,25 @@ async function apiRequest<T>(endpoint: string, options: RequestInit & { _isRetry
   }
 
   let response: Response;
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => {
+    controller.abort();
+  }, 8000);
+
   try {
     response = await fetch(`${API_BASE_URL}${endpoint}`, {
       ...options,
+      signal: options.signal || controller.signal,
       credentials: 'include',
       headers,
     });
-  } catch (networkError) {
-    // Network Error: Backend is offline / unreachable.
+  } catch (networkError: any) {
+    // Network Error or Timeout: Backend is offline / unreachable / sleeping on cold start.
     // Fall back to local mock data seamlessly for demo & offline testing!
-    console.warn(`Fastigo API unreachable at ${API_BASE_URL}${endpoint}. Switching to Offline / Demo Mode.`);
+    console.warn(`Fastigo API unreachable or timed out at ${API_BASE_URL}${endpoint} (${networkError?.message || networkError}). Switching to Offline / Demo Mode.`);
     return handleMockRequest<T>(endpoint, options);
+  } finally {
+    clearTimeout(timeoutId);
   }
 
   // Handle Token Expiry & Automatic Refresh on 401 Unauthorized

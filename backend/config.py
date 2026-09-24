@@ -33,8 +33,9 @@ class Settings(BaseSettings):
     # JWT Config (reads from .env)
     JWT_SECRET_KEY: str = "fastigo_super_secret_jwt_key_2026_change_in_production"
     ALGORITHM: str = "HS256"
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 1440
     REFRESH_TOKEN_EXPIRE_DAYS: int = 7
+    ACCESS_TOKEN_COOKIE_NAME: str = "fastigo_access_token"
     REFRESH_TOKEN_COOKIE_NAME: str = "fastigo_refresh_token"
     COOKIE_SECURE: bool = False
     

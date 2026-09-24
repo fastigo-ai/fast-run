@@ -2,7 +2,7 @@ from datetime import datetime, timedelta, timezone
 from typing import Optional
 import bcrypt
 from jose import JWTError, jwt
-from fastapi import Depends, HTTPException, status
+from fastapi import Depends, HTTPException, status, Request
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from backend.config import settings
 from backend.database import get_db
@@ -64,16 +64,25 @@ def verify_refresh_token(token: str) -> str:
         )
 
 
-async def get_current_admin(credentials: Optional[HTTPAuthorizationCredentials] = Depends(security)):
+async def get_current_admin(
+    request: Request,
+    credentials: Optional[HTTPAuthorizationCredentials] = Depends(security)
+):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
         headers={"WWW-Authenticate": "Bearer"},
     )
-    if not credentials:
+
+    token = None
+    if credentials:
+        token = credentials.credentials
+    if not token:
+        token = request.cookies.get(settings.ACCESS_TOKEN_COOKIE_NAME)
+
+    if not token:
         raise credentials_exception
 
-    token = credentials.credentials
     try:
         payload = jwt.decode(token, settings.JWT_SECRET_KEY, algorithms=[settings.ALGORITHM])
         email: str = payload.get("sub")
