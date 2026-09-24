@@ -35,14 +35,20 @@ async def is_db_connected() -> bool:
     return db_instance.is_connected
 
 async def _try_connect(uri: str, db_name: str) -> tuple[AsyncIOMotorClient, AsyncIOMotorDatabase]:
-    client = AsyncIOMotorClient(
-        uri,
-        serverSelectionTimeoutMS=2500,
-        connectTimeoutMS=2500,
-        socketTimeoutMS=2500,
-    )
+    motor_kwargs = {
+        "serverSelectionTimeoutMS": 5000,
+        "connectTimeoutMS": 5000,
+        "socketTimeoutMS": 5000,
+    }
+    try:
+        import certifi
+        motor_kwargs["tlsCAFile"] = certifi.where()
+    except Exception:
+        pass
+
+    client = AsyncIOMotorClient(uri, **motor_kwargs)
     db = client[db_name]
-    await asyncio.wait_for(client.admin.command('ping'), timeout=2.5)
+    await asyncio.wait_for(client.admin.command('ping'), timeout=5.0)
     return client, db
 
 async def connect_to_mongo():
@@ -51,41 +57,18 @@ async def connect_to_mongo():
     client = None
     db = None
 
-    # 1. Attempt connection to primary configured MONGO_URI
     try:
-        print(f"Connecting to primary MongoDB URI ({target_uri[:35]}...)...")
+        print(f"Connecting to MongoDB ({target_uri[:35]}...)...")
         client, db = await _try_connect(target_uri, db_name)
         db_instance.client = client
         db_instance.db = db
         db_instance.is_connected = True
-        print(f"Connected to primary MongoDB at {target_uri[:35]}..., database: {db_name}")
-    except Exception as primary_err:
-        print(f"[Notice] Primary MongoDB unreachable ({primary_err}). Checking local MongoDB...")
-        if client:
-            client.close()
-            client = None
-
-        # 2. If primary failed and is remote, try local MongoDB (127.0.0.1:27017)
-        is_remote = "mongodb+srv://" in target_uri or ("localhost" not in target_uri and "127.0.0.1" not in target_uri)
-        if is_remote:
-            local_uri = "mongodb://127.0.0.1:27017"
-            try:
-                client, db = await _try_connect(local_uri, db_name)
-                db_instance.client = client
-                db_instance.db = db
-                db_instance.is_connected = True
-                print(f"Successfully connected to local MongoDB fallback at {local_uri}, database: {db_name}")
-            except Exception as local_err:
-                print(f"[Notice] Local MongoDB also unavailable ({local_err}).")
-                if client:
-                    client.close()
-                db_instance.client = None
-                db_instance.db = None
-                db_instance.is_connected = False
-        else:
-            db_instance.client = None
-            db_instance.db = None
-            db_instance.is_connected = False
+        print(f"Successfully connected to MongoDB, database: {db_name}")
+    except Exception as err:
+        print(f"[Error] MongoDB connection failed: {err}")
+        db_instance.client = None
+        db_instance.db = None
+        db_instance.is_connected = False
 
     # 3. If connected (either primary or local fallback), configure indexes & seed
     if db_instance.is_connected and db_instance.db is not None:

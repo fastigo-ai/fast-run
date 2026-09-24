@@ -24,38 +24,7 @@ def format_app_doc(doc: dict) -> dict:
     doc["id"] = str(doc["_id"])
     return doc
 
-FALLBACK_APPLICATIONS: List[dict] = [
-    {
-        "id": "app-demo-101",
-        "job_id": "seed-job-1",
-        "job_title": "AI Developer Intern",
-        "name": "Aarav Sharma",
-        "email": "aarav.sharma@example.com",
-        "phone": "+91 98765 43210",
-        "linkedin": "https://linkedin.com/in/aaravsharma",
-        "portfolio": "https://github.com/aaravsharma",
-        "resume_url": "https://res.cloudinary.com/fastigo-cloud/image/upload/v1710500000/resumes/Aarav_Sharma_AI_Intern_Resume.pdf",
-        "experience_years": "Freshers / Student",
-        "message": "Enthusiastic computer science student with hands-on PyTorch & LLM agent projects. Eager to contribute to Fastigo AI systems.",
-        "status": ApplicationStatus.REVIEWED.value,
-        "created_at": datetime.now(timezone.utc),
-    },
-    {
-        "id": "app-demo-102",
-        "job_id": "seed-job-2",
-        "job_title": "SEO Marketing Specialist",
-        "name": "Pooja Verma",
-        "email": "pooja.verma@example.com",
-        "phone": "+91 98111 22334",
-        "linkedin": "https://linkedin.com/in/poojaverma-growth",
-        "portfolio": "https://poojaverma.me",
-        "resume_url": "https://res.cloudinary.com/fastigo-cloud/image/upload/v1710500000/resumes/Pooja_Verma_SEO_Specialist_Resume.pdf",
-        "experience_years": "3 years",
-        "message": "Experienced technical SEO specialist with track record in B2B SaaS ranking growth and semantic content strategy.",
-        "status": ApplicationStatus.PENDING.value,
-        "created_at": datetime.now(timezone.utc),
-    }
-]
+FALLBACK_APPLICATIONS: List[dict] = []
 
 MAX_RESUME_SIZE = 10 * 1024 * 1024  # 10 MB
 ALLOWED_RESUME_EXTENSIONS = {".pdf", ".docx", ".doc", ".png", ".jpg", ".jpeg", ".webp"}
@@ -324,11 +293,12 @@ async def update_application_status(
             if not (await is_db_connected()):
                 return a
 
-    if await is_db_connected() and ObjectId.is_valid(app_id):
+    if await is_db_connected():
         try:
             db = get_db()
+            query = {"$or": [{"_id": ObjectId(app_id)}, {"id": app_id}]} if ObjectId.is_valid(app_id) else {"$or": [{"_id": app_id}, {"id": app_id}]}
             result = await db.applications.find_one_and_update(
-                {"_id": ObjectId(app_id)},
+                query,
                 {"$set": {"status": status_update.status.value}},
                 return_document=ReturnDocument.AFTER
             )
@@ -351,10 +321,12 @@ async def delete_application(
     global FALLBACK_APPLICATIONS
     FALLBACK_APPLICATIONS = [a for a in FALLBACK_APPLICATIONS if a.get("id") != app_id]
 
-    if await is_db_connected() and ObjectId.is_valid(app_id):
+    if await is_db_connected():
         try:
             db = get_db()
-            await db.applications.delete_one({"_id": ObjectId(app_id)})
+            query = {"$or": [{"_id": ObjectId(app_id)}, {"id": app_id}]} if ObjectId.is_valid(app_id) else {"$or": [{"_id": app_id}, {"id": app_id}]}
+            res = await db.applications.delete_one(query)
+            print(f"MongoDB delete_one count for {app_id}: {res.deleted_count}")
         except Exception as e:
             print(f"Notice deleting app in DB: {e}")
 

@@ -10,15 +10,13 @@ router = APIRouter(prefix="/admin", tags=["Admin Stats"])
 async def get_dashboard_stats(current_admin: dict = Depends(get_current_admin)):
     try:
         if not await is_db_connected():
-            from backend.routes.jobs import FALLBACK_JOBS
-            from backend.routes.applications import FALLBACK_APPLICATIONS
             return {
-                "total_jobs": len(FALLBACK_JOBS),
-                "active_jobs": len([j for j in FALLBACK_JOBS if j.get("status") == JobStatus.PUBLISHED.value]),
-                "draft_jobs": len([j for j in FALLBACK_JOBS if j.get("status") == JobStatus.DRAFT.value]),
-                "closed_jobs": len([j for j in FALLBACK_JOBS if j.get("status") == JobStatus.CLOSED.value]),
-                "total_applications": len(FALLBACK_APPLICATIONS),
-                "recent_applications_count": len(FALLBACK_APPLICATIONS),
+                "total_jobs": 0,
+                "active_jobs": 0,
+                "draft_jobs": 0,
+                "closed_jobs": 0,
+                "total_applications": 0,
+                "recent_applications_count": 0,
             }
         
         db = get_db()
@@ -46,13 +44,11 @@ async def get_dashboard_stats(current_admin: dict = Depends(get_current_admin)):
         }
     except Exception as e:
         print(f"Stats query notice: {e}")
-        from backend.routes.jobs import FALLBACK_JOBS
-        from backend.routes.applications import FALLBACK_APPLICATIONS
         return {
-            "total_jobs": len(FALLBACK_JOBS),
-            "active_jobs": len([j for j in FALLBACK_JOBS if j.get("status") == JobStatus.PUBLISHED.value]),
-            "draft_jobs": len([j for j in FALLBACK_JOBS if j.get("status") == JobStatus.DRAFT.value]),
-            "closed_jobs": len([j for j in FALLBACK_JOBS if j.get("status") == JobStatus.CLOSED.value]),
-            "total_applications": len(FALLBACK_APPLICATIONS),
-            "recent_applications_count": len(FALLBACK_APPLICATIONS),
+            "total_jobs": 0,
+            "active_jobs": 0,
+            "draft_jobs": 0,
+            "closed_jobs": 0,
+            "total_applications": 0,
+            "recent_applications_count": 0,
         }

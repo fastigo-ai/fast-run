@@ -163,30 +163,24 @@ async def init_database(existing_db=None):
     else:
         print(f"Connecting to MongoDB: {settings.MONGO_URI[:35]}..., DB: {settings.DB_NAME}")
         try:
-            client = AsyncIOMotorClient(
-                settings.MONGO_URI,
-                serverSelectionTimeoutMS=2500,
-                connectTimeoutMS=2500,
-                socketTimeoutMS=2500,
-            )
-            await asyncio.wait_for(client.admin.command('ping'), timeout=2.5)
+            motor_kwargs = {
+                "serverSelectionTimeoutMS": 5000,
+                "connectTimeoutMS": 5000,
+                "socketTimeoutMS": 5000,
+            }
+            try:
+                import certifi
+                motor_kwargs["tlsCAFile"] = certifi.where()
+            except Exception:
+                pass
+
+            client = AsyncIOMotorClient(settings.MONGO_URI, **motor_kwargs)
+            await asyncio.wait_for(client.admin.command('ping'), timeout=5.0)
             db = client[settings.DB_NAME]
             should_close = True
         except Exception as e:
-            print(f"[WARN] Primary MongoDB connection failed: {e}. Trying local fallback...")
-            try:
-                client = AsyncIOMotorClient(
-                    "mongodb://127.0.0.1:27017",
-                    serverSelectionTimeoutMS=2500,
-                    connectTimeoutMS=2500,
-                    socketTimeoutMS=2500,
-                )
-                await asyncio.wait_for(client.admin.command('ping'), timeout=2.5)
-                db = client[settings.DB_NAME]
-                should_close = True
-            except Exception as e2:
-                print(f"[ERROR] Could not connect to any MongoDB instance: {e2}")
-                return
+            print(f"[ERROR] Could not connect to MongoDB Atlas ({settings.MONGO_URI[:35]}...): {e}")
+            return
 
     # 1. Initialize Admin Account
     try:
