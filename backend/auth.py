@@ -10,14 +10,19 @@ from backend.database import get_db
 security = HTTPBearer(auto_error=False)
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
+    if not plain_password or not hashed_password:
+        return False
     try:
-        return bcrypt.checkpw(plain_password.encode('utf-8'), hashed_password.encode('utf-8'))
+        pwd_bytes = plain_password.encode('utf-8')[:72] if isinstance(plain_password, str) else bytes(plain_password)[:72]
+        hash_bytes = hashed_password.encode('utf-8') if isinstance(hashed_password, str) else bytes(hashed_password)
+        return bcrypt.checkpw(pwd_bytes, hash_bytes)
     except Exception:
         return False
 
 def get_password_hash(password: str) -> str:
+    pwd_bytes = password.encode('utf-8')[:72] if isinstance(password, str) else bytes(password)[:72]
     salt = bcrypt.gensalt()
-    return bcrypt.hashpw(password.encode('utf-8'), salt).decode('utf-8')
+    return bcrypt.hashpw(pwd_bytes, salt).decode('utf-8')
 
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -> str:
     to_encode = data.copy()
