@@ -10,6 +10,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import OmniSellAgentPage from './OmniSellAgentPage';
 
 const ProductSubscription = () => {
   const { productId } = useParams<{ productId: string }>();
@@ -17,6 +18,10 @@ const ProductSubscription = () => {
 
   // Fallback if product not found
   const product = productId ? products[productId] : null;
+
+  if (productId === "omni-sell-agent") {
+    return <OmniSellAgentPage product={product} />;
+  }
 
   if (!product) {
     return (

@@ -161,7 +161,7 @@ const About = () => {
                 {/* Top Pill Badge */}
                 <div className="absolute top-5 left-5 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#061226]/85 backdrop-blur-md border border-white/25 text-xs font-semibold shadow-md">
                   <Target className="w-3.5 h-3.5 text-[#00A3E0] shrink-0" />
-                  <span className="text-[#38bdf8] font-bold tracking-wide">01 // PURPOSE-DRIVEN IMPACT</span>
+                  <span className="text-[#38bdf8] font-bold tracking-wide">01 — PURPOSE-DRIVEN IMPACT</span>
                 </div>
 
                 {/* Bottom Title on Image */}
@@ -211,7 +211,7 @@ const About = () => {
                 {/* Top Pill Badge */}
                 <div className="absolute top-5 left-5 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#061226]/85 backdrop-blur-md border border-white/25 text-xs font-semibold shadow-md">
                   <Globe className="w-3.5 h-3.5 text-[#00A3E0] shrink-0" />
-                  <span className="text-[#38bdf8] font-bold tracking-wide">02 // LONG-TERM HORIZON</span>
+                  <span className="text-[#38bdf8] font-bold tracking-wide">02 — LONG-TERM HORIZON</span>
                 </div>
 
                 {/* Bottom Title on Image */}
