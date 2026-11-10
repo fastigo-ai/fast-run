@@ -120,14 +120,13 @@ const AnimatedRoutes = memo(() => {
 const AppShell = () => {
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith("/admin");
-  const isOmniSellRoute = location.pathname.includes("/products/omni-sell-agent");
 
   return (
     <>
       <ScrollToTop />
-      {!isAdminRoute && !isOmniSellRoute && <Navbar />}
+      {!isAdminRoute && <Navbar />}
       <AnimatedRoutes />
-      {!isAdminRoute && !isOmniSellRoute && <Footer />}
+      {!isAdminRoute && <Footer />}
     </>
   );
 };

@@ -32,11 +32,22 @@ import {
   CheckCheck,
   Send,
   Database,
-  Smartphone
+  Smartphone,
+  Lock,
+  Server,
+  Workflow,
+  Cpu,
+  Headphones,
+  ExternalLink,
+  ChevronDown,
+  Repeat,
+  Compass,
+  FileText
 } from 'lucide-react';
 import fastigoLogo from '@/assets/fastigo-logo.webp';
-import salesWorkspaceImg from '@/assets/sales-late-night-workspace.jpg';
 import heroAiCoreImg from '@/assets/omnisell-hero-ai-core.jpg';
+import astronautHeroImg from '@/assets/omnisell-hero-astronaut-clean.jpg';
+import neuralNexusHeroBg from '@/assets/omnisell-session1-terracotta-nexus.jpg';
 import { Switch } from '@/components/ui/switch';
 import {
   Accordion,
@@ -51,19 +62,21 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import Footer from '@/components/Footer';
 
-// FASTIGO AUTHENTIC WEBSITE COLOR SYSTEM
-// Primary Brand Blue: #0070AD
-// Dark Brand Blue / Hover: #005a8c
-// Light Blue / Electric Cyan: #00A3E0
-// Brand Navy / Headings: #0E0A42
-// Dark Background Tone: #041021
+
+// 11x AUTHENTIC COLOR CODE & THEME SYSTEM
+// Hero Background: Deep Obsidian Black (#000000 / #050508)
+// Hero Primary Accent: Authentic 11x Terracotta Orange (#C8492C)
+// Interactive Demo Background: Warm Natural Cream / Eggshell (#F4EFEB / #FAF7F2)
+// Interactive Demo Accent: Authentic 11x Terracotta Red-Orange (#C8492C / #D04B2B)
+// Text Dark: #0D0D0D / #1A1A1A
+// Neon Cyan Spark: #00E5FF / #38BDF8
 
 interface OmniSellAgentPageProps {
   product?: any;
 }
 
+// EXACT 11x 3D PARTICLE SPHERE WITH TERRACOTTA & BLACK WAVE BANDS
 const ParticleSphere: React.FC<{ isTalking: boolean }> = ({ isTalking }) => {
   const canvasRef = React.useRef<HTMLCanvasElement | null>(null);
 
@@ -75,15 +88,15 @@ const ParticleSphere: React.FC<{ isTalking: boolean }> = ({ isTalking }) => {
 
     let animationFrameId: number;
     let angle = 0;
-    const width = (canvas.width = 340);
-    const height = (canvas.height = 340);
-    const radius = 115;
+    const width = (canvas.width = 360);
+    const height = (canvas.height = 360);
+    const radius = 118;
     const particles: { lat: number; lon: number }[] = [];
 
-    const rings = 30;
+    const rings = 32;
     for (let i = 0; i < rings; i++) {
       const lat = (Math.PI / rings) * (i + 0.5) - Math.PI / 2;
-      const count = Math.max(6, Math.floor(Math.cos(lat) * 55));
+      const count = Math.max(6, Math.floor(Math.cos(lat) * 56));
       for (let j = 0; j < count; j++) {
         const lon = (2 * Math.PI / count) * j;
         particles.push({ lat, lon });
@@ -92,39 +105,42 @@ const ParticleSphere: React.FC<{ isTalking: boolean }> = ({ isTalking }) => {
 
     const render = () => {
       ctx.clearRect(0, 0, width, height);
-      angle += isTalking ? 0.022 : 0.007;
+      angle += isTalking ? 0.024 : 0.008;
 
       const cx = width / 2;
       const cy = height / 2;
 
       const projected = particles.map((p) => {
-        const wave = Math.sin(p.lon * 3 + angle * 2.5) * (isTalking ? 16 : 8) * Math.cos(p.lat);
+        const wave = Math.sin(p.lon * 3 + angle * 2.5) * (isTalking ? 18 : 9) * Math.cos(p.lat);
         const r = radius + wave;
         const x3d = r * Math.cos(p.lat) * Math.sin(p.lon + angle);
         const y3d = r * Math.sin(p.lat);
         const z3d = r * Math.cos(p.lat) * Math.cos(p.lon + angle);
 
         const scale = 260 / (260 - z3d * 0.35);
-        const x2d = cx + x3d * scale * 0.68;
-        const y2d = cy + y3d * scale * 0.68;
-        const isWaveBand = Math.abs(p.lat) < 0.28;
+        const x2d = cx + x3d * scale * 0.70;
+        const y2d = cy + y3d * scale * 0.70;
+        const isTerracottaBand = Math.abs(p.lat) < 0.22;
+        const isBlackBand = Math.abs(p.lat) >= 0.22 && Math.abs(p.lat) < 0.38;
 
-        return { x: x2d, y: y2d, z: z3d, isWaveBand };
+        return { x: x2d, y: y2d, z: z3d, isTerracottaBand, isBlackBand };
       });
 
       projected.sort((a, b) => a.z - b.z);
 
       for (const p of projected) {
         if (p.z < -radius * 0.9) continue;
-        const alpha = Math.max(0.15, (p.z + radius) / (2 * radius));
+        const alpha = Math.max(0.18, (p.z + radius) / (2 * radius));
         ctx.beginPath();
-        const size = Math.max(0.8, (p.isWaveBand ? 2.2 : 1.3) * (p.z > 0 ? 1.2 : 0.8));
+        const size = Math.max(0.85, (p.isTerracottaBand || p.isBlackBand ? 2.3 : 1.35) * (p.z > 0 ? 1.25 : 0.8));
         ctx.arc(p.x, p.y, size, 0, Math.PI * 2);
 
-        if (p.isWaveBand) {
-          ctx.fillStyle = `rgba(0, 112, 173, ${alpha * 0.95})`;
+        if (p.isTerracottaBand) {
+          ctx.fillStyle = `rgba(200, 73, 44, ${alpha * 0.95})`;
+        } else if (p.isBlackBand) {
+          ctx.fillStyle = `rgba(18, 18, 18, ${alpha * 0.9})`;
         } else {
-          ctx.fillStyle = `rgba(30, 41, 59, ${alpha * 0.55})`;
+          ctx.fillStyle = `rgba(120, 120, 120, ${alpha * 0.5})`;
         }
         ctx.fill();
       }
@@ -139,7 +155,7 @@ const ParticleSphere: React.FC<{ isTalking: boolean }> = ({ isTalking }) => {
     };
   }, [isTalking]);
 
-  return <canvas ref={canvasRef} className="w-[220px] h-[220px] xs:w-[260px] xs:h-[260px] sm:w-[320px] sm:h-[320px] mx-auto block max-w-full" />;
+  return <canvas ref={canvasRef} className="w-[230px] h-[230px] xs:w-[270px] xs:h-[270px] sm:w-[330px] sm:h-[330px] mx-auto block max-w-full" />;
 };
 
 export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product }) => {
@@ -152,7 +168,20 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
   const [selectedScenario, setSelectedScenario] = useState<string>('RECEPTIONIST');
   const [selectedPersona, setSelectedPersona] = useState<string>('CONFIDENT');
   const [isSimulatingCall, setIsSimulatingCall] = useState<boolean>(false);
-  const [motionChannel, setMotionChannel] = useState<'EMAIL' | 'VOICE AI' | 'LINKEDIN'>('EMAIL');
+  const [activeMotionTab, setActiveMotionTab] = useState<'outbound' | 'inbound' | 'expansion'>('outbound');
+  
+  // 11x Hero Dynamic Rotating Words & Email State
+  const rotatingWords = ['Email', 'Voice', 'Chat', 'Inbound', 'Outbound'];
+  const [currentWordIndex, setCurrentWordIndex] = useState(0);
+  const [heroEmail, setHeroEmail] = useState('');
+  const [heroVoicePlaying, setHeroVoicePlaying] = useState(false);
+
+  useEffect(() => {
+    const wordTimer = setInterval(() => {
+      setCurrentWordIndex((prev) => (prev + 1) % rotatingWords.length);
+    }, 2800);
+    return () => clearInterval(wordTimer);
+  }, [rotatingWords.length]);
 
   const channels = ['VOICE', 'EMAIL', 'CHAT', 'SOCIAL', 'SMS & WHATSAPP', 'HUMAN DIALER'];
 
@@ -192,421 +221,216 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
     {
       name: "Growth",
       price: { monthly: "$79", annual: "$65" },
-      description: "For small sales teams looking to scale outreach.",
-      features: ["2 connected accounts", "Email & LinkedIn automation", "500 AI credits/mo", "Standard reporting"],
+      description: "For small sales teams looking to scale outbound outreach.",
+      features: ["2 connected accounts", "Email & LinkedIn automation", "500 AI credits/mo", "Standard CRM sync", "Real-time signal alerts"],
       ctaText: "Start Free Trial"
     },
     {
       name: "Scale",
       price: { monthly: "$199", annual: "$159" },
       description: "For established teams demanding omni-channel presence.",
-      features: ["5 connected accounts", "All channels (WhatsApp/SMS)", "2,000 AI credits/mo", "Advanced analytics"],
+      features: ["5 connected accounts", "All channels (Voice, WhatsApp, SMS)", "2,000 AI credits/mo", "Sub-60s Inbound conversion", "Advanced pipeline analytics"],
       isPopular: true,
       ctaText: "Get Scale"
     },
     {
       name: "Enterprise",
       price: { monthly: "Custom", annual: "Custom" },
-      description: "For large organizations with complex sales structures.",
-      features: ["Unlimited accounts", "Custom workflows", "Unlimited AI credits", "Dedicated success manager"],
+      description: "For large organizations with complex GTM structures.",
+      features: ["Unlimited accounts & seats", "Custom multi-agent workflows", "Unlimited AI credits", "Dedicated AI engineer", "Custom SLA & Okta SSO"],
       ctaText: "Contact Sales"
     }
   ];
 
   const comparisonData = product?.comparison || [
     { feature: "Connected Accounts", starter: "2", pro: "5", enterprise: "Unlimited" },
-    { feature: "Channels", starter: "Email/LI", pro: "All Channels", enterprise: "All Channels" },
-    { feature: "AI Personalization", starter: "500 credits", pro: "2,000 credits", enterprise: "Unlimited" },
-    { feature: "White-labeling", starter: false, pro: false, enterprise: true },
-    { feature: "Reporting", starter: "Standard", pro: "Advanced", enterprise: "Custom Dashboards" }
+    { feature: "Autonomous Channels", starter: "Email & LinkedIn", pro: "All 6 Channels", enterprise: "All 6 Channels" },
+    { feature: "Inbound Speed-to-Lead (< 60s)", starter: false, pro: true, enterprise: true },
+    { feature: "Voice AI Dialing & Interruption", starter: false, pro: true, enterprise: true },
+    { feature: "AI Research & Signal Triggers", starter: "500 credits", pro: "2,000 credits", enterprise: "Unlimited" },
+    { feature: "Bi-Directional CRM Sync", starter: "Standard", pro: "Real-time 2-Way", enterprise: "Custom Pipelines" },
+    { feature: "Enterprise Security & SOC 2", starter: true, pro: true, enterprise: true }
+  ];
+
+  const clientLogos = [
+    { name: "Brex", label: "BREX" },
+    { name: "Ramp", label: "RAMP" },
+    { name: "Deel", label: "deel." },
+    { name: "Checkr", label: "Checkr" },
+    { name: "Leica Biosystems", label: "Leica" },
+    { name: "Remote", label: "remote" },
+    { name: "Vanta", label: "VANTA" },
+    { name: "Carta", label: "carta" }
+  ];
+
+  const faqs = [
+    {
+      q: "How does OmniSell differ from traditional sales automation tools?",
+      a: "Traditional sales sequencers rely on static templates and human reps doing manual data entry. OmniSell deploys autonomous digital workers (like Alice and Julian) that research accounts in real-time, synthesize 10-K & funding signals, execute personalized 2-way conversations across voice, email, chat, and WhatsApp, and book meetings directly into your CRM."
+    },
+    {
+      q: "Will OmniSell replace my existing sales reps?",
+      a: "No. OmniSell acts as a superhuman force multiplier. It takes over the tedious 80% of sales work—prospecting, reading annual reports, drafting cold emails, and following up—so your human account executives can spend 100% of their day having high-value conversations and closing deals."
+    },
+    {
+      q: "How does OmniSell prevent hallucinations in prospect conversations?",
+      a: "OmniSell uses a deterministic multi-agent consensus architecture. Every draft generated by the Messaging Agent must be validated by the Context & Verification Agent against your actual company Knowledge Base, pricing matrices, and CRM ground truth before anything is dispatched."
+    },
+    {
+      q: "What CRM and sales systems are supported out of the box?",
+      a: "OmniSell supports bi-directional native synchronization with Salesforce, HubSpot, Gong, Snowflake, Outreach, Salesloft, Apollo, Slack, and Notion with automated meeting logging and field enrichment."
+    },
+    {
+      q: "How quickly can our team go live with OmniSell?",
+      a: "Most revenue teams are fully operational within 48 to 72 hours. Simply connect your CRM, upload your product knowledge docs or pitch decks, set your target ICP criteria, and your digital workers will begin prospecting and qualifying immediately."
+    }
   ];
 
   return (
-    <div className="text-white min-h-screen selection:bg-[#0070AD]/30 selection:text-white relative overflow-x-hidden font-sans">
+    <div className="text-white min-h-screen selection:bg-[#C8492C]/40 selection:text-white relative overflow-x-hidden font-sans bg-[#000000]">
 
       {/* =========================================================================
-          NAVBAR: EXACT FASTIGO WEBSITE COLOR CODE & FROSTED GLASS STYLING
+          01 — HERO: SESSION 1 WITH GENERATED CYBERNETIC NEURAL NEXUS BACKGROUND
+          Visual: Glowing OmniSell Hexagonal Core with concentric rings & floating connected cards
+          Headline: [ Email ] agents that drive revenue (dynamic rotating brackets)
+          Input: Work email pill + Get a Demo > button
+          CTA: Or hear it first: Try Voice AI →
+          Coordinates: X: -122.39 | Y: 37.78
       ========================================================================= */}
-      <motion.header
-        initial={{ y: -20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.4 }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled 
-            ? 'bg-white/95 backdrop-blur-2xl border-b border-slate-200/80 shadow-[0_4px_24px_rgba(0,112,173,0.08)] py-3' 
-            : 'bg-white/90 backdrop-blur-xl border-b border-slate-200/50 shadow-[0_2px_16px_rgba(0,0,0,0.04)] py-4'
-        }`}
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-          
-          {/* LEFT: Fastigo logo (Original Crisp Display) + OmniSell Badge */}
-          <Link to="/" className="flex items-center gap-3 group">
-            <img 
-              src={fastigoLogo} 
-              alt="Fastigo" 
-              className="h-10 sm:h-12 md:h-14 w-auto object-contain transition-all duration-300" 
-            />
-            <span className="text-slate-300 text-lg font-light">/</span>
-            <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#00A3E0] shadow-[0_0_8px_#00A3E0] animate-pulse" />
-              <span className="font-bold text-[#0E0A42] tracking-tight text-base sm:text-lg group-hover:text-[#0070AD] transition-colors">
-                OmniSell
-              </span>
-            </div>
-          </Link>
-
-          {/* CENTER: Floating Pill Navigation Matching Website Style */}
-          <nav className="hidden md:flex items-center gap-6 lg:gap-8 rounded-full border border-slate-200/80 bg-white/80 px-6 py-2 backdrop-blur-md shadow-sm">
-            <a href="#capabilities" className="text-[14px] font-medium text-[#0E0A42] hover:text-[#0070AD] transition-colors">
-              Platform
-            </a>
-            <a href="#pricing" className="text-[14px] font-medium text-[#0E0A42] hover:text-[#0070AD] transition-colors">
-              Pricing
-            </a>
-            <a href="#faq" className="text-[14px] font-medium text-[#0E0A42] hover:text-[#0070AD] transition-colors">
-              FAQ
-            </a>
-          </nav>
-
-          {/* RIGHT: Primary Fastigo Blue Action Button */}
-          <div className="hidden sm:flex items-center gap-4">
-            <button 
-              onClick={() => setDemoModalOpen(true)}
-              className="relative inline-flex items-center justify-center gap-2 px-5 py-2 rounded-full text-[14px] font-semibold tracking-wide text-white bg-[#0070AD] hover:bg-[#005a8c] hover:shadow-[0_8px_20px_rgba(0,112,173,0.3)] transition-all duration-300 shadow-md cursor-pointer group"
-            >
-              <span>Book a Demo</span>
-              <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
-            </button>
-          </div>
-
-          {/* Mobile Toggle */}
-          <button 
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 text-[#0E0A42] hover:text-[#0070AD]"
-            aria-label="Toggle menu"
-          >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+      <section className="relative z-10 pt-28 sm:pt-36 md:pt-40 pb-20 sm:pb-28 lg:pb-32 min-h-[720px] sm:min-h-[800px] lg:min-h-[860px] flex items-center bg-[#000000] overflow-hidden">
+        {/* Full-bleed Clean Cybernetic Astronaut Background (100% Text-Free & Logo-Free) */}
+        <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">
+          <img
+            src={astronautHeroImg}
+            alt="OmniSell Autonomous Revenue Agent Hero"
+            className="w-full h-full object-cover object-right md:object-[82%_center] filter brightness-[0.92] contrast-[1.08]"
+          />
+          {/* Crisp gradients ensuring pure contrast on the left for text while keeping astronaut radiant on right */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#000000] via-[#000000]/80 to-transparent sm:via-[#000000]/65 lg:via-[#000000]/35" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#000000] via-transparent to-[#000000]/60" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#000000]/80 via-transparent to-[#000000]" />
+          {/* Subtle Warm Terracotta Core Radiance matching theme color #C8492C */}
+          <div className="absolute top-1/2 right-[20%] -translate-y-1/2 w-[550px] h-[550px] bg-[radial-gradient(circle,_rgba(200,73,44,0.18)_0%,_transparent_70%)] blur-[95px] pointer-events-none" />
         </div>
 
-        {/* Mobile Dropdown */}
-        <AnimatePresence>
-          {mobileMenuOpen && (
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28 lg:py-32 w-full">
+          <div className="max-w-2xl lg:max-w-3xl space-y-7 sm:space-y-8">
+            
+            {/* Tag: FOR FRONTIER REVENUE TEAMS */}
             <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              className="md:hidden bg-white/98 border-b border-slate-200/80 px-6 py-6 space-y-4 shadow-xl backdrop-blur-xl"
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="text-xs sm:text-sm font-sans tracking-[0.2em] uppercase font-semibold text-[#B0B7C3]"
             >
-              <a 
-                href="#capabilities" 
-                onClick={() => setMobileMenuOpen(false)}
-                className="block text-sm font-medium text-[#0E0A42] hover:text-[#0070AD] py-1"
+              FOR FRONTIER REVENUE TEAMS
+            </motion.div>
+
+            {/* Dynamic Rotating Bracketed Headline */}
+            <div className="space-y-1">
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                className="text-4xl sm:text-6xl md:text-7xl lg:text-[76px] font-bold text-white tracking-tight leading-[1.05]"
               >
-                Platform
-              </a>
-              <a 
-                href="#pricing" 
-                onClick={() => setMobileMenuOpen(false)}
-                className="block text-sm font-medium text-[#0E0A42] hover:text-[#0070AD] py-1"
+                <span className="text-[#C8492C] font-mono mr-2">[</span>
+                <span className="inline-block text-white">
+                  <AnimatePresence mode="wait">
+                    <motion.span
+                      key={rotatingWords[currentWordIndex]}
+                      initial={{ opacity: 0, y: 14 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -14 }}
+                      transition={{ duration: 0.28, ease: "easeOut" }}
+                      className="inline-block"
+                    >
+                      {rotatingWords[currentWordIndex]}
+                    </motion.span>
+                  </AnimatePresence>
+                </span>
+                <span className="text-[#C8492C] font-mono ml-2 mr-3 sm:mr-4">]</span>
+                <span>agents</span>
+                <br />
+                <span>that drive revenue</span>
+              </motion.h1>
+            </div>
+
+            {/* Supporting Copy */}
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.15 }}
+              className="text-base sm:text-lg md:text-xl text-[#C8CED8] font-normal leading-relaxed max-w-xl"
+            >
+              Convert inbound demand. Run your outbound playbooks. <br className="hidden sm:inline" />
+              Expand your accounts. Across every channel.
+            </motion.p>
+
+            {/* Work Email Pill + Get a Demo > Button */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.25 }}
+              className="space-y-4 pt-1"
+            >
+              <form 
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  setDemoModalOpen(true);
+                }}
+                className="max-w-md w-full bg-white rounded-full p-1 sm:p-1.5 flex items-center shadow-[0_12px_40px_rgba(0,0,0,0.6)] border border-white/20"
               >
-                Pricing
-              </a>
-              <a 
-                href="#faq" 
-                onClick={() => setMobileMenuOpen(false)}
-                className="block text-sm font-medium text-[#0E0A42] hover:text-[#0070AD] py-1"
-              >
-                FAQ
-              </a>
-              <div className="pt-3">
+                <input
+                  type="email"
+                  placeholder="Work email"
+                  value={heroEmail}
+                  onChange={(e) => setHeroEmail(e.target.value)}
+                  className="flex-1 px-4 sm:px-5 py-2.5 sm:py-3 text-xs sm:text-sm text-[#111111] placeholder-[#777777] bg-transparent outline-none rounded-full"
+                  required
+                />
                 <button
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    setDemoModalOpen(true);
-                  }}
-                  className="w-full flex items-center justify-center gap-2 py-2.5 rounded-full text-sm font-semibold text-white bg-[#0070AD] hover:bg-[#005a8c]"
+                  type="submit"
+                  className="px-5 sm:px-6 py-2.5 sm:py-3 rounded-full text-xs sm:text-sm font-semibold text-white bg-[#C8492C] hover:bg-[#B83E26] transition-colors flex items-center gap-1.5 shrink-0 shadow-md cursor-pointer"
                 >
-                  Book a Demo <ArrowRight className="w-4 h-4" />
+                  <span>Get a Demo</span>
+                  <ChevronRight className="w-3.5 h-3.5" />
+                </button>
+              </form>
+
+              {/* Secondary CTA: Or hear it first: Try Voice AI → */}
+              <div className="flex items-center gap-3 text-xs sm:text-sm text-white/85">
+                <span className="text-[#A1A8B8]">Or hear it first:</span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setHeroVoicePlaying(!heroVoicePlaying);
+                    setIsSimulatingCall(true);
+                  }}
+                  className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white font-medium text-xs sm:text-sm transition-all group cursor-pointer shadow-sm"
+                >
+                  <span>Try Voice AI</span>
+                  <span className="w-5 h-5 rounded-full bg-white text-[#111111] flex items-center justify-center text-[11px] group-hover:translate-x-0.5 transition-transform font-bold">
+                    →
+                  </span>
                 </button>
               </div>
             </motion.div>
-          )}
-        </AnimatePresence>
-      </motion.header>
 
-
-      {/* =========================================================================
-          01 — HERO (Background: #030507, Fastigo Blue Glow, AI Neural Core Graphic)
-      ========================================================================= */}
-      <section className="relative z-10 pt-40 pb-24 sm:pt-44 md:pt-48 md:pb-32 bg-[#030507] overflow-hidden">
-        {/* Full-bleed AI Generated Hero Neural Core Background */}
-        <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">
-          <img
-            src={heroAiCoreImg}
-            alt="OmniSell AI Sales Agent Neural Core"
-            className="w-full h-full object-cover object-right filter brightness-[0.7] contrast-[1.15]"
-          />
-          {/* Directional Gradients for Crisp Left-Column Readability */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#030507] via-[#030507]/75 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#030507] via-transparent to-[#030507]/80" />
-          <div className="absolute top-1/2 right-[15%] -translate-y-1/2 w-[650px] h-[650px] bg-[radial-gradient(circle,_rgba(0,112,173,0.25)_0%,_rgba(0,200,255,0.1)_40%,_transparent_70%)] blur-[90px] pointer-events-none" />
-        </div>
-        
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-6 items-center">
-            
-            {/* LEFT CONTENT */}
-            <div className="lg:col-span-5 space-y-6">
-              
-              {/* Technical label */}
-              <motion.div
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#10141A] border border-white/10 text-xs font-mono uppercase tracking-widest text-[#00A3E0]"
-              >
-                <span className="w-1.5 h-1.5 rounded-full bg-[#00A3E0] animate-ping" />
-                OMNISELL — AI SALES AGENT
-              </motion.div>
-
-              {/* Line-by-line masked text reveal */}
-              <div className="space-y-1">
-                <div className="overflow-hidden">
-                  <motion.h1
-                    initial={{ y: "100%", opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                    className="text-4xl sm:text-6xl md:text-7xl lg:text-[76px] font-bold text-white tracking-tight leading-[0.98]"
-                  >
-                    YOUR AI
-                  </motion.h1>
-                </div>
-                <div className="overflow-hidden">
-                  <motion.h1
-                    initial={{ y: "100%", opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-                    className="text-4xl sm:text-6xl md:text-7xl lg:text-[76px] font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-[#00A3E0] tracking-tight leading-[0.98]"
-                  >
-                    SALES AGENT.
-                  </motion.h1>
-                </div>
-              </div>
-
-              {/* Supporting copy */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="space-y-1.5 text-base sm:text-xl text-[#B4BAC5] font-light max-w-xl"
-              >
-                <p>Find the right prospects.</p>
-                <p>Start the right conversations.</p>
-                <p>Follow up without slowing down.</p>
-              </motion.div>
-
-              {/* Action Buttons */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-                className="pt-2 flex flex-wrap items-center gap-3 sm:gap-4"
-              >
-                <button
-                  onClick={() => setDemoModalOpen(true)}
-                  className="w-full sm:w-auto justify-center px-8 py-3.5 rounded-full text-sm font-semibold text-white bg-[#0070AD] hover:bg-[#005a8c] transition-all duration-300 shadow-[0_0_25px_rgba(0,112,173,0.4)] hover:shadow-[0_0_35px_rgba(0,112,173,0.7)] flex items-center gap-2 group cursor-pointer"
-                >
-                  <span>Book a Demo</span>
-                  <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-                </button>
-
-                <a
-                  href="#capabilities"
-                  className="w-full sm:w-auto text-center justify-center px-7 py-3.5 rounded-full text-sm font-medium text-[#B4BAC5] hover:text-white bg-[#10141A]/80 border border-white/10 hover:border-[#0070AD]/60 transition-all duration-300"
-                >
-                  See How It Works
-                </a>
-              </motion.div>
-
-              {/* Minimal Trust Indicator */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.8, delay: 0.4 }}
-                className="pt-4 flex flex-wrap items-center gap-y-2 gap-x-3 sm:gap-4 text-xs text-[#737B88] font-mono"
-              >
-                <span className="flex items-center gap-1.5">
-                  <ShieldCheck className="w-4 h-4 text-[#00A3E0]" /> Enterprise Ready
-                </span>
-                <span className="w-1 h-1 rounded-full bg-white/20 hidden xs:inline-block" />
-                <span>Multi-channel Orchestration</span>
-                <span className="w-1 h-1 rounded-full bg-white/20 hidden xs:inline-block" />
-                <span>Autonomous Pipeline</span>
-              </motion.div>
-            </div>
-
-            {/* RIGHT VISUAL: Sophisticated OmniSell AI Core & Spaced-Out Floating Animated Cards */}
-            <div className="lg:col-span-7 relative flex items-center justify-center min-h-[460px] sm:min-h-[580px] lg:min-h-[720px] w-full max-w-full overflow-hidden sm:overflow-visible">
-              
-              {/* Outer Cybernetic Orbital Rings */}
-              <div className="absolute w-[260px] h-[260px] sm:w-[400px] sm:h-[400px] rounded-full border border-white/[0.08] animate-[spin_60s_linear_infinite]" />
-              <div className="absolute w-[200px] h-[200px] sm:w-[310px] sm:h-[310px] rounded-full border border-dashed border-[#0070AD]/40 animate-[spin_40s_linear_infinite_reverse]" />
-              <div className="absolute w-[150px] h-[150px] sm:w-[220px] sm:h-[220px] rounded-full border border-[#00A3E0]/30 animate-[spin_30s_linear_infinite]" />
-              <div className="absolute w-[130px] h-[130px] sm:w-[200px] sm:h-[200px] rounded-full bg-gradient-to-tr from-[#0070AD]/25 to-[#00A3E0]/25 blur-2xl" />
-
-              {/* Central OmniSell AI Nexus */}
-              <motion.div
-                initial={{ scale: 0.85, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
-                whileHover={{ scale: 1.05 }}
-                className="relative z-20 w-28 h-28 sm:w-40 sm:h-40 rounded-full bg-[#080C14]/95 border-2 border-[#0070AD] shadow-[0_0_70px_rgba(0,112,173,0.5)] flex flex-col items-center justify-center p-2.5 sm:p-3 text-center backdrop-blur-xl group cursor-pointer transition-transform"
-              >
-                <div className="absolute inset-1 rounded-full bg-gradient-to-br from-[#0070AD]/30 via-transparent to-[#00A3E0]/30" />
-                
-                {/* Glowing Hexagonal Logo Aperture */}
-                <div className="relative z-10 w-8 h-8 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-[#0B1017] border border-[#00A3E0]/60 flex items-center justify-center mb-1 shadow-[0_0_20px_rgba(0,163,224,0.4)] group-hover:border-[#00A3E0] transition-colors">
-                  <svg className="w-4 h-4 sm:w-6 sm:h-6 text-[#00A3E0]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <polygon points="12 2 21 7 21 17 12 22 3 17 3 7 12 2" />
-                    <circle cx="12" cy="12" r="3" fill="#00A3E0" fillOpacity="0.4" />
-                  </svg>
-                </div>
-                
-                <div className="relative z-10 font-bold text-white text-xs sm:text-base tracking-tight">
-                  OmniSell
-                </div>
-                <div className="relative z-10 text-[8px] sm:text-[10px] font-mono text-[#00A3E0] tracking-widest uppercase font-semibold">
-                  AI Core
-                </div>
-              </motion.div>
-
-              {/* Floating Card 1: PROSPECTS (Top-Right) */}
-              <motion.div
-                animate={shouldReduceMotion ? {} : { y: [-6, 6, -6], x: [0, 2, 0] }}
-                transition={{ duration: 4.8, repeat: Infinity, ease: "easeInOut" }}
-                whileHover={{ scale: 1.04, y: -4 }}
-                className="absolute top-2 sm:top-4 right-1 sm:right-[-20px] lg:right-[-35px] z-20 bg-[#0B1017]/95 backdrop-blur-xl border border-white/15 hover:border-[#0070AD]/80 hover:shadow-[0_0_25px_rgba(0,112,173,0.35)] rounded-xl sm:rounded-2xl p-2 sm:p-3.5 shadow-2xl flex items-center gap-2 sm:gap-3 transition-all cursor-pointer group max-w-[155px] sm:max-w-[225px]"
-              >
-                <div className="flex -space-x-1.5 sm:-space-x-2 shrink-0">
-                  <img className="w-6 h-6 sm:w-8 sm:h-8 rounded-full border border-[#0B1017] object-cover" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=120" alt="Lead" />
-                  <img className="w-6 h-6 sm:w-8 sm:h-8 rounded-full border border-[#0B1017] object-cover" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=120" alt="Lead" />
-                </div>
-                <div className="min-w-0">
-                  <h4 className="text-[11px] sm:text-sm font-semibold text-white tracking-tight leading-snug group-hover:text-[#00A3E0] transition-colors truncate">Prospects</h4>
-                  <p className="hidden sm:block text-[11px] text-[#8C9BAE] leading-snug">High-intent leads identified</p>
-                </div>
-              </motion.div>
-
-              {/* Floating Card 2: COMPANY INSIGHTS (Top-Left) */}
-              <motion.div
-                animate={shouldReduceMotion ? {} : { y: [6, -6, 6], x: [0, -2, 0] }}
-                transition={{ duration: 5.6, repeat: Infinity, ease: "easeInOut", delay: 0.4 }}
-                whileHover={{ scale: 1.04, y: -4 }}
-                className="absolute top-2 sm:top-4 left-1 sm:left-[-20px] lg:left-[-35px] z-20 bg-[#0B1017]/95 backdrop-blur-xl border border-white/15 hover:border-[#0070AD]/80 hover:shadow-[0_0_25px_rgba(0,112,173,0.35)] rounded-xl sm:rounded-2xl p-2 sm:p-3.5 shadow-2xl flex items-center gap-2 sm:gap-3 transition-all cursor-pointer group max-w-[150px] sm:max-w-[215px]"
-              >
-                <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-white/[0.04] border border-white/10 flex items-center justify-center text-[#00A3E0] shrink-0">
-                  <BarChart3 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                </div>
-                <div className="min-w-0">
-                  <h4 className="text-[11px] sm:text-sm font-semibold text-white tracking-tight leading-snug group-hover:text-[#00A3E0] transition-colors truncate">Insights</h4>
-                  <p className="hidden sm:block text-[11px] text-[#8C9BAE] leading-snug">Real-time research & signals</p>
-                </div>
-              </motion.div>
-
-              {/* Floating Card 3: PERSONALIZED OUTREACH (Middle-Right) */}
-              <motion.div
-                animate={shouldReduceMotion ? {} : { y: [-5, 5, -5], x: [2, -2, 2] }}
-                transition={{ duration: 5.2, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
-                whileHover={{ scale: 1.04, y: -4 }}
-                className="absolute top-1/2 -translate-y-1/2 right-1 sm:right-[-45px] lg:right-[-75px] z-20 bg-[#0B1017]/95 backdrop-blur-xl border border-white/15 hover:border-[#0070AD]/80 hover:shadow-[0_0_25px_rgba(0,112,173,0.35)] rounded-xl sm:rounded-2xl p-2 sm:p-3.5 shadow-2xl flex items-center gap-2 sm:gap-3 transition-all cursor-pointer group max-w-[160px] sm:max-w-[235px]"
-              >
-                <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-white/[0.04] border border-white/10 flex items-center justify-center text-[#00A3E0] shrink-0">
-                  <Mail className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                </div>
-                <div className="min-w-0">
-                  <h4 className="text-[11px] sm:text-sm font-semibold text-white tracking-tight leading-snug group-hover:text-[#00A3E0] transition-colors truncate">Outreach</h4>
-                  <p className="hidden sm:block text-[11px] text-[#8C9BAE] leading-snug">Relevant messages that get replies</p>
-                </div>
-              </motion.div>
-
-              {/* Floating Card 4: FOLLOW UPS (Bottom-Right) */}
-              <motion.div
-                animate={shouldReduceMotion ? {} : { y: [5, -5, 5], x: [0, 2, 0] }}
-                transition={{ duration: 6.2, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
-                whileHover={{ scale: 1.04, y: -4 }}
-                className="absolute bottom-2 sm:bottom-4 right-1 sm:right-[-20px] lg:right-[-35px] z-20 bg-[#0B1017]/95 backdrop-blur-xl border border-white/15 hover:border-[#0070AD]/80 hover:shadow-[0_0_25px_rgba(0,112,173,0.35)] rounded-xl sm:rounded-2xl p-2 sm:p-3.5 shadow-2xl flex items-center gap-2 sm:gap-3 transition-all cursor-pointer group max-w-[150px] sm:max-w-[215px]"
-              >
-                <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-white/[0.04] border border-white/10 flex items-center justify-center text-[#00A3E0] shrink-0">
-                  <Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                </div>
-                <div className="min-w-0">
-                  <h4 className="text-[11px] sm:text-sm font-semibold text-white tracking-tight leading-snug group-hover:text-[#00A3E0] transition-colors truncate">Follow Ups</h4>
-                  <p className="hidden sm:block text-[11px] text-[#8C9BAE] leading-snug">Consistent, natural engagement</p>
-                </div>
-              </motion.div>
-
-              {/* Floating Card 5: MEETINGS (Bottom-Left) */}
-              <motion.div
-                animate={shouldReduceMotion ? {} : { y: [-6, 6, -6], x: [-2, 2, -2] }}
-                transition={{ duration: 5.8, repeat: Infinity, ease: "easeInOut", delay: 1.6 }}
-                whileHover={{ scale: 1.04, y: -4 }}
-                className="absolute bottom-2 sm:bottom-4 left-1 sm:left-[-20px] lg:left-[-35px] z-20 bg-[#0B1017]/95 backdrop-blur-xl border border-white/15 hover:border-[#0070AD]/80 hover:shadow-[0_0_25px_rgba(0,112,173,0.35)] rounded-xl sm:rounded-2xl p-2 sm:p-3.5 shadow-2xl flex items-center gap-2 sm:gap-3 transition-all cursor-pointer group max-w-[150px] sm:max-w-[215px]"
-              >
-                <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-white/[0.04] border border-white/10 flex items-center justify-center text-[#00A3E0] shrink-0">
-                  <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                </div>
-                <div className="min-w-0">
-                  <h4 className="text-[11px] sm:text-sm font-semibold text-white tracking-tight leading-snug group-hover:text-[#00A3E0] transition-colors truncate">Meetings</h4>
-                  <p className="hidden sm:block text-[11px] text-[#8C9BAE] leading-snug">More conversations. More pipeline.</p>
-                </div>
-              </motion.div>
-
-              {/* Mini Icon Nodes Floating Along Filaments with Good Clearance */}
-              <motion.div 
-                animate={{ y: [-3, 3, -3] }} 
-                transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute top-[30%] left-[26%] z-15 w-7 h-7 rounded-lg bg-[#0B1017]/85 border border-[#00A3E0]/40 flex items-center justify-center text-[#00A3E0] shadow-[0_0_12px_rgba(0,163,224,0.4)]"
-              >
-                <Search className="w-3.5 h-3.5" />
-              </motion.div>
-
-              <motion.div 
-                animate={{ y: [3, -3, 3] }} 
-                transition={{ duration: 4.1, repeat: Infinity, ease: "easeInOut", delay: 0.6 }}
-                className="absolute bottom-[30%] left-[26%] z-15 w-7 h-7 rounded-lg bg-[#0B1017]/85 border border-[#0070AD]/50 flex items-center justify-center text-[#00A3E0] shadow-[0_0_12px_rgba(0,112,173,0.4)]"
-              >
-                <Target className="w-3.5 h-3.5" />
-              </motion.div>
-
-              <motion.div 
-                animate={{ y: [-4, 4, -4] }} 
-                transition={{ duration: 3.8, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                className="absolute top-[28%] right-[24%] z-15 w-7 h-7 rounded-lg bg-[#0B1017]/85 border border-[#00A3E0]/40 flex items-center justify-center text-[#00A3E0] shadow-[0_0_12px_rgba(0,163,224,0.4)]"
-              >
-                <Mail className="w-3.5 h-3.5" />
-              </motion.div>
-
-              {/* SVG Animated Synaptic Connection Lines */}
-              <svg className="absolute inset-0 w-full h-full pointer-events-none z-10 stroke-current text-[#0070AD]/40">
-                <path d="M 50% 50% Q 70% 30% 84% 14%" fill="none" strokeWidth="1.5" strokeDasharray="5 5" className="animate-[dash_20s_linear_infinite]" />
-                <path d="M 50% 50% Q 30% 30% 16% 14%" fill="none" strokeWidth="1.5" strokeDasharray="5 5" className="animate-[dash_20s_linear_infinite]" />
-                <path d="M 50% 50% Q 74% 50% 90% 50%" fill="none" strokeWidth="1.5" strokeDasharray="5 5" className="animate-[dash_20s_linear_infinite]" />
-                <path d="M 50% 50% Q 70% 70% 84% 86%" fill="none" strokeWidth="1.5" strokeDasharray="5 5" className="animate-[dash_20s_linear_infinite]" />
-                <path d="M 50% 50% Q 30% 70% 16% 86%" fill="none" strokeWidth="1.5" strokeDasharray="5 5" className="animate-[dash_20s_linear_infinite]" />
-              </svg>
-            </div>
           </div>
         </div>
       </section>
 
 
       {/* =========================================================================
-          02 — INTERACTIVE AI SALES AGENT DEMO (White Background & Fastigo Colors)
+          02 — SECOND SESSION: INTERACTIVE AI SALES AGENT DEMO
+          Sales agents that turn conversations into revenue
+          Theme: Warm Cream BG (#F4EFEB), Terracotta (#C8492C) & Black Pills!
       ========================================================================= */}
-      <section className="relative z-10 py-20 sm:py-28 bg-[#F8FAFC] border-y border-slate-200/90 overflow-hidden text-slate-800">
-        {/* Soft Ambient Fastigo Blue Glow */}
-        <div className="absolute top-1/2 right-[10%] -translate-y-1/2 w-[550px] h-[550px] bg-[radial-gradient(circle,_rgba(0,112,173,0.08)_0%,_rgba(0,163,224,0.03)_50%,_transparent_75%)] blur-[80px] pointer-events-none" />
+      <section className="relative z-10 py-20 sm:py-28 bg-[#F4EFEB] border-y border-[#E5DFD7] overflow-hidden text-[#1A1A1A]">
+        {/* Soft Ambient Warm Glow */}
+        <div className="absolute top-1/2 right-[10%] -translate-y-1/2 w-[550px] h-[550px] bg-[radial-gradient(circle,_rgba(200,73,44,0.06)_0%,_transparent_70%)] blur-[90px] pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
@@ -620,14 +444,14 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5 }}
-                  className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#0E0A42] leading-[1.12]"
+                  className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#111111] leading-[1.12]"
                 >
-                  <span className="text-[#0070AD]">Sales agents</span> that turn <br />
+                  <span className="text-[#C8492C]">Sales agents</span> that turn <br />
                   conversations into revenue
                 </motion.h2>
               </div>
 
-              {/* Channel Tabs */}
+              {/* Channel Tabs: Black Active Pill matching image b518044e.png */}
               <div className="flex flex-wrap gap-1.5 sm:gap-2 pt-1">
                 {channels.map((ch) => {
                   const isActive = activeChannel === ch;
@@ -636,10 +460,10 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                       key={ch}
                       type="button"
                       onClick={() => setActiveChannel(ch)}
-                      className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-[11px] sm:text-xs font-semibold tracking-wider transition-all cursor-pointer ${
+                      className={`px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full text-[11px] sm:text-xs font-semibold tracking-wider transition-all cursor-pointer ${
                         isActive
-                          ? 'bg-[#0E0A42] text-white shadow-sm ring-1 ring-[#0E0A42]'
-                          : 'bg-white text-slate-600 hover:text-slate-900 border border-slate-200/90 hover:border-slate-300'
+                          ? 'bg-[#111111] text-white shadow-sm ring-1 ring-[#111111]'
+                          : 'bg-transparent text-[#555555] hover:text-[#111111] hover:bg-black/5'
                       }`}
                     >
                       {ch}
@@ -649,14 +473,14 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
               </div>
 
               {/* Dynamic Description */}
-              <p className="text-sm sm:text-base text-slate-600 leading-relaxed max-w-xl">
+              <p className="text-sm sm:text-base text-[#444444] leading-relaxed max-w-xl">
                 {channelDescriptions[activeChannel]}
               </p>
 
-              {/* Scenario Selector */}
+              {/* Scenario Selector: Terracotta active pill with radio circle */}
               <div className="space-y-2 pt-1">
-                <div className="flex items-center gap-2 text-[11px] sm:text-xs font-mono uppercase tracking-wider text-slate-500 font-semibold">
-                  <Folder className="w-3.5 h-3.5 text-slate-400" />
+                <div className="flex items-center gap-2 text-[11px] sm:text-xs font-mono uppercase tracking-wider text-[#777777] font-semibold">
+                  <Folder className="w-3.5 h-3.5 text-[#999999]" />
                   <span>SCENARIO</span>
                 </div>
                 <div className="flex flex-wrap gap-1.5 sm:gap-2">
@@ -667,23 +491,26 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                         key={sc}
                         type="button"
                         onClick={() => setSelectedScenario(sc)}
-                        className={`px-3 sm:px-4 py-1.5 rounded-full text-[11px] sm:text-xs font-medium transition-all cursor-pointer ${
+                        className={`inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-1.5 rounded-full text-[11px] sm:text-xs font-medium transition-all cursor-pointer ${
                           isSelected
-                            ? 'bg-[#0070AD] text-white shadow-sm'
-                            : 'bg-slate-100/90 text-slate-700 border border-slate-200/80 hover:border-slate-300 hover:bg-slate-200/60'
+                            ? 'bg-[#C8492C] text-white shadow-sm'
+                            : 'bg-transparent text-[#444444] border border-[#DDD5C9] hover:border-[#BBADA0] hover:bg-black/5'
                         }`}
                       >
-                        {sc}
+                        <span className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center shrink-0 ${isSelected ? 'border-white bg-white/20' : 'border-[#999999]'}`}>
+                          {isSelected && <span className="w-1.5 h-1.5 rounded-full bg-white" />}
+                        </span>
+                        <span>{sc}</span>
                       </button>
                     );
                   })}
                 </div>
               </div>
 
-              {/* Voice / Persona Selector */}
+              {/* Voice / Persona Selector: Terracotta active pill with radio circle */}
               <div className="space-y-2 pt-1">
-                <div className="flex items-center gap-2 text-[11px] sm:text-xs font-mono uppercase tracking-wider text-slate-500 font-semibold">
-                  <Radio className="w-3.5 h-3.5 text-slate-400" />
+                <div className="flex items-center gap-2 text-[11px] sm:text-xs font-mono uppercase tracking-wider text-[#777777] font-semibold">
+                  <Radio className="w-3.5 h-3.5 text-[#999999]" />
                   <span>VOICE</span>
                 </div>
                 <div className="flex flex-wrap gap-1.5 sm:gap-2">
@@ -694,45 +521,48 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                         key={p}
                         type="button"
                         onClick={() => setSelectedPersona(p)}
-                        className={`px-3 sm:px-4 py-1.5 rounded-full text-[11px] sm:text-xs font-medium transition-all cursor-pointer ${
+                        className={`inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-1.5 rounded-full text-[11px] sm:text-xs font-medium transition-all cursor-pointer ${
                           isSelected
-                            ? 'bg-[#0070AD] text-white shadow-sm'
-                            : 'bg-slate-100/90 text-slate-700 border border-slate-200/80 hover:border-slate-300 hover:bg-slate-200/60'
+                            ? 'bg-[#C8492C] text-white shadow-sm'
+                            : 'bg-transparent text-[#444444] border border-[#DDD5C9] hover:border-[#BBADA0] hover:bg-black/5'
                         }`}
                       >
-                        {p}
+                        <span className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center shrink-0 ${isSelected ? 'border-white bg-white/20' : 'border-[#999999]'}`}>
+                          {isSelected && <span className="w-1.5 h-1.5 rounded-full bg-white" />}
+                        </span>
+                        <span>{p}</span>
                       </button>
                     );
                   })}
                 </div>
               </div>
 
-              {/* Action Button */}
+              {/* Action Button: Black Pill matching 11x image */}
               <div className="pt-2">
                 <button
                   type="button"
                   onClick={() => setIsSimulatingCall(!isSimulatingCall)}
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-6 py-3 rounded-full bg-[#0E0A42] hover:bg-[#0070AD] text-white text-xs sm:text-sm font-semibold tracking-wider uppercase transition-all shadow-md group cursor-pointer"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-6 py-3 rounded-full bg-[#000000] hover:bg-[#222222] text-white text-xs sm:text-sm font-semibold tracking-wider uppercase transition-all shadow-md group cursor-pointer"
                 >
                   <span>Try {activeChannel.charAt(0) + activeChannel.slice(1).toLowerCase()} AI</span>
-                  <div className="w-6 h-6 rounded-full bg-white/15 flex items-center justify-center group-hover:translate-x-1 transition-transform">
+                  <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center group-hover:translate-x-1 transition-transform">
                     <ArrowRight className="w-3.5 h-3.5" />
                   </div>
                 </button>
               </div>
             </div>
 
-            {/* Right Column: Interactive White Console with Animated Floating AI Bot */}
+            {/* Right Column: Clean White 11x Console with Dotted Terracotta Particle Sphere */}
             <div className="lg:col-span-6">
-              <div className="bg-white rounded-2xl sm:rounded-3xl border border-slate-200/90 shadow-[0_20px_60px_-15px_rgba(0,112,173,0.12),0_0_1px_1px_rgba(0,0,0,0.03)] p-4 sm:p-8 relative overflow-hidden flex flex-col justify-between min-h-[460px] sm:min-h-[480px]">
+              <div className="bg-[#FFFFFF] rounded-2xl sm:rounded-3xl border border-[#E2DBD1] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.08)] p-4 sm:p-8 relative overflow-hidden flex flex-col justify-between min-h-[460px] sm:min-h-[480px]">
                 
                 {/* Console Header Bar */}
-                <div className="flex items-center justify-between pb-3 sm:pb-4 border-b border-slate-100 gap-2">
+                <div className="flex items-center justify-between pb-3 sm:pb-4 border-b border-[#F0EBE3] gap-2">
                   <div className="flex items-center gap-2 min-w-0">
-                    <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-[#0070AD]/10 flex items-center justify-center text-[#0070AD] shrink-0">
-                      <Bot className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                    <div className="h-6 sm:h-7 px-1 rounded-lg bg-[#F5F2EB] flex items-center justify-center shrink-0">
+                      <img src={fastigoLogo} alt="Fastigo" className="h-4 sm:h-4.5 w-auto object-contain" />
                     </div>
-                    <span className="text-[11px] sm:text-xs font-mono font-bold tracking-wider text-[#0E0A42] uppercase truncate">
+                    <span className="text-[11px] sm:text-xs font-mono font-bold tracking-wider text-[#111111] uppercase truncate">
                       OmniSell Multi-Channel
                     </span>
                   </div>
@@ -742,7 +572,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                   </div>
                 </div>
 
-                {/* Center Stage: Animated Floating 3D AI Particle Sphere */}
+                {/* Center Stage: 11x 3D Particle Sphere with Terracotta & Black Dotted Waves */}
                 <div className="my-auto py-3 sm:py-4 relative flex flex-col items-center justify-center">
                   
                   {/* Floating Motion Wrapper */}
@@ -755,17 +585,17 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                     {/* The 3D Dotted Wave Particle Sphere */}
                     <ParticleSphere isTalking={isSimulatingCall} />
 
-                    {/* Subtle Radial Blue Glow Behind Sphere */}
-                    <div className="absolute inset-0 -z-10 rounded-full bg-gradient-to-tr from-[#0070AD]/15 to-[#00A3E0]/15 blur-2xl pointer-events-none" />
+                    {/* Subtle Radial Glow */}
+                    <div className="absolute inset-0 -z-10 rounded-full bg-gradient-to-tr from-[#C8492C]/10 to-transparent blur-2xl pointer-events-none" />
                   </motion.div>
 
-                  {/* Radial Arc Arc Guideline */}
+                  {/* Radial Arc Guideline */}
                   <div className="relative w-full max-w-[260px] sm:max-w-[280px] flex flex-col items-center mt-[-6px] sm:mt-[-10px]">
-                    <svg className="w-full h-10 sm:h-12 stroke-slate-200 overflow-visible pointer-events-none">
+                    <svg className="w-full h-10 sm:h-12 stroke-[#D8D0C5] overflow-visible pointer-events-none">
                       <path d="M 10 26 Q 130 -4 250 26" fill="none" strokeWidth="1" strokeDasharray="4 4" />
                     </svg>
 
-                    {/* Central Microphone / Talk Button */}
+                    {/* Central Microphone / Talk Button in Terracotta */}
                     <div className="absolute -top-3 flex flex-col items-center">
                       <button
                         type="button"
@@ -773,13 +603,13 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                         className={`w-11 h-11 sm:w-14 sm:h-14 rounded-full flex items-center justify-center text-white transition-all shadow-lg cursor-pointer ${
                           isSimulatingCall
                             ? 'bg-emerald-600 shadow-emerald-500/40 ring-4 ring-emerald-200 animate-pulse'
-                            : 'bg-[#0070AD] hover:bg-[#005a8c] shadow-[0_0_25px_rgba(0,112,173,0.35)]'
+                            : 'bg-[#C8492C] hover:bg-[#B33F24] shadow-[0_0_25px_rgba(200,73,44,0.4)]'
                         }`}
                       >
                         <Mic className="w-4 h-4 sm:w-6 sm:h-6" />
                       </button>
 
-                      <span className="text-[9px] sm:text-[10px] font-mono uppercase tracking-widest text-slate-500 font-bold mt-2 text-center">
+                      <span className="text-[9px] sm:text-[10px] font-mono uppercase tracking-widest text-[#777777] font-bold mt-2 text-center">
                         {isSimulatingCall ? 'SPEAKING • CLICK TO MUTE' : 'READY TO TALK'}
                       </span>
                     </div>
@@ -787,16 +617,16 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                 </div>
 
                 {/* Console Footer Bar */}
-                <div className="pt-3 sm:pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
-                  <div className="flex items-center gap-1.5 text-[10px] sm:text-[11px] font-mono text-slate-500">
-                    <Volume2 className="w-3.5 h-3.5 text-[#0070AD] shrink-0" />
+                <div className="pt-3 sm:pt-4 border-t border-[#F0EBE3] flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+                  <div className="flex items-center gap-1.5 text-[10px] sm:text-[11px] font-mono text-[#777777]">
+                    <Volume2 className="w-3.5 h-3.5 text-[#C8492C] shrink-0" />
                     <span>REAL-TIME CONVERSATION • POWERED BY OMNISELL</span>
                   </div>
 
                   <button
                     type="button"
                     onClick={() => setDemoModalOpen(true)}
-                    className="w-full sm:w-auto justify-center px-4 sm:px-5 py-2 rounded-full bg-[#0070AD] hover:bg-[#005a8c] text-white text-xs font-semibold tracking-wider transition-all shadow-sm flex items-center gap-1 cursor-pointer"
+                    className="w-full sm:w-auto justify-center px-5 py-2 rounded-full bg-[#C8492C] hover:bg-[#B33F24] text-white text-xs font-semibold tracking-wider transition-all shadow-sm flex items-center gap-1 cursor-pointer"
                   >
                     <span>Book a Demo</span>
                     <ChevronRight className="w-3.5 h-3.5" />
@@ -810,23 +640,394 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
         </div>
       </section>
 
+      {/* =========================================================================
+          REVENUE MOTIONS (MINIMALIST BLACK & WHITE WITH ORANGE ICONS)
+          Scale outbound. Capture demand. Expand accounts.
+          Revenue agents that do the work in one unified platform. Across all channels.
+      ========================================================================= */}
+      <section id="motions" className="relative z-10 py-24 sm:py-32 bg-white border-b border-[#E5DFD7] overflow-hidden text-[#111111]">
+        {/* Subtle Ambient Warm Glow */}
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-[radial-gradient(ellipse,_rgba(200,73,44,0.05)_0%,_transparent_70%)] blur-[140px] pointer-events-none" />
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          {/* Header Block: Animated Modern Text with Minimum Words (White BG Theme with Orange Icon) */}
+          <div className="max-w-4xl mx-auto text-center space-y-6 mb-16 sm:mb-20">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#F4EFEB] border border-[#E5DFD7] text-xs font-mono font-semibold text-[#111111] tracking-widest uppercase shadow-sm"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-[#C8492C] animate-ping" />
+              <span>Revenue agents that accelerate growth</span>
+            </motion.div>
+
+            {/* Modern Animated Staggered Heading */}
+            <div className="space-y-1 sm:space-y-2">
+              <motion.h2
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={{
+                  hidden: { opacity: 0 },
+                  visible: {
+                    opacity: 1,
+                    transition: { staggerChildren: 0.15 }
+                  }
+                }}
+                className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-[#111111] leading-[1.06]"
+              >
+                <motion.span
+                  variants={{
+                    hidden: { opacity: 0, y: 25, filter: "blur(6px)" },
+                    visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } }
+                  }}
+                  className="block"
+                >
+                  Scale outbound.
+                </motion.span>
+                <motion.span
+                  variants={{
+                    hidden: { opacity: 0, y: 25, filter: "blur(6px)" },
+                    visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } }
+                  }}
+                  className="block text-[#222222]"
+                >
+                  Capture demand.
+                </motion.span>
+                <motion.span
+                  variants={{
+                    hidden: { opacity: 0, y: 25, filter: "blur(6px)" },
+                    visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } }
+                  }}
+                  className="block text-[#555555]"
+                >
+                  Expand accounts.
+                </motion.span>
+              </motion.h2>
+            </div>
+
+            <motion.p
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.45 }}
+              className="text-sm sm:text-lg text-[#555555] max-w-xl mx-auto font-normal leading-relaxed"
+            >
+              Revenue agents that do the work in one unified platform. Across all channels.
+            </motion.p>
+          </div>
+
+          {/* 3 Premium Boxes (Minimalist White Background with Pure Orange Icons) */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
+            
+            {/* BOX 1: Scale outbound (Alice · AI SDR) */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              whileHover={{ y: -8, scale: 1.01 }}
+              className="group relative rounded-3xl bg-[#09090D] border border-black/10 hover:border-black/25 p-6 sm:p-8 flex flex-col justify-between transition-all duration-300 shadow-[0_20px_50px_rgba(0,0,0,0.85)] overflow-hidden text-white"
+            >
+              {/* Subtle Ambient Backlight Glow */}
+              <div className="absolute top-0 right-0 w-44 h-44 bg-[#C8492C]/10 rounded-full blur-3xl pointer-events-none group-hover:bg-[#C8492C]/18 transition-all duration-500" />
+              
+              {/* Watermark Number */}
+              <span className="absolute -bottom-4 -right-2 text-7xl sm:text-8xl font-mono font-black text-white/[0.03] group-hover:text-white/[0.06] transition-colors pointer-events-none select-none">
+                01
+              </span>
+
+              <div className="space-y-6 relative z-10">
+                {/* Header Tag */}
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-[#C8492C] animate-pulse" />
+                    <span className="text-[11px] font-mono tracking-widest text-white/70 uppercase font-semibold">
+                      01 // OUTBOUND
+                    </span>
+                  </div>
+                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-semibold bg-white/[0.05] border border-white/10 text-white/80">
+                    Alice · AI SDR
+                  </span>
+                </div>
+
+                {/* Title & Minimum Text */}
+                <div className="space-y-2">
+                  <h3 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+                    Scale outbound
+                  </h3>
+                  <p className="text-xs sm:text-sm text-white/60 leading-relaxed">
+                    Researches live buying signals and launches 1:1 hyper-personalized outreach that books pipeline automatically.
+                  </p>
+                </div>
+
+                {/* Premium Micro-UI Box: Minimal Black & White + Orange Icons */}
+                <div className="p-4 rounded-2xl bg-[#000000] border border-white/[0.08] space-y-3 shadow-inner">
+                  <div className="flex items-center justify-between text-[11px]">
+                    <div className="flex items-center gap-2 min-w-0">
+                      <div className="w-6 h-6 rounded-full bg-white/10 border border-white/15 flex items-center justify-center text-white text-[10px] font-bold shrink-0">
+                        SJ
+                      </div>
+                      <span className="text-white font-medium truncate">Sarah J. • VP RevOps</span>
+                    </div>
+                    <span className="text-[10px] font-mono text-white/80 bg-white/[0.06] border border-white/10 px-2 py-0.5 rounded shrink-0">
+                      99% ICP
+                    </span>
+                  </div>
+
+                  {/* Signal Pill with Orange Icon */}
+                  <div className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-white/[0.03] border border-white/[0.06] text-[11px] text-white/80">
+                    <Zap className="w-3.5 h-3.5 text-[#C8492C] shrink-0" />
+                    <span className="truncate">Signal: $150M Series D funding detected</span>
+                  </div>
+
+                  {/* Dispatched Confirmation with Orange Check */}
+                  <div className="flex items-center justify-between pt-1 border-t border-white/[0.06] text-[10px] font-mono text-white/90">
+                    <span className="flex items-center gap-1.5">
+                      <CheckCircle2 className="w-3 h-3 text-[#C8492C]" />
+                      Meeting Booked • Thu 2 PM
+                    </span>
+                    <span className="text-white/40">HUBSPOT</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Metrics Row & CTA */}
+              <div className="pt-6 border-t border-white/[0.08] mt-6 space-y-4 relative z-10">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="text-2xl font-bold text-white font-mono tracking-tight">3.8x</div>
+                    <div className="text-[10px] text-white/40 uppercase tracking-wider font-mono">Pipeline Lift</div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-2xl font-bold text-white font-mono tracking-tight">84%</div>
+                    <div className="text-[10px] text-white/40 uppercase tracking-wider font-mono">Reply Rate</div>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => setDemoModalOpen(true)}
+                  className="w-full py-2.5 rounded-xl bg-white/[0.06] hover:bg-white text-white hover:text-black border border-white/10 text-xs font-semibold tracking-wider transition-all duration-300 flex items-center justify-center gap-2 group/btn cursor-pointer shadow-sm"
+                >
+                  <span>Deploy Alice</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-[#C8492C] group-hover/btn:translate-x-1 transition-transform" />
+                </button>
+              </div>
+            </motion.div>
+
+            {/* BOX 2: Capture demand (Julian · Voice & Chat) */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              whileHover={{ y: -8, scale: 1.01 }}
+              className="group relative rounded-3xl bg-[#09090D] border border-black/10 hover:border-black/25 p-6 sm:p-8 flex flex-col justify-between transition-all duration-300 shadow-[0_20px_50px_rgba(0,0,0,0.85)] overflow-hidden text-white"
+            >
+              {/* Subtle Ambient Backlight Glow */}
+              <div className="absolute top-0 right-0 w-44 h-44 bg-[#C8492C]/10 rounded-full blur-3xl pointer-events-none group-hover:bg-[#C8492C]/18 transition-all duration-500" />
+              
+              {/* Watermark Number */}
+              <span className="absolute -bottom-4 -right-2 text-7xl sm:text-8xl font-mono font-black text-white/[0.03] group-hover:text-white/[0.06] transition-colors pointer-events-none select-none">
+                02
+              </span>
+
+              <div className="space-y-6 relative z-10">
+                {/* Header Tag */}
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-[#C8492C] animate-pulse" />
+                    <span className="text-[11px] font-mono tracking-widest text-white/70 uppercase font-semibold">
+                      02 // INBOUND
+                    </span>
+                  </div>
+                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-semibold bg-white/[0.05] border border-white/10 text-white/80">
+                    Julian · Voice & Chat
+                  </span>
+                </div>
+
+                {/* Title & Minimum Text */}
+                <div className="space-y-2">
+                  <h3 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+                    Capture demand
+                  </h3>
+                  <p className="text-xs sm:text-sm text-white/60 leading-relaxed">
+                    Instantly engages every website visitor, inbound form and pricing inquiry with conversational voice and chat in seconds.
+                  </p>
+                </div>
+
+                {/* Premium Micro-UI Box: Julian Voice Interaction */}
+                <div className="p-4 rounded-2xl bg-[#000000] border border-white/[0.08] space-y-3 shadow-inner">
+                  <div className="flex items-center justify-between text-[11px]">
+                    <div className="flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                      <span className="text-white font-medium">Inbound Call Connected</span>
+                    </div>
+                    <span className="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded">
+                      &lt; 60s SLA
+                    </span>
+                  </div>
+
+                  {/* Audio waveform simulation */}
+                  <div className="flex items-center justify-center gap-1 py-2 px-3 rounded-lg bg-white/[0.03] border border-white/[0.06]">
+                    {[40, 75, 30, 90, 60, 100, 45, 80, 55, 95, 35, 70, 85, 50, 65, 40].map((h, i) => (
+                      <span
+                        key={i}
+                        className="w-1 bg-[#C8492C] rounded-full transition-all"
+                        style={{ height: `${h * 0.22}px` }}
+                      />
+                    ))}
+                  </div>
+
+                  {/* Qualified Outcome with Orange Icon */}
+                  <div className="flex items-center justify-between pt-1 border-t border-white/[0.06] text-[10px] font-mono text-white/90">
+                    <span className="flex items-center gap-1.5">
+                      <PhoneCall className="w-3 h-3 text-[#C8492C]" />
+                      Qualified &amp; Demo Transferred
+                    </span>
+                    <span className="text-white/40">GONG</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Metrics Row & CTA */}
+              <div className="pt-6 border-t border-white/[0.08] mt-6 space-y-4 relative z-10">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="text-2xl font-bold text-white font-mono tracking-tight">&lt; 60s</div>
+                    <div className="text-[10px] text-white/40 uppercase tracking-wider font-mono">Speed to Lead</div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-2xl font-bold text-white font-mono tracking-tight">4.6x</div>
+                    <div className="text-[10px] text-white/40 uppercase tracking-wider font-mono">More SQLs</div>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => setDemoModalOpen(true)}
+                  className="w-full py-2.5 rounded-xl bg-white/[0.06] hover:bg-white text-white hover:text-black border border-white/10 text-xs font-semibold tracking-wider transition-all duration-300 flex items-center justify-center gap-2 group/btn cursor-pointer shadow-sm"
+                >
+                  <span>Deploy Julian</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-[#C8492C] group-hover/btn:translate-x-1 transition-transform" />
+                </button>
+              </div>
+            </motion.div>
+
+            {/* BOX 3: Expand accounts (Jordan · Expansion AI) */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              whileHover={{ y: -8, scale: 1.01 }}
+              className="group relative rounded-3xl bg-[#09090D] border border-black/10 hover:border-black/25 p-6 sm:p-8 flex flex-col justify-between transition-all duration-300 shadow-[0_20px_50px_rgba(0,0,0,0.85)] overflow-hidden text-white"
+            >
+              {/* Subtle Ambient Backlight Glow */}
+              <div className="absolute top-0 right-0 w-44 h-44 bg-[#C8492C]/10 rounded-full blur-3xl pointer-events-none group-hover:bg-[#C8492C]/18 transition-all duration-500" />
+              
+              {/* Watermark Number */}
+              <span className="absolute -bottom-4 -right-2 text-7xl sm:text-8xl font-mono font-black text-white/[0.03] group-hover:text-white/[0.06] transition-colors pointer-events-none select-none">
+                03
+              </span>
+
+              <div className="space-y-6 relative z-10">
+                {/* Header Tag */}
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-[#C8492C] animate-pulse" />
+                    <span className="text-[11px] font-mono tracking-widest text-white/70 uppercase font-semibold">
+                      03 // EXPANSION
+                    </span>
+                  </div>
+                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-semibold bg-white/[0.05] border border-white/10 text-white/80">
+                    Jordan · Expansion AI
+                  </span>
+                </div>
+
+                {/* Title & Minimum Text */}
+                <div className="space-y-2">
+                  <h3 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+                    Expand accounts
+                  </h3>
+                  <p className="text-xs sm:text-sm text-white/60 leading-relaxed">
+                    Monitors product usage milestones, org chart expansions and renewals to capture net-retention ARR automatically.
+                  </p>
+                </div>
+
+                {/* Premium Micro-UI Box: Expansion Signal */}
+                <div className="p-4 rounded-2xl bg-[#000000] border border-white/[0.08] space-y-3 shadow-inner">
+                  <div className="flex items-center justify-between text-[11px]">
+                    <span className="text-white font-medium">Enterprise Tier Account</span>
+                    <span className="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded">
+                      HEALTH: 98%
+                    </span>
+                  </div>
+
+                  {/* Signal Pill with Orange Icon */}
+                  <div className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-white/[0.03] border border-white/[0.06] text-[11px] text-white/80">
+                    <TrendingUp className="w-3.5 h-3.5 text-[#C8492C] shrink-0" />
+                    <span className="truncate">Trigger: 100% Seat Capacity Reached</span>
+                  </div>
+
+                  {/* Automated Upgrade Dispatched with Orange Check */}
+                  <div className="flex items-center justify-between pt-1 border-t border-white/[0.06] text-[10px] font-mono text-white/90">
+                    <span className="flex items-center gap-1.5">
+                      <CheckCircle2 className="w-3 h-3 text-[#C8492C]" />
+                      +$65,000 ARR Proposal Dispatched
+                    </span>
+                    <span className="text-white/40">SALESFORCE</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Metrics Row & CTA */}
+              <div className="pt-6 border-t border-white/[0.08] mt-6 space-y-4 relative z-10">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="text-2xl font-bold text-white font-mono tracking-tight">135%</div>
+                    <div className="text-[10px] text-white/40 uppercase tracking-wider font-mono">Net Retention</div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-2xl font-bold text-white font-mono tracking-tight">2.4x</div>
+                    <div className="text-[10px] text-white/40 uppercase tracking-wider font-mono">Faster Expansion</div>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => setDemoModalOpen(true)}
+                  className="w-full py-2.5 rounded-xl bg-white/[0.06] hover:bg-white text-white hover:text-black border border-white/10 text-xs font-semibold tracking-wider transition-all duration-300 flex items-center justify-center gap-2 group/btn cursor-pointer shadow-sm"
+                >
+                  <span>Deploy Atlas</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-[#C8492C] group-hover/btn:translate-x-1 transition-transform" />
+                </button>
+              </div>
+            </motion.div>
+
+          </div>
+        </div>
+      </section>
 
       {/* =========================================================================
-          03 — ROADMAP: ONE AI AGENT. THE ENTIRE SALES MOTION.
-          Theme: One shared brain. Across every channel. (Context → Intelligence → Omnichannel)
+          04 — ROADMAP: ONE AI AGENT. THE ENTIRE SALES MOTION.
+          Theme: Monochrome Black & White with Orange Accents (#C8492C)
       ========================================================================= */}
-      <section id="capabilities" className="relative z-10 py-24 sm:py-32 bg-[#06080F] border-t border-white/[0.08] overflow-hidden">
-        {/* Ambient Fastigo Blue Atmospheric Glows */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[750px] h-[380px] bg-[radial-gradient(ellipse,_rgba(0,112,173,0.14)_0%,_rgba(0,163,224,0.05)_50%,_transparent_75%)] blur-[100px] pointer-events-none" />
-        <div className="absolute bottom-1/4 right-[5%] w-[450px] h-[450px] bg-[radial-gradient(circle,_rgba(0,163,224,0.08)_0%,_transparent_70%)] blur-[90px] pointer-events-none" />
-        <div className="absolute inset-0 bg-[radial-gradient(#ffffff08_1px,transparent_1px)] [background-size:28px_28px] opacity-70 pointer-events-none" />
+      <section id="platform" className="relative z-10 py-24 sm:py-32 bg-white border-t border-[#E5DFD7] overflow-hidden text-[#111111]">
+        {/* Subtle Ambient Warm Glow */}
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[850px] h-[400px] bg-[radial-gradient(ellipse,_rgba(200,73,44,0.05)_0%,_transparent_75%)] blur-[120px] pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(#0000000d_1px,transparent_1px)] [background-size:28px_28px] opacity-70 pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           
           {/* Section Header */}
           <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-20 space-y-4">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#0070AD]/15 border border-[#0070AD]/40 text-[#00A3E0] text-xs font-mono tracking-widest uppercase shadow-[0_0_20px_rgba(0,112,173,0.25)]">
-              <Zap className="w-3.5 h-3.5 text-[#00A3E0] animate-pulse" />
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#F4EFEB] border border-[#E5DFD7] text-[#111111] text-xs font-mono tracking-widest uppercase shadow-sm">
+              <Zap className="w-3.5 h-3.5 text-[#C8492C] animate-pulse" />
               <span>ONE SHARED BRAIN. ACROSS EVERY CHANNEL.</span>
             </div>
 
@@ -836,122 +1037,113 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                 whileInView={{ y: 0, opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
-                className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white uppercase leading-[1.08]"
+                className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-[#111111] uppercase leading-[1.08]"
               >
                 ONE AI AGENT. <br />
-                <span className="bg-gradient-to-r from-[#00A3E0] via-[#38BDF8] to-[#0070AD] bg-clip-text text-transparent">
+                <span className="text-[#333333]">
                   THE ENTIRE SALES MOTION.
                 </span>
               </motion.h2>
             </div>
 
-            <p className="text-sm sm:text-base text-[#94A3B8] leading-relaxed max-w-2xl mx-auto">
+            <p className="text-sm sm:text-base text-[#555555] leading-relaxed max-w-2xl mx-auto font-normal">
               An autonomous architecture powered by one continuous shared intelligence. From unified context and coordinated multi-agent reasoning to frictionless omnichannel execution.
             </p>
 
-            {/* Direct Link to Explore the Platform */}
             <div className="pt-2">
-              <a
-                href="https://www.11x.ai/platform"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/5 hover:bg-[#0070AD]/25 border border-white/10 hover:border-[#0070AD]/60 text-xs sm:text-sm font-semibold text-[#00A3E0] hover:text-white transition-all shadow-sm group cursor-pointer"
+              <button
+                type="button"
+                onClick={() => setDemoModalOpen(true)}
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#111111] hover:bg-[#C8492C] text-xs sm:text-sm font-semibold text-white transition-all shadow-md group cursor-pointer"
               >
-                <span>Explore the platform</span>
-                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-              </a>
+                <span>Deploy Platform</span>
+                <ArrowRight className="w-3.5 h-3.5 text-white group-hover:translate-x-1 transition-transform" />
+              </button>
             </div>
           </div>
 
-          {/* =========================================================================
-              THE ROADMAP PIPELINE (Central Spine with 3 Milestones)
-          ========================================================================= */}
+          {/* THE ROADMAP PIPELINE (Central Spine with 3 Milestones) */}
           <div className="relative">
             
-            {/* Glowing Central Vertical Roadmap Spine Line (Desktop) */}
-            <div className="hidden lg:block absolute left-1/2 -translate-x-1/2 top-10 bottom-10 w-[2px] bg-gradient-to-b from-[#00A3E0] via-[#0070AD] to-emerald-400 opacity-50 shadow-[0_0_15px_rgba(0,163,224,0.5)]" />
-            
-            {/* Left Vertical Spine (Mobile / Tablet) */}
-            <div className="lg:hidden absolute left-4 sm:left-6 top-6 bottom-6 w-[2px] bg-gradient-to-b from-[#00A3E0] via-[#0070AD] to-emerald-400 opacity-50" />
+            {/* Central Spine Line in Clean Orange & Gray Gradient */}
+            <div className="hidden lg:block absolute left-1/2 -translate-x-1/2 top-10 bottom-10 w-[2px] bg-gradient-to-b from-[#C8492C] via-black/15 to-[#C8492C] opacity-50 shadow-sm" />
+            <div className="lg:hidden absolute left-4 sm:left-6 top-6 bottom-6 w-[2px] bg-gradient-to-b from-[#C8492C] via-black/15 to-[#C8492C] opacity-50" />
 
             <div className="space-y-12 sm:space-y-20 lg:space-y-24">
               
-              {/* -------------------------------------------------------------------
-                  MILESTONE 01: CONTEXT
-              ------------------------------------------------------------------- */}
+              {/* MILESTONE 01: CONTEXT */}
               <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-14 items-center">
                 
                 {/* Roadmap Node Indicator */}
                 <div className="absolute left-4 sm:left-6 lg:left-1/2 -translate-x-1/2 -top-1 lg:top-1/2 lg:-translate-y-1/2 z-20 flex items-center justify-center">
-                  <div className="w-8 h-8 sm:w-11 sm:h-11 rounded-full bg-[#06080F] border-2 border-[#00A3E0] shadow-[0_0_25px_rgba(0,163,224,0.7)] flex items-center justify-center text-white font-mono font-bold text-xs sm:text-sm">
+                  <div className="w-8 h-8 sm:w-11 sm:h-11 rounded-full bg-white border-2 border-[#C8492C] shadow-md flex items-center justify-center text-[#111111] font-mono font-bold text-xs sm:text-sm">
                     01
                   </div>
                 </div>
 
-                {/* Left Column (Desktop): Text & Narrative */}
+                {/* Left Column: Text & Narrative */}
                 <div className="lg:col-span-6 pl-10 sm:pl-16 lg:pl-0 lg:pr-14 text-left space-y-3 sm:space-y-4">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#0070AD]/20 border border-[#0070AD]/40 text-[#00A3E0] text-xs font-mono font-semibold tracking-wider">
-                    <Database className="w-3.5 h-3.5" />
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#F4EFEB] border border-[#E5DFD7] text-[#111111] text-xs font-mono font-semibold tracking-wider">
+                    <Database className="w-3.5 h-3.5 text-[#C8492C]" />
                     <span>MILESTONE 01 • CONTEXT</span>
                   </div>
                   
-                  <h3 className="text-xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight leading-tight">
+                  <h3 className="text-xl sm:text-3xl lg:text-4xl font-bold text-[#111111] tracking-tight leading-tight">
                     Unified customer and <br className="hidden sm:block" />
                     market context
                   </h3>
                   
-                  <p className="text-sm sm:text-base text-[#94A3B8] leading-relaxed">
-                    Your CRM, knowledge base, website activity and every OmniSell conversation, connected through supported integrations, and enriched with real-time third-party signals about your priority accounts such as funding, hiring, job moves, and tech stack.
+                  <p className="text-sm sm:text-base text-[#555555] leading-relaxed font-normal">
+                    Your CRM, knowledge base, website activity and every OmniSell conversation, connected through supported integrations, and enriched with real-time third-party signals about your priority accounts.
                   </p>
 
                   <div className="flex flex-wrap gap-1.5 sm:gap-2 pt-2">
                     {['Salesforce', 'HubSpot', 'Snowflake', 'Gong', 'Notion', 'Slack'].map((tool) => (
-                      <span key={tool} className="px-2.5 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] text-xs font-mono text-slate-300">
+                      <span key={tool} className="px-2.5 py-1 rounded-full bg-[#F4EFEB] border border-[#E5DFD7] text-xs font-mono text-[#333333]">
                         {tool}
                       </span>
                     ))}
                   </div>
                 </div>
 
-                {/* Right Column (Desktop): Live Telemetry Context Visual Card */}
+                {/* Right Column: Live Telemetry Context Visual Card */}
                 <div className="lg:col-span-6 pl-10 sm:pl-16 lg:pl-14">
-                  <div className="bg-[#0B0F19]/90 border border-white/10 hover:border-[#0070AD] rounded-2xl p-4 sm:p-7 shadow-2xl relative overflow-hidden group transition-all">
-                    <div className="absolute top-0 right-0 w-44 h-44 bg-[#0070AD]/10 blur-3xl pointer-events-none" />
+                  <div className="bg-[#09090D] border border-white/10 hover:border-white/20 rounded-2xl p-4 sm:p-7 shadow-2xl relative overflow-hidden group transition-all text-white">
+                    <div className="absolute top-0 right-0 w-44 h-44 bg-[#C8492C]/10 blur-3xl pointer-events-none" />
                     
                     <div className="flex items-center justify-between pb-3 mb-4 border-b border-white/[0.08] text-xs font-mono">
                       <div className="flex items-center gap-2 text-white font-semibold">
-                        <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                        <span className="w-2 h-2 rounded-full bg-[#C8492C] animate-pulse" />
                         <span>SHARED CONTEXT LAYER</span>
                       </div>
-                      <span className="text-[#00A3E0] text-[10px]">REAL-TIME ENRICHMENT</span>
+                      <span className="text-white/60 text-[10px]">REAL-TIME ENRICHMENT</span>
                     </div>
 
                     <div className="space-y-3 font-mono text-xs">
-                      {/* Data Conduits */}
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px]">
                         <div className="p-2.5 rounded-lg bg-white/[0.02] border border-white/[0.05]">
-                          <span className="text-[#64748B] block text-[9px]">BI-DIRECTIONAL CRM</span>
-                          <span className="text-white font-medium">Salesforce & HubSpot</span>
+                          <span className="text-white/40 block text-[9px]">BI-DIRECTIONAL CRM</span>
+                          <span className="text-white font-medium">Salesforce &amp; HubSpot</span>
                         </div>
                         <div className="p-2.5 rounded-lg bg-white/[0.02] border border-white/[0.05]">
-                          <span className="text-[#64748B] block text-[9px]">INTENT DE-ANONYMIZED</span>
+                          <span className="text-white/40 block text-[9px]">INTENT DE-ANONYMIZED</span>
                           <span className="text-white font-medium">Website Live Traffic</span>
                         </div>
                       </div>
 
-                      {/* Account Card Example */}
-                      <div className="p-3 sm:p-3.5 rounded-xl bg-[#05070D] border border-white/[0.08] space-y-2">
+                      <div className="p-3 sm:p-3.5 rounded-xl bg-[#000000] border border-white/[0.08] space-y-2">
                         <div className="flex flex-wrap items-center justify-between gap-1">
                           <span className="text-white font-bold text-sm">CloudScale Networks</span>
-                          <span className="px-2 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-[10px] font-bold">
+                          <span className="px-2 py-0.5 rounded-full bg-white/[0.08] border border-white/10 text-white text-[10px] font-bold">
                             99.2% FIT SCORE
                           </span>
                         </div>
-                        <div className="text-[11px] text-[#38BDF8]">
-                          ⚡ 3rd-Party Trigger: Series B ($38M) • Hiring 14 SDRs in US/EMEA
+                        <div className="text-[11px] text-white/80 flex items-center gap-1.5">
+                          <Zap className="w-3.5 h-3.5 text-[#C8492C] shrink-0" />
+                          <span>Trigger: Series B ($38M) • Hiring 14 SDRs in US/EMEA</span>
                         </div>
-                        <div className="text-[10px] text-[#94A3B8] leading-relaxed">
-                          Knowledge Base Synced: Product Pricing Matrix, Security Dossier & Competitor Battlecards
+                        <div className="text-[10px] text-white/50 leading-relaxed">
+                          Knowledge Base Synced: Product Pricing Matrix &amp; Battlecards
                         </div>
                       </div>
                     </div>
@@ -961,96 +1153,83 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
               </div>
 
 
-              {/* -------------------------------------------------------------------
-                  MILESTONE 02: INTELLIGENCE
-              ------------------------------------------------------------------- */}
+              {/* MILESTONE 02: INTELLIGENCE */}
               <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-14 items-center">
                 
                 {/* Roadmap Node Indicator */}
                 <div className="absolute left-4 sm:left-6 lg:left-1/2 -translate-x-1/2 -top-1 lg:top-1/2 lg:-translate-y-1/2 z-20 flex items-center justify-center">
-                  <div className="w-8 h-8 sm:w-11 sm:h-11 rounded-full bg-[#06080F] border-2 border-[#0070AD] shadow-[0_0_25px_rgba(0,112,173,0.7)] flex items-center justify-center text-white font-mono font-bold text-xs sm:text-sm">
+                  <div className="w-8 h-8 sm:w-11 sm:h-11 rounded-full bg-white border-2 border-[#C8492C] shadow-md flex items-center justify-center text-[#111111] font-mono font-bold text-xs sm:text-sm">
                     02
                   </div>
                 </div>
 
-                {/* Left Column (Desktop): Multi-Agent Swarm Visual Card */}
+                {/* Left Column: Multi-Agent Swarm Visual Card */}
                 <div className="lg:col-span-6 order-2 lg:order-1 pl-10 sm:pl-16 lg:pl-0 lg:pr-14">
-                  <div className="bg-[#0B0F19]/90 border border-white/10 hover:border-[#00A3E0] rounded-2xl p-4 sm:p-7 shadow-2xl relative overflow-hidden group transition-all">
-                    <div className="absolute top-0 left-0 w-44 h-44 bg-[#00A3E0]/10 blur-3xl pointer-events-none" />
+                  <div className="bg-[#09090D] border border-white/10 hover:border-white/20 rounded-2xl p-4 sm:p-7 shadow-2xl relative overflow-hidden group transition-all text-white">
+                    <div className="absolute top-0 left-0 w-44 h-44 bg-[#C8492C]/10 blur-3xl pointer-events-none" />
 
                     <div className="flex items-center justify-between pb-3 mb-4 border-b border-white/[0.08] text-xs font-mono">
                       <div className="flex items-center gap-2 text-white font-semibold">
-                        <Bot className="w-4 h-4 text-[#00A3E0]" />
+                        <Bot className="w-4 h-4 text-[#C8492C]" />
                         <span>MULTI-AGENT ORCHESTRATION</span>
                       </div>
-                      <span className="text-emerald-400 text-[10px] bg-emerald-500/10 border border-emerald-500/30 px-2 py-0.5 rounded">
+                      <span className="text-white/80 text-[10px] bg-white/[0.06] border border-white/10 px-2 py-0.5 rounded">
                         COORDINATED
                       </span>
                     </div>
 
-                    {/* 4 Agent Nodes */}
                     <div className="space-y-2.5 font-mono text-xs">
-                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-2 p-2.5 rounded-lg bg-[#05070D] border border-white/[0.06]">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-2 p-2.5 rounded-lg bg-[#000000] border border-white/[0.06]">
                         <div className="flex items-center gap-2.5">
-                          <span className="w-5 h-5 rounded-md bg-[#0070AD]/20 text-[#00A3E0] flex items-center justify-center text-[10px] font-bold shrink-0">R</span>
-                          <span className="text-white text-[11px] font-semibold">Research Agent</span>
+                          <span className="w-2 h-2 rounded-full bg-[#C8492C]" />
+                          <span className="text-white font-medium">Research Agent</span>
                         </div>
-                        <span className="text-[10px] text-slate-400 pl-7 sm:pl-0">10-K & Hook Synthesized</span>
+                        <span className="text-[10px] text-white/50">10-K &amp; Exec Hiring Scraped</span>
                       </div>
 
-                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-2 p-2.5 rounded-lg bg-[#05070D] border border-white/[0.06]">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-2 p-2.5 rounded-lg bg-[#000000] border border-white/[0.06]">
                         <div className="flex items-center gap-2.5">
-                          <span className="w-5 h-5 rounded-md bg-[#00A3E0]/20 text-[#00A3E0] flex items-center justify-center text-[10px] font-bold shrink-0">Q</span>
-                          <span className="text-white text-[11px] font-semibold">Qualification Agent</span>
+                          <span className="w-2 h-2 rounded-full bg-[#C8492C]" />
+                          <span className="text-white font-medium">Context Agent</span>
                         </div>
-                        <span className="text-[10px] text-emerald-400 pl-7 sm:pl-0">99.4% Authority Verified</span>
+                        <span className="text-[10px] text-white/50">Value Props Matched (99.8%)</span>
                       </div>
 
-                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-2 p-2.5 rounded-lg bg-[#05070D] border border-white/[0.06]">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-2 p-2.5 rounded-lg bg-[#000000] border border-white/[0.06]">
                         <div className="flex items-center gap-2.5">
-                          <span className="w-5 h-5 rounded-md bg-[#0070AD]/20 text-[#00A3E0] flex items-center justify-center text-[10px] font-bold shrink-0">M</span>
-                          <span className="text-white text-[11px] font-semibold">Messaging Agent</span>
+                          <span className="w-2 h-2 rounded-full bg-[#C8492C]" />
+                          <span className="text-white font-medium">Dispatch Agent</span>
                         </div>
-                        <span className="text-[10px] text-slate-400 pl-7 sm:pl-0">Value Pitch Calibrated</span>
-                      </div>
-
-                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-2 p-2.5 rounded-lg bg-[#05070D] border border-white/[0.06]">
-                        <div className="flex items-center gap-2.5">
-                          <span className="w-5 h-5 rounded-md bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-[10px] font-bold shrink-0">T</span>
-                          <span className="text-white text-[11px] font-semibold">Routing Agent</span>
-                        </div>
-                        <span className="text-[10px] text-cyan-300 pl-7 sm:pl-0">Optimal Channel Dispatched</span>
+                        <span className="text-[10px] text-[#C8492C] font-bold">Synchronized Multi-Channel</span>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                {/* Right Column (Desktop): Text & Narrative */}
+                {/* Right Column: Narrative */}
                 <div className="lg:col-span-6 order-1 lg:order-2 pl-10 sm:pl-16 lg:pl-14 text-left space-y-3 sm:space-y-4">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#00A3E0]/20 border border-[#00A3E0]/40 text-[#00A3E0] text-xs font-mono font-semibold tracking-wider">
-                    <Sparkles className="w-3.5 h-3.5" />
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#F4EFEB] border border-[#E5DFD7] text-[#111111] text-xs font-mono font-semibold tracking-wider">
+                    <Workflow className="w-3.5 h-3.5 text-[#C8492C]" />
                     <span>MILESTONE 02 • INTELLIGENCE</span>
                   </div>
 
-                  <h3 className="text-xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight leading-tight">
-                    Specialized agents. <br className="hidden sm:block" />
-                    Working as a team. <br className="hidden sm:block" />
-                    Delivering outcomes.
+                  <h3 className="text-xl sm:text-3xl lg:text-4xl font-bold text-[#111111] tracking-tight leading-tight">
+                    Specialized agents, <br className="hidden sm:block" />
+                    collaborative intelligence
                   </h3>
 
-                  <p className="text-sm sm:text-base text-[#94A3B8] leading-relaxed">
-                    From research and qualification to messaging and routing, agents turn shared context into coordinated action — knowing who to engage, why now, what to say, and when to step back.
+                  <p className="text-sm sm:text-base text-[#555555] leading-relaxed font-normal">
+                    OmniSell coordinates a swarm of purpose-built AI agents—each an expert in research, positioning, objection handling, or scheduling—delivering nuanced, context-aware execution that never hallucinates.
                   </p>
 
-                  <div className="pt-2 flex flex-wrap items-center gap-2 sm:gap-3 text-xs font-mono text-slate-400">
-                    <div className="flex items-center gap-1.5">
-                      <CheckCheck className="w-4 h-4 text-emerald-400" />
-                      <span>Zero Hallucinations</span>
+                  <div className="space-y-2 pt-1 text-xs sm:text-sm text-[#444444]">
+                    <div className="flex items-center gap-2">
+                      <Check className="w-4 h-4 text-[#C8492C] shrink-0" />
+                      <span>Deterministic guardrails strictly prevent pricing or product hallucinations</span>
                     </div>
-                    <span className="text-slate-600 hidden sm:inline">•</span>
-                    <div className="flex items-center gap-1.5">
-                      <CheckCheck className="w-4 h-4 text-emerald-400" />
-                      <span>Coordinated Consensus</span>
+                    <div className="flex items-center gap-2">
+                      <Check className="w-4 h-4 text-[#C8492C] shrink-0" />
+                      <span>Continuous reinforcement learning from won/lost deal feedback loops</span>
                     </div>
                   </div>
                 </div>
@@ -1058,129 +1237,79 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
               </div>
 
 
-              {/* -------------------------------------------------------------------
-                  MILESTONE 03: OMNICHANNEL COVERAGE
-              ------------------------------------------------------------------- */}
+              {/* MILESTONE 03: EXECUTION */}
               <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-14 items-center">
                 
                 {/* Roadmap Node Indicator */}
                 <div className="absolute left-4 sm:left-6 lg:left-1/2 -translate-x-1/2 -top-1 lg:top-1/2 lg:-translate-y-1/2 z-20 flex items-center justify-center">
-                  <div className="w-8 h-8 sm:w-11 sm:h-11 rounded-full bg-[#06080F] border-2 border-emerald-400 shadow-[0_0_25px_rgba(52,211,153,0.7)] flex items-center justify-center text-white font-mono font-bold text-xs sm:text-sm">
+                  <div className="w-8 h-8 sm:w-11 sm:h-11 rounded-full bg-white border-2 border-[#C8492C] shadow-md flex items-center justify-center text-[#111111] font-mono font-bold text-xs sm:text-sm">
                     03
                   </div>
                 </div>
 
-                {/* Left Column (Desktop): Text & Narrative */}
+                {/* Left Column: Text & Narrative */}
                 <div className="lg:col-span-6 pl-10 sm:pl-16 lg:pl-0 lg:pr-14 text-left space-y-3 sm:space-y-4">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 text-xs font-mono font-semibold tracking-wider">
-                    <Radio className="w-3.5 h-3.5" />
-                    <span>MILESTONE 03 • OMNICHANNEL COVERAGE</span>
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#F4EFEB] border border-[#E5DFD7] text-[#111111] text-xs font-mono font-semibold tracking-wider">
+                    <Radio className="w-3.5 h-3.5 text-[#C8492C]" />
+                    <span>MILESTONE 03 • EXECUTION</span>
                   </div>
 
-                  <h3 className="text-xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight leading-tight">
-                    Drive outcomes on every <br className="hidden sm:block" />
-                    channel your prospects are on
+                  <h3 className="text-xl sm:text-3xl lg:text-4xl font-bold text-[#111111] tracking-tight leading-tight">
+                    Frictionless omnichannel <br className="hidden sm:block" />
+                    conversation loops
                   </h3>
 
-                  <p className="text-sm sm:text-base text-[#94A3B8] leading-relaxed">
-                    Two-way conversations across voice, chat, email, SMS and WhatsApp, and a human dialer. Engage with prospects on whichever channel they prefer.
+                  <p className="text-sm sm:text-base text-[#555555] leading-relaxed font-normal">
+                    Prospects respond on their terms. OmniSell transitions seamlessly from cold email to personalized LinkedIn outreach, to interactive voice calls, and direct WhatsApp replies without losing context.
                   </p>
 
-                  <div className="pt-2 flex flex-wrap gap-2 text-xs font-mono">
-                    <span className="px-2.5 py-1 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">
-                      ✓ Sub-Second Response
-                    </span>
-                    <span className="px-2.5 py-1 rounded-lg bg-[#0070AD]/15 border border-[#0070AD]/30 text-[#00A3E0]">
-                      ✓ Calendar Synced Booking
-                    </span>
-                    <span className="px-2.5 py-1 rounded-lg bg-white/[0.04] border border-white/[0.08] text-slate-300">
-                      ✓ 2-Way CRM Logging
-                    </span>
+                  <div className="grid grid-cols-2 gap-2 pt-2">
+                    {[
+                      { channel: "Voice AI", rate: "< 400ms Latency" },
+                      { channel: "2-Way Email", rate: "99.4% Deliverability" },
+                      { channel: "LinkedIn Touch", rate: "Warm Connections" },
+                      { channel: "WhatsApp Pro", rate: "Direct Executive Line" }
+                    ].map((item) => (
+                      <div key={item.channel} className="p-2 rounded-lg bg-[#FAF8F5] border border-[#EBE5DC] text-xs">
+                        <span className="text-[#111111] font-semibold block">{item.channel}</span>
+                        <span className="text-[10px] text-[#C8492C] font-mono">{item.rate}</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
 
-                {/* Right Column (Desktop): 6-Channel Grid Visual Card */}
+                {/* Right Column: Execution Live Terminal Card */}
                 <div className="lg:col-span-6 pl-10 sm:pl-16 lg:pl-14">
-                  <div className="bg-[#0B0F19]/90 border border-white/10 hover:border-emerald-400/80 rounded-2xl p-4 sm:p-7 shadow-2xl relative overflow-hidden group transition-all">
-                    <div className="absolute top-0 right-0 w-44 h-44 bg-emerald-500/10 blur-3xl pointer-events-none" />
+                  <div className="bg-[#09090D] border border-white/10 hover:border-white/20 rounded-2xl p-4 sm:p-7 shadow-2xl relative overflow-hidden group transition-all text-white">
+                    <div className="absolute bottom-0 right-0 w-44 h-44 bg-[#C8492C]/10 blur-3xl pointer-events-none" />
 
                     <div className="flex items-center justify-between pb-3 mb-4 border-b border-white/[0.08] text-xs font-mono">
                       <div className="flex items-center gap-2 text-white font-semibold">
                         <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                        <span>OMNICHANNEL EXECUTION MESH</span>
+                        <span>LIVE EXECUTION STREAM</span>
                       </div>
-                      <span className="text-emerald-400 text-[10px]">ALL 6 CHANNELS ONLINE</span>
+                      <span className="text-[#C8492C] text-[10px]">ALL CHANNELS ACTIVE</span>
                     </div>
 
-                    {/* 6-Channel Grid */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 font-mono text-xs">
-                      
-                      {/* Voice AI */}
-                      <div className="p-3 rounded-xl bg-[#05070D] border border-white/[0.06] hover:border-[#0070AD] transition-all">
-                        <div className="flex items-center gap-2 text-white font-bold text-xs mb-1">
-                          <Mic className="w-3.5 h-3.5 text-[#00A3E0]" />
-                          <span>Voice AI</span>
+                    <div className="space-y-3 font-mono text-xs">
+                      <div className="p-3 rounded-xl bg-[#000000] border border-white/[0.08] space-y-2">
+                        <div className="flex items-center justify-between text-[10px] text-white/50">
+                          <span>CHANNEL: ULTRA-LOW LATENCY VOICE</span>
+                          <span className="text-emerald-400">CALL COMPLETED</span>
                         </div>
-                        <p className="text-[10px] text-[#94A3B8] leading-tight">
-                          Human-cadence inbound/outbound calls with sub-second latency.
-                        </p>
+                        <div className="text-white text-[11px] leading-snug">
+                          "I saw your recent expansion into Frankfurt. Would Tuesday 10 AM CET work for a brief 15-minute briefing?"
+                        </div>
+                        <div className="text-[10px] text-white/60 flex items-center justify-between pt-1 border-t border-white/[0.06]">
+                          <span>PROSPECT: "Yes, send the calendar invite."</span>
+                          <span className="text-[#C8492C] font-bold">INVITE DISPATCHED</span>
+                        </div>
                       </div>
 
-                      {/* Web Chat */}
-                      <div className="p-3 rounded-xl bg-[#05070D] border border-white/[0.06] hover:border-[#0070AD] transition-all">
-                        <div className="flex items-center gap-2 text-white font-bold text-xs mb-1">
-                          <MessageSquare className="w-3.5 h-3.5 text-emerald-400" />
-                          <span>Web Chat</span>
-                        </div>
-                        <p className="text-[10px] text-[#94A3B8] leading-tight">
-                          24/7 web visitor engagement, instant qualifying & routing.
-                        </p>
+                      <div className="p-2.5 rounded-lg bg-white/[0.02] border border-white/[0.05] flex items-center justify-between text-[11px]">
+                        <span className="text-white/60">CRM Lead Status</span>
+                        <span className="text-emerald-400 font-bold">QUALIFIED_MEETING_SET</span>
                       </div>
-
-                      {/* Email */}
-                      <div className="p-3 rounded-xl bg-[#05070D] border border-white/[0.06] hover:border-[#0070AD] transition-all">
-                        <div className="flex items-center gap-2 text-white font-bold text-xs mb-1">
-                          <Mail className="w-3.5 h-3.5 text-[#38BDF8]" />
-                          <span>Email Engine</span>
-                        </div>
-                        <p className="text-[10px] text-[#94A3B8] leading-tight">
-                          Inbox-deliverability personalized multi-step cadences.
-                        </p>
-                      </div>
-
-                      {/* SMS & WhatsApp */}
-                      <div className="p-3 rounded-xl bg-[#05070D] border border-white/[0.06] hover:border-[#0070AD] transition-all">
-                        <div className="flex items-center gap-2 text-white font-bold text-xs mb-1">
-                          <Smartphone className="w-3.5 h-3.5 text-purple-400" />
-                          <span>SMS & WhatsApp</span>
-                        </div>
-                        <p className="text-[10px] text-[#94A3B8] leading-tight">
-                          Rapid 2-way mobile messaging & appointment scheduling.
-                        </p>
-                      </div>
-
-                      {/* Social / LinkedIn */}
-                      <div className="p-3 rounded-xl bg-[#05070D] border border-white/[0.06] hover:border-[#0070AD] transition-all">
-                        <div className="flex items-center gap-2 text-white font-bold text-xs mb-1">
-                          <Users className="w-3.5 h-3.5 text-blue-400" />
-                          <span>Social / LinkedIn</span>
-                        </div>
-                        <p className="text-[10px] text-[#94A3B8] leading-tight">
-                          Warm buyer signal alerts & executive InMail outreach.
-                        </p>
-                      </div>
-
-                      {/* Human Dialer */}
-                      <div className="p-3 rounded-xl bg-[#05070D] border border-white/[0.06] hover:border-[#0070AD] transition-all">
-                        <div className="flex items-center gap-2 text-white font-bold text-xs mb-1">
-                          <PhoneCall className="w-3.5 h-3.5 text-amber-400" />
-                          <span>Human Dialer</span>
-                        </div>
-                        <p className="text-[10px] text-[#94A3B8] leading-tight">
-                          Seamless live rep transfer with instant pre-call briefing.
-                        </p>
-                      </div>
-
                     </div>
                   </div>
                 </div>
@@ -1188,33 +1317,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
               </div>
 
             </div>
-          </div>
 
-          {/* Bottom High-Impact Performance Metrics Bar */}
-          <div className="mt-14 sm:mt-20 grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-5">
-            <div className="p-4 sm:p-6 rounded-2xl bg-white/[0.02] border border-white/[0.08] backdrop-blur-sm flex items-center gap-4">
-              <div className="text-3xl sm:text-4xl font-extrabold text-[#38BDF8] font-mono tracking-tight shrink-0">10x</div>
-              <div>
-                <div className="text-xs sm:text-sm font-bold text-white uppercase tracking-wider">Faster Pipeline Velocity</div>
-                <div className="text-[11px] sm:text-xs text-[#94A3B8]">From weeks of manual search to minutes</div>
-              </div>
-            </div>
-
-            <div className="p-4 sm:p-6 rounded-2xl bg-white/[0.02] border border-white/[0.08] backdrop-blur-sm flex items-center gap-4">
-              <div className="text-3xl sm:text-4xl font-extrabold text-[#00A3E0] font-mono tracking-tight shrink-0">84%</div>
-              <div>
-                <div className="text-xs sm:text-sm font-bold text-white uppercase tracking-wider">Executive Response Rate</div>
-                <div className="text-[11px] sm:text-xs text-[#94A3B8]">Deep personalized value hooks that resonate</div>
-              </div>
-            </div>
-
-            <div className="p-4 sm:p-6 rounded-2xl bg-white/[0.02] border border-white/[0.08] backdrop-blur-sm flex items-center gap-4">
-              <div className="text-3xl sm:text-4xl font-extrabold text-emerald-400 font-mono tracking-tight shrink-0">0 hrs</div>
-              <div>
-                <div className="text-xs sm:text-sm font-bold text-white uppercase tracking-wider">Manual SDR Admin</div>
-                <div className="text-[11px] sm:text-xs text-[#94A3B8]">Continuous autonomous pipeline execution</div>
-              </div>
-            </div>
           </div>
 
         </div>
@@ -1223,16 +1326,19 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
 
 
 
-
       {/* =========================================================================
-          07 — OUTCOME (Background: #F4F7FA, The Only Major Light Section)
+          05 — PROVEN IMPACT & CASE STUDIES
+          Theme: Clean White Background with Terracotta Orange (#C8492C)
       ========================================================================= */}
-      <section className="relative z-10 py-24 sm:py-32 bg-[#F4F7FA] text-[#071018]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="results" className="relative z-10 py-24 sm:py-32 bg-white border-t border-[#E5DFD7] text-[#111111] overflow-hidden">
+        {/* Subtle Ambient Glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-[radial-gradient(ellipse,_rgba(200,73,44,0.05)_0%,_transparent_75%)] blur-[120px] pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           
           <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
-            <span className="text-xs font-mono uppercase tracking-widest text-[#0070AD] block font-semibold">
-              THE OUTCOME
+            <span className="text-xs font-mono uppercase tracking-widest text-[#C8492C] block font-semibold">
+              PROVEN RESULTS
             </span>
             <div className="overflow-hidden">
               <motion.h2 
@@ -1240,85 +1346,118 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                 whileInView={{ y: 0, opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
-                className="text-4xl sm:text-5xl font-bold tracking-tight text-[#071018] uppercase"
+                className="text-3xl sm:text-5xl font-bold tracking-tight text-[#111111] uppercase"
               >
-                FROM PROSPECT <br />
-                TO MEETING.
+                REAL IMPACT. <br />
+                SUPERHUMAN REVENUE.
               </motion.h2>
             </div>
-            <p className="text-base text-[#536170]">
-              OmniSell moves prospects through your pipeline with the right action at the right time.
+            <p className="text-base text-[#555555]">
+              How leading enterprise revenue organizations scale pipeline and compress sales cycles with OmniSell.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative">
-            {[
-              {
-                stage: "Prospects",
-                desc: "AI finds the right people and companies",
-                icon: Users,
-                num: "01"
-              },
-              {
-                stage: "Qualified",
-                desc: "Enriched and verified intent & growth",
-                icon: ShieldCheck,
-                num: "02"
-              },
-              {
-                stage: "Conversations",
-                desc: "Personalized outreach starts conversations",
-                icon: MessageSquare,
-                num: "03"
-              },
-              {
-                stage: "Meetings",
-                desc: "Meaningful conversations turn into meetings",
-                icon: Calendar,
-                num: "04"
-              }
-            ].map((st) => (
-              <div 
-                key={st.stage} 
-                className="bg-[#FFFFFF] rounded-[14px] p-6 sm:p-8 border border-slate-200/80 shadow-md hover:shadow-xl transition-all duration-300 relative group"
-              >
-                <div className="w-12 h-12 rounded-xl bg-[#0070AD]/10 text-[#0070AD] flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
-                  <st.icon className="w-6 h-6" />
+          {/* 4 Quantified Customer Outcome Cards in Dark Obsidian + Orange */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            
+            <div className="bg-[#09090D] rounded-2xl p-6 sm:p-7 border border-black/10 hover:border-[#C8492C]/50 transition-all duration-300 flex flex-col justify-between group shadow-[0_20px_50px_rgba(0,0,0,0.85)] text-white">
+              <div>
+                <div className="text-xs font-mono uppercase tracking-wider text-white/50 font-semibold mb-3">
+                  LEICA BIOSYSTEMS
                 </div>
-                <div className="text-xs font-mono text-[#0070AD] font-semibold mb-1">
-                  STAGE {st.num}
+                <div className="text-3xl sm:text-4xl font-extrabold text-[#C8492C] font-mono tracking-tight mb-2">
+                  $4.2M
                 </div>
-                <h3 className="text-xl font-bold text-[#071018] mb-2">{st.stage}</h3>
-                <p className="text-sm text-[#536170] leading-relaxed">{st.desc}</p>
+                <h4 className="text-base font-bold text-white mb-2">Net-New Pipeline</h4>
+                <p className="text-xs sm:text-sm text-white/65 leading-relaxed">
+                  Expanded into brand-new healthcare verticals by deploying AI agents to execute deep 10-K research and executive outreach.
+                </p>
               </div>
-            ))}
+              <div className="pt-6 border-t border-white/[0.08] mt-6 flex items-center gap-1.5 text-xs font-mono text-[#C8492C] font-semibold">
+                <span>Enterprise Case Study</span>
+                <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+              </div>
+            </div>
+
+            <div className="bg-[#09090D] rounded-2xl p-6 sm:p-7 border border-black/10 hover:border-[#C8492C]/50 transition-all duration-300 flex flex-col justify-between group shadow-[0_20px_50px_rgba(0,0,0,0.85)] text-white">
+              <div>
+                <div className="text-xs font-mono uppercase tracking-wider text-white/50 font-semibold mb-3">
+                  CHECKR
+                </div>
+                <div className="text-3xl sm:text-4xl font-extrabold text-[#C8492C] font-mono tracking-tight mb-2">
+                  700%
+                </div>
+                <h4 className="text-base font-bold text-white mb-2">Program ROI</h4>
+                <p className="text-xs sm:text-sm text-white/65 leading-relaxed">
+                  Generated a 3.2x increase in reply rates from stalled enterprise leads, converting dormant contacts into revenue.
+                </p>
+              </div>
+              <div className="pt-6 border-t border-white/[0.08] mt-6 flex items-center gap-1.5 text-xs font-mono text-[#C8492C] font-semibold">
+                <span>Enterprise Case Study</span>
+                <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+              </div>
+            </div>
+
+            <div className="bg-[#09090D] rounded-2xl p-6 sm:p-7 border border-black/10 hover:border-[#C8492C]/50 transition-all duration-300 flex flex-col justify-between group shadow-[0_20px_50px_rgba(0,0,0,0.85)] text-white">
+              <div>
+                <div className="text-xs font-mono uppercase tracking-wider text-white/50 font-semibold mb-3">
+                  MMB NETWORKS
+                </div>
+                <div className="text-3xl sm:text-4xl font-extrabold text-[#C8492C] font-mono tracking-tight mb-2">
+                  5x Lift
+                </div>
+                <h4 className="text-base font-bold text-white mb-2">Qualified Meetings</h4>
+                <p className="text-xs sm:text-sm text-white/65 leading-relaxed">
+                  Replaced generic outbound templates with real-time intent-triggered messaging, driving 2.5x industry reply rates.
+                </p>
+              </div>
+              <div className="pt-6 border-t border-white/[0.08] mt-6 flex items-center gap-1.5 text-xs font-mono text-[#C8492C] font-semibold">
+                <span>Enterprise Case Study</span>
+                <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+              </div>
+            </div>
+
+            <div className="bg-[#09090D] rounded-2xl p-6 sm:p-7 border border-black/10 hover:border-[#C8492C]/50 transition-all duration-300 flex flex-col justify-between group shadow-[0_20px_50px_rgba(0,0,0,0.85)] text-white">
+              <div>
+                <div className="text-xs font-mono uppercase tracking-wider text-white/50 font-semibold mb-3">
+                  BRAINSUITE
+                </div>
+                <div className="text-3xl sm:text-4xl font-extrabold text-[#C8492C] font-mono tracking-tight mb-2">
+                  40% Time
+                </div>
+                <h4 className="text-base font-bold text-white mb-2">Saved per SDR</h4>
+                <p className="text-xs sm:text-sm text-white/65 leading-relaxed">
+                  Empowered a single sales rep to handle the prospecting volume and calendar output of a 10-person SDR team.
+                </p>
+              </div>
+              <div className="pt-6 border-t border-white/[0.08] mt-6 flex items-center gap-1.5 text-xs font-mono text-[#C8492C] font-semibold">
+                <span>Enterprise Case Study</span>
+                <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+              </div>
+            </div>
+
           </div>
 
           <div className="text-center mt-12">
             <button
               onClick={() => setDemoModalOpen(true)}
-              className="px-8 py-3.5 rounded-full text-sm font-semibold text-white bg-[#0070AD] hover:bg-[#005a8c] shadow-[0_0_20px_rgba(0,112,173,0.35)] transition-all"
+              className="px-8 py-3.5 rounded-full text-sm font-semibold text-white bg-[#C8492C] hover:bg-[#B33F24] shadow-[0_4px_25px_rgba(200,73,44,0.35)] transition-all cursor-pointer"
             >
-              Book a Demo →
+              See All Customer Stories →
             </button>
           </div>
 
         </div>
       </section>
 
-
-
-
-
-      {/* =========================================================================
-          RESOURCES & PRICING ANCHOR (id="pricing")
-          Focused, transparent conversion section with Fastigo colors
+{/* =========================================================================
+          08 — PRICING & FEATURE COMPARISON
       ========================================================================= */}
-      <section id="pricing" className="relative z-10 py-24 sm:py-32 bg-[#0A0D12] border-t border-white/[0.06]">
+      <section id="pricing" className="relative z-10 py-24 sm:py-32 bg-[#000000] border-t border-white/[0.06]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
-            <span className="text-xs font-mono uppercase tracking-widest text-[#00A3E0] block">
+            <span className="text-xs font-mono uppercase tracking-widest text-[#C8492C] block">
               TRANSPARENT INVESTMENT
             </span>
             <div className="overflow-hidden">
@@ -1333,7 +1472,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
               </motion.h2>
             </div>
             <p className="text-base text-[#B4BAC5]">
-              Choose the right tier to automate prospecting and boost meetings booked.
+              Choose the right tier to deploy digital workers and boost qualified meetings booked.
             </p>
 
             {/* Monthly / Annual Toggle */}
@@ -1344,11 +1483,11 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
               <Switch 
                 checked={isAnnual} 
                 onCheckedChange={setIsAnnual}
-                className="data-[state=checked]:bg-[#0070AD]" 
+                className="data-[state=checked]:bg-[#C8492C]" 
               />
               <span className={`text-sm font-medium flex items-center gap-2 ${isAnnual ? 'text-white' : 'text-[#737B88]'}`}>
                 Annually
-                <span className="px-2 py-0.5 rounded-full text-[10px] uppercase tracking-wider font-bold bg-[#00A3E0]/15 text-[#00A3E0] border border-[#00A3E0]/30">
+                <span className="px-2 py-0.5 rounded-full text-[10px] uppercase tracking-wider font-bold bg-[#C8492C]/25 text-[#C8492C] border border-[#C8492C]/40">
                   Save 20%
                 </span>
               </span>
@@ -1369,12 +1508,12 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                   whileHover={{ y: -4, scale: 1.01 }}
                   className={`relative p-8 rounded-[14px] border transition-all duration-300 flex flex-col justify-between ${
                     isPopular
-                      ? 'bg-[#10141A] border-[#0070AD] shadow-[0_0_40px_rgba(0,112,173,0.3)] md:scale-105 z-10'
-                      : 'bg-[#10141A]/70 border-white/10 hover:border-white/25'
+                      ? 'bg-[#0E0E18] border-[#C8492C] shadow-[0_0_40px_rgba(200,73,44,0.25)] md:scale-105 z-10'
+                      : 'bg-[#0A0A0E] border-white/10 hover:border-white/25'
                   }`}
                 >
                   {isPopular && (
-                    <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-[#0070AD] text-white px-4 py-0.5 rounded-full text-[10px] font-mono uppercase tracking-widest shadow-md">
+                    <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-[#C8492C] text-white px-4 py-0.5 rounded-full text-[10px] font-mono uppercase tracking-widest shadow-md">
                       Most Popular
                     </div>
                   )}
@@ -1395,7 +1534,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                     <ul className="space-y-3 mb-8 text-xs text-[#B4BAC5]">
                       {plan.features.map((feat: string, i: number) => (
                         <li key={i} className="flex items-start gap-2.5">
-                          <CheckCircle2 className={`w-4 h-4 shrink-0 mt-0.5 ${isPopular ? 'text-[#00A3E0]' : 'text-[#0070AD]'}`} />
+                          <CheckCircle2 className={`w-4 h-4 shrink-0 mt-0.5 ${isPopular ? 'text-[#C8492C]' : 'text-[#C8492C]'}`} />
                           <span>{feat}</span>
                         </li>
                       ))}
@@ -1406,7 +1545,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                     onClick={() => setDemoModalOpen(true)}
                     className={`w-full py-3 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all duration-300 ${
                       isPopular
-                        ? 'bg-[#0070AD] hover:bg-[#005a8c] text-white shadow-[0_0_20px_rgba(0,112,173,0.4)]'
+                        ? 'bg-[#C8492C] hover:bg-[#B33F24] text-white shadow-[0_0_25px_rgba(200,73,44,0.4)]'
                         : 'bg-white/10 hover:bg-white/20 text-white'
                     }`}
                   >
@@ -1423,14 +1562,14 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
               Compare Features
             </h3>
             
-            <div className="bg-[#10141A] rounded-[14px] border border-white/10 overflow-hidden shadow-xl">
+            <div className="bg-[#0A0A0E] rounded-[14px] border border-white/10 overflow-hidden shadow-xl">
               <div className="overflow-x-auto">
                 <table className="w-full min-w-[500px] text-left border-collapse text-xs">
                   <thead>
-                    <tr className="border-b border-white/10 bg-[#05070B]">
+                    <tr className="border-b border-white/10 bg-[#050508]">
                       <th className="p-3.5 sm:p-4 font-mono text-[#737B88] uppercase tracking-wider w-1/4">Feature</th>
                       <th className="p-3.5 sm:p-4 font-mono text-center text-white">Starter</th>
-                      <th className="p-3.5 sm:p-4 font-mono text-center text-[#00A3E0] bg-[#0070AD]/10">Scale (Pro)</th>
+                      <th className="p-3.5 sm:p-4 font-mono text-center text-[#C8492C] bg-[#C8492C]/10">Scale (Pro)</th>
                       <th className="p-3.5 sm:p-4 font-mono text-center text-white">Enterprise</th>
                     </tr>
                   </thead>
@@ -1440,21 +1579,21 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                         <td className="p-3.5 sm:p-4 font-medium text-white">{row.feature}</td>
                         <td className="p-3.5 sm:p-4 text-center text-[#B4BAC5]">
                           {typeof row.starter === 'boolean' ? (
-                            row.starter ? <Check className="w-4 h-4 text-emerald-400 mx-auto" /> : <span className="text-[#737B88]">—</span>
+                            row.starter ? <Check className="w-4 h-4 text-[#C8492C] mx-auto" /> : <span className="text-[#737B88]">—</span>
                           ) : (
                             row.starter
                           )}
                         </td>
-                        <td className="p-3.5 sm:p-4 text-center font-semibold text-[#00A3E0] bg-[#0070AD]/5">
+                        <td className="p-3.5 sm:p-4 text-center font-semibold text-[#C8492C] bg-[#C8492C]/5">
                           {typeof row.pro === 'boolean' ? (
-                            row.pro ? <Check className="w-4 h-4 text-[#00A3E0] mx-auto" /> : <span className="text-[#737B88]">—</span>
+                            row.pro ? <Check className="w-4 h-4 text-[#C8492C] mx-auto" /> : <span className="text-[#737B88]">—</span>
                           ) : (
                             row.pro
                           )}
                         </td>
                         <td className="p-3.5 sm:p-4 text-center text-white font-medium">
                           {typeof row.enterprise === 'boolean' ? (
-                            row.enterprise ? <Check className="w-4 h-4 text-emerald-400 mx-auto" /> : <span className="text-[#737B88]">—</span>
+                            row.enterprise ? <Check className="w-4 h-4 text-[#C8492C] mx-auto" /> : <span className="text-[#737B88]">—</span>
                           ) : (
                             row.enterprise
                           )}
@@ -1472,14 +1611,53 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
 
 
       {/* =========================================================================
-          09 — FINAL CTA (Background: #020407, Strongest Visual Glow)
+          09 — FREQUENTLY ASKED QUESTIONS (FAQ)
       ========================================================================= */}
-      <section className="relative z-10 py-20 sm:py-32 bg-[#020407] border-t border-white/[0.06] overflow-hidden text-center">
-        {/* Large Fastigo Blue/Cyan Atmospheric Glow */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(0,112,173,0.30)_0%,_rgba(0,163,224,0.10)_45%,_transparent_75%)] blur-[90px] pointer-events-none" />
+      <section id="faq" className="relative z-10 py-24 sm:py-32 bg-[#050508] border-t border-white/[0.08] overflow-hidden">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div className="text-center mb-16 space-y-3">
+            <span className="text-xs font-mono uppercase tracking-widest text-[#C8492C] block">
+              QUESTIONS & ANSWERS
+            </span>
+            <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-white uppercase">
+              FREQUENTLY ASKED QUESTIONS
+            </h2>
+            <p className="text-base text-[#94A3B8]">
+              Everything you need to know about deploying OmniSell across your revenue organization.
+            </p>
+          </div>
+
+          <Accordion type="single" collapsible className="space-y-4">
+            {faqs.map((faq, index) => (
+              <AccordionItem 
+                key={index} 
+                value={`faq-${index}`}
+                className="bg-[#0D0D14] border border-white/10 rounded-2xl px-6 py-2 overflow-hidden hover:border-[#C8492C]/60 transition-colors"
+              >
+                <AccordionTrigger className="text-left font-bold text-base sm:text-lg text-white hover:text-[#C8492C] transition-colors py-4">
+                  {faq.q}
+                </AccordionTrigger>
+                <AccordionContent className="text-sm sm:text-base text-[#94A3B8] leading-relaxed pb-4">
+                  {faq.a}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+
+        </div>
+      </section>
+
+
+      {/* =========================================================================
+          10 — FINAL HIGH-IMPACT CTA (Theme: Clean White Background with Orange Accents)
+      ========================================================================= */}
+      <section className="relative z-10 py-20 sm:py-32 bg-white border-t border-[#E5DFD7] overflow-hidden text-center text-[#111111]">
+        {/* Soft Warm Terracotta Atmospheric Glow */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(200,73,44,0.07)_0%,_transparent_70%)] blur-[100px] pointer-events-none" />
         
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-5 sm:space-y-6">
-          <span className="text-xs font-mono uppercase tracking-widest text-[#00A3E0] block">
+          <span className="text-xs font-mono uppercase tracking-widest text-[#C8492C] block font-semibold">
             GET STARTED
           </span>
 
@@ -1489,7 +1667,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
               whileInView={{ y: 0, opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7 }}
-              className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white uppercase leading-[1.08]"
+              className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-[#111111] uppercase leading-[1.08]"
             >
               LET YOUR AI SALES <br />
               AGENT HANDLE <br />
@@ -1497,14 +1675,14 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
             </motion.h2>
           </div>
 
-          <p className="text-sm sm:text-lg text-[#B4BAC5] max-w-xl mx-auto">
+          <p className="text-sm sm:text-lg text-[#555555] max-w-xl mx-auto">
             You focus on the conversation. OmniSell keeps the pipeline moving.
           </p>
 
           <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
             <button
               onClick={() => setDemoModalOpen(true)}
-              className="w-full sm:w-auto px-8 py-3.5 rounded-full text-sm font-semibold text-white bg-[#0070AD] hover:bg-[#005a8c] transition-all duration-300 shadow-[0_0_30px_rgba(0,112,173,0.5)] flex items-center justify-center gap-2 group cursor-pointer"
+              className="w-full sm:w-auto px-8 py-3.5 rounded-full text-sm font-semibold text-white bg-[#C8492C] hover:bg-[#B33F24] transition-all duration-300 shadow-[0_4px_25px_rgba(200,73,44,0.35)] flex items-center justify-center gap-2 group cursor-pointer"
             >
               <span>Book a Demo</span>
               <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
@@ -1512,7 +1690,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
 
             <button
               onClick={() => setDemoModalOpen(true)}
-              className="w-full sm:w-auto px-8 py-3.5 rounded-full text-sm font-medium text-[#B4BAC5] hover:text-white bg-[#10141A] border border-white/10 hover:border-white/30 transition-all duration-300"
+              className="w-full sm:w-auto px-8 py-3.5 rounded-full text-sm font-medium text-[#111111] hover:text-black bg-black/[0.04] hover:bg-black/[0.08] border border-black/10 transition-all duration-300"
             >
               Talk to Us
             </button>
@@ -1521,20 +1699,17 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
       </section>
 
 
-      {/* =========================================================================
-          FASTIGO AUTHENTIC WEBSITE FOOTER
-      ========================================================================= */}
-      <Footer />
+
 
 
       {/* =========================================================================
           DEMO BOOKING DIALOG
       ========================================================================= */}
       <Dialog open={demoModalOpen} onOpenChange={setDemoModalOpen}>
-        <DialogContent className="bg-[#080A0E] border border-white/15 text-white max-w-md p-6 sm:p-8 rounded-[14px]">
+        <DialogContent className="bg-[#09090F] border border-white/15 text-white max-w-md p-6 sm:p-8 rounded-[14px]">
           <DialogHeader>
             <DialogTitle className="text-xl font-bold text-white flex items-center gap-2">
-              <Sparkles className="w-5 h-5 text-[#00A3E0]" />
+              <Sparkles className="w-5 h-5 text-[#C8492C]" />
               Schedule an OmniSell Demo
             </DialogTitle>
             <DialogDescription className="text-xs text-[#B4BAC5]">
@@ -1556,7 +1731,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                 required
                 type="email"
                 placeholder="alex@company.com"
-                className="w-full px-3.5 py-2.5 rounded-xl bg-[#10141A] border border-white/10 text-white placeholder-white/30 text-xs focus:outline-none focus:border-[#0070AD]"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-[#12121B] border border-white/10 text-white placeholder-white/30 text-xs focus:outline-none focus:border-[#C8492C]"
               />
             </div>
 
@@ -1566,7 +1741,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                 required
                 type="text"
                 placeholder="Alex Morgan"
-                className="w-full px-3.5 py-2.5 rounded-xl bg-[#10141A] border border-white/10 text-white placeholder-white/30 text-xs focus:outline-none focus:border-[#0070AD]"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-[#12121B] border border-white/10 text-white placeholder-white/30 text-xs focus:outline-none focus:border-[#C8492C]"
               />
             </div>
 
@@ -1576,14 +1751,14 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                 required
                 type="text"
                 placeholder="Acme Inc."
-                className="w-full px-3.5 py-2.5 rounded-xl bg-[#10141A] border border-white/10 text-white placeholder-white/30 text-xs focus:outline-none focus:border-[#0070AD]"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-[#12121B] border border-white/10 text-white placeholder-white/30 text-xs focus:outline-none focus:border-[#C8492C]"
               />
             </div>
 
             <div className="pt-2">
               <button
                 type="submit"
-                className="w-full py-3 rounded-xl bg-[#0070AD] hover:bg-[#005a8c] text-white text-xs font-semibold uppercase tracking-wider transition-colors shadow-[0_0_20px_rgba(0,112,173,0.4)]"
+                className="w-full py-3 rounded-xl bg-[#C8492C] hover:bg-[#B33F24] text-white text-xs font-semibold uppercase tracking-wider transition-colors shadow-[0_0_25px_rgba(200,73,44,0.4)]"
               >
                 Confirm Demo Request
               </button>
