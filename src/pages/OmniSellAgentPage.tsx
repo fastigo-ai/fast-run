@@ -139,7 +139,7 @@ const ParticleSphere: React.FC<{ isTalking: boolean }> = ({ isTalking }) => {
     };
   }, [isTalking]);
 
-  return <canvas ref={canvasRef} className="w-[280px] h-[280px] sm:w-[320px] sm:h-[320px] mx-auto block" />;
+  return <canvas ref={canvasRef} className="w-[220px] h-[220px] xs:w-[260px] xs:h-[260px] sm:w-[320px] sm:h-[320px] mx-auto block max-w-full" />;
 };
 
 export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product }) => {
@@ -377,7 +377,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                     initial={{ y: "100%", opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                    className="text-5xl sm:text-6xl md:text-7xl lg:text-[76px] font-bold text-white tracking-tight leading-[0.98]"
+                    className="text-4xl sm:text-6xl md:text-7xl lg:text-[76px] font-bold text-white tracking-tight leading-[0.98]"
                   >
                     YOUR AI
                   </motion.h1>
@@ -387,7 +387,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                     initial={{ y: "100%", opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-                    className="text-5xl sm:text-6xl md:text-7xl lg:text-[76px] font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-[#00A3E0] tracking-tight leading-[0.98]"
+                    className="text-4xl sm:text-6xl md:text-7xl lg:text-[76px] font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-[#00A3E0] tracking-tight leading-[0.98]"
                   >
                     SALES AGENT.
                   </motion.h1>
@@ -399,7 +399,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="space-y-1.5 text-lg sm:text-xl text-[#B4BAC5] font-light max-w-xl"
+                className="space-y-1.5 text-base sm:text-xl text-[#B4BAC5] font-light max-w-xl"
               >
                 <p>Find the right prospects.</p>
                 <p>Start the right conversations.</p>
@@ -411,11 +411,11 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
-                className="pt-2 flex flex-wrap items-center gap-4"
+                className="pt-2 flex flex-wrap items-center gap-3 sm:gap-4"
               >
                 <button
                   onClick={() => setDemoModalOpen(true)}
-                  className="px-8 py-3.5 rounded-full text-sm font-semibold text-white bg-[#0070AD] hover:bg-[#005a8c] transition-all duration-300 shadow-[0_0_25px_rgba(0,112,173,0.4)] hover:shadow-[0_0_35px_rgba(0,112,173,0.7)] flex items-center gap-2 group cursor-pointer"
+                  className="w-full sm:w-auto justify-center px-8 py-3.5 rounded-full text-sm font-semibold text-white bg-[#0070AD] hover:bg-[#005a8c] transition-all duration-300 shadow-[0_0_25px_rgba(0,112,173,0.4)] hover:shadow-[0_0_35px_rgba(0,112,173,0.7)] flex items-center gap-2 group cursor-pointer"
                 >
                   <span>Book a Demo</span>
                   <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
@@ -423,7 +423,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
 
                 <a
                   href="#capabilities"
-                  className="px-7 py-3.5 rounded-full text-sm font-medium text-[#B4BAC5] hover:text-white bg-[#10141A]/80 border border-white/10 hover:border-[#0070AD]/60 transition-all duration-300"
+                  className="w-full sm:w-auto text-center justify-center px-7 py-3.5 rounded-full text-sm font-medium text-[#B4BAC5] hover:text-white bg-[#10141A]/80 border border-white/10 hover:border-[#0070AD]/60 transition-all duration-300"
                 >
                   See How It Works
                 </a>
@@ -434,26 +434,26 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
-                className="pt-4 flex items-center gap-4 text-xs text-[#737B88] font-mono"
+                className="pt-4 flex flex-wrap items-center gap-y-2 gap-x-3 sm:gap-4 text-xs text-[#737B88] font-mono"
               >
                 <span className="flex items-center gap-1.5">
                   <ShieldCheck className="w-4 h-4 text-[#00A3E0]" /> Enterprise Ready
                 </span>
-                <span className="w-1 h-1 rounded-full bg-white/20" />
+                <span className="w-1 h-1 rounded-full bg-white/20 hidden xs:inline-block" />
                 <span>Multi-channel Orchestration</span>
-                <span className="w-1 h-1 rounded-full bg-white/20" />
+                <span className="w-1 h-1 rounded-full bg-white/20 hidden xs:inline-block" />
                 <span>Autonomous Pipeline</span>
               </motion.div>
             </div>
 
             {/* RIGHT VISUAL: Sophisticated OmniSell AI Core & Spaced-Out Floating Animated Cards */}
-            <div className="lg:col-span-7 relative flex items-center justify-center min-h-[580px] sm:min-h-[660px] lg:min-h-[720px] w-full">
+            <div className="lg:col-span-7 relative flex items-center justify-center min-h-[460px] sm:min-h-[580px] lg:min-h-[720px] w-full max-w-full overflow-hidden sm:overflow-visible">
               
               {/* Outer Cybernetic Orbital Rings */}
-              <div className="absolute w-[320px] h-[320px] sm:w-[400px] sm:h-[400px] rounded-full border border-white/[0.08] animate-[spin_60s_linear_infinite]" />
-              <div className="absolute w-[250px] h-[250px] sm:w-[310px] sm:h-[310px] rounded-full border border-dashed border-[#0070AD]/40 animate-[spin_40s_linear_infinite_reverse]" />
-              <div className="absolute w-[180px] h-[180px] sm:w-[220px] sm:h-[220px] rounded-full border border-[#00A3E0]/30 animate-[spin_30s_linear_infinite]" />
-              <div className="absolute w-[160px] h-[160px] sm:w-[200px] sm:h-[200px] rounded-full bg-gradient-to-tr from-[#0070AD]/25 to-[#00A3E0]/25 blur-2xl" />
+              <div className="absolute w-[260px] h-[260px] sm:w-[400px] sm:h-[400px] rounded-full border border-white/[0.08] animate-[spin_60s_linear_infinite]" />
+              <div className="absolute w-[200px] h-[200px] sm:w-[310px] sm:h-[310px] rounded-full border border-dashed border-[#0070AD]/40 animate-[spin_40s_linear_infinite_reverse]" />
+              <div className="absolute w-[150px] h-[150px] sm:w-[220px] sm:h-[220px] rounded-full border border-[#00A3E0]/30 animate-[spin_30s_linear_infinite]" />
+              <div className="absolute w-[130px] h-[130px] sm:w-[200px] sm:h-[200px] rounded-full bg-gradient-to-tr from-[#0070AD]/25 to-[#00A3E0]/25 blur-2xl" />
 
               {/* Central OmniSell AI Nexus */}
               <motion.div
@@ -461,105 +461,104 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
                 whileHover={{ scale: 1.05 }}
-                className="relative z-20 w-32 h-32 sm:w-40 sm:h-40 rounded-full bg-[#080C14]/95 border-2 border-[#0070AD] shadow-[0_0_70px_rgba(0,112,173,0.5)] flex flex-col items-center justify-center p-3 text-center backdrop-blur-xl group cursor-pointer transition-transform"
+                className="relative z-20 w-28 h-28 sm:w-40 sm:h-40 rounded-full bg-[#080C14]/95 border-2 border-[#0070AD] shadow-[0_0_70px_rgba(0,112,173,0.5)] flex flex-col items-center justify-center p-2.5 sm:p-3 text-center backdrop-blur-xl group cursor-pointer transition-transform"
               >
                 <div className="absolute inset-1 rounded-full bg-gradient-to-br from-[#0070AD]/30 via-transparent to-[#00A3E0]/30" />
                 
                 {/* Glowing Hexagonal Logo Aperture */}
-                <div className="relative z-10 w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-[#0B1017] border border-[#00A3E0]/60 flex items-center justify-center mb-1 shadow-[0_0_20px_rgba(0,163,224,0.4)] group-hover:border-[#00A3E0] transition-colors">
-                  <svg className="w-5 h-5 sm:w-6 sm:h-6 text-[#00A3E0]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <div className="relative z-10 w-8 h-8 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-[#0B1017] border border-[#00A3E0]/60 flex items-center justify-center mb-1 shadow-[0_0_20px_rgba(0,163,224,0.4)] group-hover:border-[#00A3E0] transition-colors">
+                  <svg className="w-4 h-4 sm:w-6 sm:h-6 text-[#00A3E0]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <polygon points="12 2 21 7 21 17 12 22 3 17 3 7 12 2" />
                     <circle cx="12" cy="12" r="3" fill="#00A3E0" fillOpacity="0.4" />
                   </svg>
                 </div>
                 
-                <div className="relative z-10 font-bold text-white text-sm sm:text-base tracking-tight">
+                <div className="relative z-10 font-bold text-white text-xs sm:text-base tracking-tight">
                   OmniSell
                 </div>
-                <div className="relative z-10 text-[9px] sm:text-[10px] font-mono text-[#00A3E0] tracking-widest uppercase font-semibold">
+                <div className="relative z-10 text-[8px] sm:text-[10px] font-mono text-[#00A3E0] tracking-widest uppercase font-semibold">
                   AI Core
                 </div>
               </motion.div>
 
-              {/* Floating Card 1: PROSPECTS (Top-Right - Ample Distance) */}
+              {/* Floating Card 1: PROSPECTS (Top-Right) */}
               <motion.div
                 animate={shouldReduceMotion ? {} : { y: [-6, 6, -6], x: [0, 2, 0] }}
                 transition={{ duration: 4.8, repeat: Infinity, ease: "easeInOut" }}
                 whileHover={{ scale: 1.04, y: -4 }}
-                className="absolute top-2 sm:top-4 right-[-10px] sm:right-[-20px] lg:right-[-35px] z-20 bg-[#0B1017]/90 backdrop-blur-xl border border-white/15 hover:border-[#0070AD]/80 hover:shadow-[0_0_25px_rgba(0,112,173,0.35)] rounded-2xl p-3 sm:p-3.5 shadow-2xl flex items-center gap-3 transition-all cursor-pointer group max-w-[225px]"
+                className="absolute top-2 sm:top-4 right-1 sm:right-[-20px] lg:right-[-35px] z-20 bg-[#0B1017]/95 backdrop-blur-xl border border-white/15 hover:border-[#0070AD]/80 hover:shadow-[0_0_25px_rgba(0,112,173,0.35)] rounded-xl sm:rounded-2xl p-2 sm:p-3.5 shadow-2xl flex items-center gap-2 sm:gap-3 transition-all cursor-pointer group max-w-[155px] sm:max-w-[225px]"
               >
-                <div className="flex -space-x-2 shrink-0">
-                  <img className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border-2 border-[#0B1017] object-cover" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=120" alt="Lead" />
-                  <img className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border-2 border-[#0B1017] object-cover" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=120" alt="Lead" />
-                  <img className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border-2 border-[#0B1017] object-cover" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=120" alt="Lead" />
+                <div className="flex -space-x-1.5 sm:-space-x-2 shrink-0">
+                  <img className="w-6 h-6 sm:w-8 sm:h-8 rounded-full border border-[#0B1017] object-cover" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=120" alt="Lead" />
+                  <img className="w-6 h-6 sm:w-8 sm:h-8 rounded-full border border-[#0B1017] object-cover" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=120" alt="Lead" />
                 </div>
-                <div>
-                  <h4 className="text-xs sm:text-sm font-semibold text-white tracking-tight leading-snug group-hover:text-[#00A3E0] transition-colors">Prospects</h4>
-                  <p className="text-[11px] text-[#8C9BAE] leading-snug">High-intent leads identified</p>
+                <div className="min-w-0">
+                  <h4 className="text-[11px] sm:text-sm font-semibold text-white tracking-tight leading-snug group-hover:text-[#00A3E0] transition-colors truncate">Prospects</h4>
+                  <p className="hidden sm:block text-[11px] text-[#8C9BAE] leading-snug">High-intent leads identified</p>
                 </div>
               </motion.div>
 
-              {/* Floating Card 2: COMPANY INSIGHTS (Top-Left - Ample Distance) */}
+              {/* Floating Card 2: COMPANY INSIGHTS (Top-Left) */}
               <motion.div
                 animate={shouldReduceMotion ? {} : { y: [6, -6, 6], x: [0, -2, 0] }}
                 transition={{ duration: 5.6, repeat: Infinity, ease: "easeInOut", delay: 0.4 }}
                 whileHover={{ scale: 1.04, y: -4 }}
-                className="absolute top-2 sm:top-4 left-[-10px] sm:left-[-20px] lg:left-[-35px] z-20 bg-[#0B1017]/90 backdrop-blur-xl border border-white/15 hover:border-[#0070AD]/80 hover:shadow-[0_0_25px_rgba(0,112,173,0.35)] rounded-2xl p-3 sm:p-3.5 shadow-2xl flex items-center gap-3 transition-all cursor-pointer group max-w-[215px]"
+                className="absolute top-2 sm:top-4 left-1 sm:left-[-20px] lg:left-[-35px] z-20 bg-[#0B1017]/95 backdrop-blur-xl border border-white/15 hover:border-[#0070AD]/80 hover:shadow-[0_0_25px_rgba(0,112,173,0.35)] rounded-xl sm:rounded-2xl p-2 sm:p-3.5 shadow-2xl flex items-center gap-2 sm:gap-3 transition-all cursor-pointer group max-w-[150px] sm:max-w-[215px]"
               >
-                <div className="w-9 h-9 rounded-xl bg-white/[0.04] border border-white/10 flex items-center justify-center text-[#00A3E0] group-hover:border-[#0070AD]/50 group-hover:bg-[#0070AD]/20 transition-all shrink-0">
-                  <BarChart3 className="w-4 h-4" />
+                <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-white/[0.04] border border-white/10 flex items-center justify-center text-[#00A3E0] shrink-0">
+                  <BarChart3 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 </div>
-                <div>
-                  <h4 className="text-xs sm:text-sm font-semibold text-white tracking-tight leading-snug group-hover:text-[#00A3E0] transition-colors">Company Insights</h4>
-                  <p className="text-[11px] text-[#8C9BAE] leading-snug">Real-time research & signals</p>
+                <div className="min-w-0">
+                  <h4 className="text-[11px] sm:text-sm font-semibold text-white tracking-tight leading-snug group-hover:text-[#00A3E0] transition-colors truncate">Insights</h4>
+                  <p className="hidden sm:block text-[11px] text-[#8C9BAE] leading-snug">Real-time research & signals</p>
                 </div>
               </motion.div>
 
-              {/* Floating Card 3: PERSONALIZED OUTREACH (Middle-Right - Pushed Far Right) */}
+              {/* Floating Card 3: PERSONALIZED OUTREACH (Middle-Right) */}
               <motion.div
                 animate={shouldReduceMotion ? {} : { y: [-5, 5, -5], x: [2, -2, 2] }}
                 transition={{ duration: 5.2, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
                 whileHover={{ scale: 1.04, y: -4 }}
-                className="absolute top-1/2 -translate-y-1/2 right-[-25px] sm:right-[-45px] lg:right-[-75px] z-20 bg-[#0B1017]/90 backdrop-blur-xl border border-white/15 hover:border-[#0070AD]/80 hover:shadow-[0_0_25px_rgba(0,112,173,0.35)] rounded-2xl p-3 sm:p-3.5 shadow-2xl flex items-center gap-3 transition-all cursor-pointer group max-w-[235px]"
+                className="absolute top-1/2 -translate-y-1/2 right-1 sm:right-[-45px] lg:right-[-75px] z-20 bg-[#0B1017]/95 backdrop-blur-xl border border-white/15 hover:border-[#0070AD]/80 hover:shadow-[0_0_25px_rgba(0,112,173,0.35)] rounded-xl sm:rounded-2xl p-2 sm:p-3.5 shadow-2xl flex items-center gap-2 sm:gap-3 transition-all cursor-pointer group max-w-[160px] sm:max-w-[235px]"
               >
-                <div className="w-9 h-9 rounded-xl bg-white/[0.04] border border-white/10 flex items-center justify-center text-[#00A3E0] group-hover:border-[#0070AD]/50 group-hover:bg-[#0070AD]/20 transition-all shrink-0">
-                  <Mail className="w-4 h-4" />
+                <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-white/[0.04] border border-white/10 flex items-center justify-center text-[#00A3E0] shrink-0">
+                  <Mail className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 </div>
-                <div>
-                  <h4 className="text-xs sm:text-sm font-semibold text-white tracking-tight leading-snug group-hover:text-[#00A3E0] transition-colors">Personalized Outreach</h4>
-                  <p className="text-[11px] text-[#8C9BAE] leading-snug">Relevant messages that get replies</p>
+                <div className="min-w-0">
+                  <h4 className="text-[11px] sm:text-sm font-semibold text-white tracking-tight leading-snug group-hover:text-[#00A3E0] transition-colors truncate">Outreach</h4>
+                  <p className="hidden sm:block text-[11px] text-[#8C9BAE] leading-snug">Relevant messages that get replies</p>
                 </div>
               </motion.div>
 
-              {/* Floating Card 4: FOLLOW UPS (Bottom-Right - Ample Distance) */}
+              {/* Floating Card 4: FOLLOW UPS (Bottom-Right) */}
               <motion.div
                 animate={shouldReduceMotion ? {} : { y: [5, -5, 5], x: [0, 2, 0] }}
                 transition={{ duration: 6.2, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
                 whileHover={{ scale: 1.04, y: -4 }}
-                className="absolute bottom-2 sm:bottom-4 right-[-10px] sm:right-[-20px] lg:right-[-35px] z-20 bg-[#0B1017]/90 backdrop-blur-xl border border-white/15 hover:border-[#0070AD]/80 hover:shadow-[0_0_25px_rgba(0,112,173,0.35)] rounded-2xl p-3 sm:p-3.5 shadow-2xl flex items-center gap-3 transition-all cursor-pointer group max-w-[215px]"
+                className="absolute bottom-2 sm:bottom-4 right-1 sm:right-[-20px] lg:right-[-35px] z-20 bg-[#0B1017]/95 backdrop-blur-xl border border-white/15 hover:border-[#0070AD]/80 hover:shadow-[0_0_25px_rgba(0,112,173,0.35)] rounded-xl sm:rounded-2xl p-2 sm:p-3.5 shadow-2xl flex items-center gap-2 sm:gap-3 transition-all cursor-pointer group max-w-[150px] sm:max-w-[215px]"
               >
-                <div className="w-9 h-9 rounded-xl bg-white/[0.04] border border-white/10 flex items-center justify-center text-[#00A3E0] group-hover:border-[#0070AD]/50 group-hover:bg-[#0070AD]/20 transition-all shrink-0">
-                  <Clock className="w-4 h-4" />
+                <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-white/[0.04] border border-white/10 flex items-center justify-center text-[#00A3E0] shrink-0">
+                  <Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 </div>
-                <div>
-                  <h4 className="text-xs sm:text-sm font-semibold text-white tracking-tight leading-snug group-hover:text-[#00A3E0] transition-colors">Follow Ups</h4>
-                  <p className="text-[11px] text-[#8C9BAE] leading-snug">Consistent, natural engagement</p>
+                <div className="min-w-0">
+                  <h4 className="text-[11px] sm:text-sm font-semibold text-white tracking-tight leading-snug group-hover:text-[#00A3E0] transition-colors truncate">Follow Ups</h4>
+                  <p className="hidden sm:block text-[11px] text-[#8C9BAE] leading-snug">Consistent, natural engagement</p>
                 </div>
               </motion.div>
 
-              {/* Floating Card 5: MEETINGS (Bottom-Left - Ample Distance) */}
+              {/* Floating Card 5: MEETINGS (Bottom-Left) */}
               <motion.div
                 animate={shouldReduceMotion ? {} : { y: [-6, 6, -6], x: [-2, 2, -2] }}
                 transition={{ duration: 5.8, repeat: Infinity, ease: "easeInOut", delay: 1.6 }}
                 whileHover={{ scale: 1.04, y: -4 }}
-                className="absolute bottom-2 sm:bottom-4 left-[-10px] sm:left-[-20px] lg:left-[-35px] z-20 bg-[#0B1017]/90 backdrop-blur-xl border border-white/15 hover:border-[#0070AD]/80 hover:shadow-[0_0_25px_rgba(0,112,173,0.35)] rounded-2xl p-3 sm:p-3.5 shadow-2xl flex items-center gap-3 transition-all cursor-pointer group max-w-[215px]"
+                className="absolute bottom-2 sm:bottom-4 left-1 sm:left-[-20px] lg:left-[-35px] z-20 bg-[#0B1017]/95 backdrop-blur-xl border border-white/15 hover:border-[#0070AD]/80 hover:shadow-[0_0_25px_rgba(0,112,173,0.35)] rounded-xl sm:rounded-2xl p-2 sm:p-3.5 shadow-2xl flex items-center gap-2 sm:gap-3 transition-all cursor-pointer group max-w-[150px] sm:max-w-[215px]"
               >
-                <div className="w-9 h-9 rounded-xl bg-white/[0.04] border border-white/10 flex items-center justify-center text-[#00A3E0] group-hover:border-[#0070AD]/50 group-hover:bg-[#0070AD]/20 transition-all shrink-0">
-                  <Calendar className="w-4 h-4" />
+                <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-white/[0.04] border border-white/10 flex items-center justify-center text-[#00A3E0] shrink-0">
+                  <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 </div>
-                <div>
-                  <h4 className="text-xs sm:text-sm font-semibold text-white tracking-tight leading-snug group-hover:text-[#00A3E0] transition-colors">Meetings</h4>
-                  <p className="text-[11px] text-[#8C9BAE] leading-snug">More conversations. More pipeline.</p>
+                <div className="min-w-0">
+                  <h4 className="text-[11px] sm:text-sm font-semibold text-white tracking-tight leading-snug group-hover:text-[#00A3E0] transition-colors truncate">Meetings</h4>
+                  <p className="hidden sm:block text-[11px] text-[#8C9BAE] leading-snug">More conversations. More pipeline.</p>
                 </div>
               </motion.div>
 
@@ -629,7 +628,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
               </div>
 
               {/* Channel Tabs */}
-              <div className="flex flex-wrap gap-2 pt-1">
+              <div className="flex flex-wrap gap-1.5 sm:gap-2 pt-1">
                 {channels.map((ch) => {
                   const isActive = activeChannel === ch;
                   return (
@@ -637,7 +636,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                       key={ch}
                       type="button"
                       onClick={() => setActiveChannel(ch)}
-                      className={`px-4 py-2 rounded-full text-xs font-semibold tracking-wider transition-all cursor-pointer ${
+                      className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-[11px] sm:text-xs font-semibold tracking-wider transition-all cursor-pointer ${
                         isActive
                           ? 'bg-[#0E0A42] text-white shadow-sm ring-1 ring-[#0E0A42]'
                           : 'bg-white text-slate-600 hover:text-slate-900 border border-slate-200/90 hover:border-slate-300'
@@ -655,12 +654,12 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
               </p>
 
               {/* Scenario Selector */}
-              <div className="space-y-2.5 pt-1">
-                <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-slate-500 font-semibold">
+              <div className="space-y-2 pt-1">
+                <div className="flex items-center gap-2 text-[11px] sm:text-xs font-mono uppercase tracking-wider text-slate-500 font-semibold">
                   <Folder className="w-3.5 h-3.5 text-slate-400" />
                   <span>SCENARIO</span>
                 </div>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-1.5 sm:gap-2">
                   {scenarios.map((sc) => {
                     const isSelected = selectedScenario === sc;
                     return (
@@ -668,7 +667,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                         key={sc}
                         type="button"
                         onClick={() => setSelectedScenario(sc)}
-                        className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer ${
+                        className={`px-3 sm:px-4 py-1.5 rounded-full text-[11px] sm:text-xs font-medium transition-all cursor-pointer ${
                           isSelected
                             ? 'bg-[#0070AD] text-white shadow-sm'
                             : 'bg-slate-100/90 text-slate-700 border border-slate-200/80 hover:border-slate-300 hover:bg-slate-200/60'
@@ -682,12 +681,12 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
               </div>
 
               {/* Voice / Persona Selector */}
-              <div className="space-y-2.5 pt-1">
-                <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-slate-500 font-semibold">
+              <div className="space-y-2 pt-1">
+                <div className="flex items-center gap-2 text-[11px] sm:text-xs font-mono uppercase tracking-wider text-slate-500 font-semibold">
                   <Radio className="w-3.5 h-3.5 text-slate-400" />
                   <span>VOICE</span>
                 </div>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-1.5 sm:gap-2">
                   {personas.map((p) => {
                     const isSelected = selectedPersona === p;
                     return (
@@ -695,7 +694,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                         key={p}
                         type="button"
                         onClick={() => setSelectedPersona(p)}
-                        className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer ${
+                        className={`px-3 sm:px-4 py-1.5 rounded-full text-[11px] sm:text-xs font-medium transition-all cursor-pointer ${
                           isSelected
                             ? 'bg-[#0070AD] text-white shadow-sm'
                             : 'bg-slate-100/90 text-slate-700 border border-slate-200/80 hover:border-slate-300 hover:bg-slate-200/60'
@@ -713,7 +712,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                 <button
                   type="button"
                   onClick={() => setIsSimulatingCall(!isSimulatingCall)}
-                  className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-[#0E0A42] hover:bg-[#0070AD] text-white text-xs sm:text-sm font-semibold tracking-wider uppercase transition-all shadow-md group cursor-pointer"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-6 py-3 rounded-full bg-[#0E0A42] hover:bg-[#0070AD] text-white text-xs sm:text-sm font-semibold tracking-wider uppercase transition-all shadow-md group cursor-pointer"
                 >
                   <span>Try {activeChannel.charAt(0) + activeChannel.slice(1).toLowerCase()} AI</span>
                   <div className="w-6 h-6 rounded-full bg-white/15 flex items-center justify-center group-hover:translate-x-1 transition-transform">
@@ -725,32 +724,32 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
 
             {/* Right Column: Interactive White Console with Animated Floating AI Bot */}
             <div className="lg:col-span-6">
-              <div className="bg-white rounded-3xl border border-slate-200/90 shadow-[0_20px_60px_-15px_rgba(0,112,173,0.12),0_0_1px_1px_rgba(0,0,0,0.03)] p-6 sm:p-8 relative overflow-hidden flex flex-col justify-between min-h-[480px]">
+              <div className="bg-white rounded-2xl sm:rounded-3xl border border-slate-200/90 shadow-[0_20px_60px_-15px_rgba(0,112,173,0.12),0_0_1px_1px_rgba(0,0,0,0.03)] p-4 sm:p-8 relative overflow-hidden flex flex-col justify-between min-h-[460px] sm:min-h-[480px]">
                 
                 {/* Console Header Bar */}
-                <div className="flex items-center justify-between pb-4 border-b border-slate-100">
-                  <div className="flex items-center gap-2">
-                    <div className="w-7 h-7 rounded-lg bg-[#0070AD]/10 flex items-center justify-center text-[#0070AD]">
-                      <Bot className="w-4 h-4" />
+                <div className="flex items-center justify-between pb-3 sm:pb-4 border-b border-slate-100 gap-2">
+                  <div className="flex items-center gap-2 min-w-0">
+                    <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-[#0070AD]/10 flex items-center justify-center text-[#0070AD] shrink-0">
+                      <Bot className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                     </div>
-                    <span className="text-xs font-mono font-bold tracking-wider text-[#0E0A42] uppercase">
-                      OmniSell Voice & Multi-Channel
+                    <span className="text-[11px] sm:text-xs font-mono font-bold tracking-wider text-[#0E0A42] uppercase truncate">
+                      OmniSell Multi-Channel
                     </span>
                   </div>
-                  <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-[10px] font-mono font-semibold">
+                  <div className="inline-flex items-center gap-1.5 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-[9px] sm:text-[10px] font-mono font-semibold shrink-0">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                     ACTIVE
                   </div>
                 </div>
 
                 {/* Center Stage: Animated Floating 3D AI Particle Sphere */}
-                <div className="my-auto py-4 relative flex flex-col items-center justify-center">
+                <div className="my-auto py-3 sm:py-4 relative flex flex-col items-center justify-center">
                   
                   {/* Floating Motion Wrapper */}
                   <motion.div
                     animate={shouldReduceMotion ? {} : { y: [-8, 8, -8], rotate: [-1.5, 1.5, -1.5] }}
                     transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                    className="relative cursor-pointer"
+                    className="relative cursor-pointer max-w-full"
                     onClick={() => setIsSimulatingCall(!isSimulatingCall)}
                   >
                     {/* The 3D Dotted Wave Particle Sphere */}
@@ -761,9 +760,9 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                   </motion.div>
 
                   {/* Radial Arc Arc Guideline */}
-                  <div className="relative w-full max-w-[280px] flex flex-col items-center mt-[-10px]">
-                    <svg className="w-full h-12 stroke-slate-200 overflow-visible pointer-events-none">
-                      <path d="M 10 30 Q 140 -5 270 30" fill="none" strokeWidth="1" strokeDasharray="4 4" />
+                  <div className="relative w-full max-w-[260px] sm:max-w-[280px] flex flex-col items-center mt-[-6px] sm:mt-[-10px]">
+                    <svg className="w-full h-10 sm:h-12 stroke-slate-200 overflow-visible pointer-events-none">
+                      <path d="M 10 26 Q 130 -4 250 26" fill="none" strokeWidth="1" strokeDasharray="4 4" />
                     </svg>
 
                     {/* Central Microphone / Talk Button */}
@@ -771,16 +770,16 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                       <button
                         type="button"
                         onClick={() => setIsSimulatingCall(!isSimulatingCall)}
-                        className={`w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center text-white transition-all shadow-lg cursor-pointer ${
+                        className={`w-11 h-11 sm:w-14 sm:h-14 rounded-full flex items-center justify-center text-white transition-all shadow-lg cursor-pointer ${
                           isSimulatingCall
                             ? 'bg-emerald-600 shadow-emerald-500/40 ring-4 ring-emerald-200 animate-pulse'
                             : 'bg-[#0070AD] hover:bg-[#005a8c] shadow-[0_0_25px_rgba(0,112,173,0.35)]'
                         }`}
                       >
-                        <Mic className="w-5 h-5 sm:w-6 sm:h-6" />
+                        <Mic className="w-4 h-4 sm:w-6 sm:h-6" />
                       </button>
 
-                      <span className="text-[10px] font-mono uppercase tracking-widest text-slate-500 font-bold mt-2.5">
+                      <span className="text-[9px] sm:text-[10px] font-mono uppercase tracking-widest text-slate-500 font-bold mt-2 text-center">
                         {isSimulatingCall ? 'SPEAKING • CLICK TO MUTE' : 'READY TO TALK'}
                       </span>
                     </div>
@@ -788,16 +787,16 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                 </div>
 
                 {/* Console Footer Bar */}
-                <div className="pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3">
-                  <div className="flex items-center gap-1.5 text-[11px] font-mono text-slate-500">
-                    <Volume2 className="w-3.5 h-3.5 text-[#0070AD]" />
+                <div className="pt-3 sm:pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+                  <div className="flex items-center gap-1.5 text-[10px] sm:text-[11px] font-mono text-slate-500">
+                    <Volume2 className="w-3.5 h-3.5 text-[#0070AD] shrink-0" />
                     <span>REAL-TIME CONVERSATION • POWERED BY OMNISELL</span>
                   </div>
 
                   <button
                     type="button"
                     onClick={() => setDemoModalOpen(true)}
-                    className="px-5 py-2 rounded-full bg-[#0070AD] hover:bg-[#005a8c] text-white text-xs font-semibold tracking-wider transition-all shadow-sm flex items-center gap-1 cursor-pointer"
+                    className="w-full sm:w-auto justify-center px-4 sm:px-5 py-2 rounded-full bg-[#0070AD] hover:bg-[#005a8c] text-white text-xs font-semibold tracking-wider transition-all shadow-sm flex items-center gap-1 cursor-pointer"
                   >
                     <span>Book a Demo</span>
                     <ChevronRight className="w-3.5 h-3.5" />
@@ -873,30 +872,30 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
             <div className="hidden lg:block absolute left-1/2 -translate-x-1/2 top-10 bottom-10 w-[2px] bg-gradient-to-b from-[#00A3E0] via-[#0070AD] to-emerald-400 opacity-50 shadow-[0_0_15px_rgba(0,163,224,0.5)]" />
             
             {/* Left Vertical Spine (Mobile / Tablet) */}
-            <div className="lg:hidden absolute left-5 sm:left-7 top-6 bottom-6 w-[2px] bg-gradient-to-b from-[#00A3E0] via-[#0070AD] to-emerald-400 opacity-50" />
+            <div className="lg:hidden absolute left-4 sm:left-6 top-6 bottom-6 w-[2px] bg-gradient-to-b from-[#00A3E0] via-[#0070AD] to-emerald-400 opacity-50" />
 
-            <div className="space-y-16 sm:space-y-24">
+            <div className="space-y-12 sm:space-y-20 lg:space-y-24">
               
               {/* -------------------------------------------------------------------
                   MILESTONE 01: CONTEXT
               ------------------------------------------------------------------- */}
-              <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
+              <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-14 items-center">
                 
                 {/* Roadmap Node Indicator */}
-                <div className="absolute left-5 sm:left-7 lg:left-1/2 -translate-x-1/2 -top-1 lg:top-1/2 lg:-translate-y-1/2 z-20 flex items-center justify-center">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#06080F] border-2 border-[#00A3E0] shadow-[0_0_25px_rgba(0,163,224,0.7)] flex items-center justify-center text-white font-mono font-bold text-xs sm:text-sm">
+                <div className="absolute left-4 sm:left-6 lg:left-1/2 -translate-x-1/2 -top-1 lg:top-1/2 lg:-translate-y-1/2 z-20 flex items-center justify-center">
+                  <div className="w-8 h-8 sm:w-11 sm:h-11 rounded-full bg-[#06080F] border-2 border-[#00A3E0] shadow-[0_0_25px_rgba(0,163,224,0.7)] flex items-center justify-center text-white font-mono font-bold text-xs sm:text-sm">
                     01
                   </div>
                 </div>
 
                 {/* Left Column (Desktop): Text & Narrative */}
-                <div className="lg:col-span-6 pl-14 sm:pl-16 lg:pl-0 lg:pr-14 text-left space-y-4">
+                <div className="lg:col-span-6 pl-10 sm:pl-16 lg:pl-0 lg:pr-14 text-left space-y-3 sm:space-y-4">
                   <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#0070AD]/20 border border-[#0070AD]/40 text-[#00A3E0] text-xs font-mono font-semibold tracking-wider">
                     <Database className="w-3.5 h-3.5" />
                     <span>MILESTONE 01 • CONTEXT</span>
                   </div>
                   
-                  <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight leading-tight">
+                  <h3 className="text-xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight leading-tight">
                     Unified customer and <br className="hidden sm:block" />
                     market context
                   </h3>
@@ -905,7 +904,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                     Your CRM, knowledge base, website activity and every OmniSell conversation, connected through supported integrations, and enriched with real-time third-party signals about your priority accounts such as funding, hiring, job moves, and tech stack.
                   </p>
 
-                  <div className="flex flex-wrap gap-2 pt-2">
+                  <div className="flex flex-wrap gap-1.5 sm:gap-2 pt-2">
                     {['Salesforce', 'HubSpot', 'Snowflake', 'Gong', 'Notion', 'Slack'].map((tool) => (
                       <span key={tool} className="px-2.5 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] text-xs font-mono text-slate-300">
                         {tool}
@@ -915,8 +914,8 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                 </div>
 
                 {/* Right Column (Desktop): Live Telemetry Context Visual Card */}
-                <div className="lg:col-span-6 pl-14 sm:pl-16 lg:pl-14">
-                  <div className="bg-[#0B0F19]/90 border border-white/10 hover:border-[#0070AD] rounded-2xl p-6 sm:p-7 shadow-2xl relative overflow-hidden group transition-all">
+                <div className="lg:col-span-6 pl-10 sm:pl-16 lg:pl-14">
+                  <div className="bg-[#0B0F19]/90 border border-white/10 hover:border-[#0070AD] rounded-2xl p-4 sm:p-7 shadow-2xl relative overflow-hidden group transition-all">
                     <div className="absolute top-0 right-0 w-44 h-44 bg-[#0070AD]/10 blur-3xl pointer-events-none" />
                     
                     <div className="flex items-center justify-between pb-3 mb-4 border-b border-white/[0.08] text-xs font-mono">
@@ -929,7 +928,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
 
                     <div className="space-y-3 font-mono text-xs">
                       {/* Data Conduits */}
-                      <div className="grid grid-cols-2 gap-2 text-[11px]">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px]">
                         <div className="p-2.5 rounded-lg bg-white/[0.02] border border-white/[0.05]">
                           <span className="text-[#64748B] block text-[9px]">BI-DIRECTIONAL CRM</span>
                           <span className="text-white font-medium">Salesforce & HubSpot</span>
@@ -941,8 +940,8 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                       </div>
 
                       {/* Account Card Example */}
-                      <div className="p-3.5 rounded-xl bg-[#05070D] border border-white/[0.08] space-y-2">
-                        <div className="flex items-center justify-between">
+                      <div className="p-3 sm:p-3.5 rounded-xl bg-[#05070D] border border-white/[0.08] space-y-2">
+                        <div className="flex flex-wrap items-center justify-between gap-1">
                           <span className="text-white font-bold text-sm">CloudScale Networks</span>
                           <span className="px-2 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-[10px] font-bold">
                             99.2% FIT SCORE
@@ -951,7 +950,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                         <div className="text-[11px] text-[#38BDF8]">
                           ⚡ 3rd-Party Trigger: Series B ($38M) • Hiring 14 SDRs in US/EMEA
                         </div>
-                        <div className="text-[10px] text-[#94A3B8]">
+                        <div className="text-[10px] text-[#94A3B8] leading-relaxed">
                           Knowledge Base Synced: Product Pricing Matrix, Security Dossier & Competitor Battlecards
                         </div>
                       </div>
@@ -965,18 +964,18 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
               {/* -------------------------------------------------------------------
                   MILESTONE 02: INTELLIGENCE
               ------------------------------------------------------------------- */}
-              <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
+              <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-14 items-center">
                 
                 {/* Roadmap Node Indicator */}
-                <div className="absolute left-5 sm:left-7 lg:left-1/2 -translate-x-1/2 -top-1 lg:top-1/2 lg:-translate-y-1/2 z-20 flex items-center justify-center">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#06080F] border-2 border-[#0070AD] shadow-[0_0_25px_rgba(0,112,173,0.7)] flex items-center justify-center text-white font-mono font-bold text-xs sm:text-sm">
+                <div className="absolute left-4 sm:left-6 lg:left-1/2 -translate-x-1/2 -top-1 lg:top-1/2 lg:-translate-y-1/2 z-20 flex items-center justify-center">
+                  <div className="w-8 h-8 sm:w-11 sm:h-11 rounded-full bg-[#06080F] border-2 border-[#0070AD] shadow-[0_0_25px_rgba(0,112,173,0.7)] flex items-center justify-center text-white font-mono font-bold text-xs sm:text-sm">
                     02
                   </div>
                 </div>
 
                 {/* Left Column (Desktop): Multi-Agent Swarm Visual Card */}
-                <div className="lg:col-span-6 order-2 lg:order-1 pl-14 sm:pl-16 lg:pl-0 lg:pr-14">
-                  <div className="bg-[#0B0F19]/90 border border-white/10 hover:border-[#00A3E0] rounded-2xl p-6 sm:p-7 shadow-2xl relative overflow-hidden group transition-all">
+                <div className="lg:col-span-6 order-2 lg:order-1 pl-10 sm:pl-16 lg:pl-0 lg:pr-14">
+                  <div className="bg-[#0B0F19]/90 border border-white/10 hover:border-[#00A3E0] rounded-2xl p-4 sm:p-7 shadow-2xl relative overflow-hidden group transition-all">
                     <div className="absolute top-0 left-0 w-44 h-44 bg-[#00A3E0]/10 blur-3xl pointer-events-none" />
 
                     <div className="flex items-center justify-between pb-3 mb-4 border-b border-white/[0.08] text-xs font-mono">
@@ -991,49 +990,49 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
 
                     {/* 4 Agent Nodes */}
                     <div className="space-y-2.5 font-mono text-xs">
-                      <div className="flex items-center justify-between p-2.5 rounded-lg bg-[#05070D] border border-white/[0.06]">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-2 p-2.5 rounded-lg bg-[#05070D] border border-white/[0.06]">
                         <div className="flex items-center gap-2.5">
-                          <span className="w-5 h-5 rounded-md bg-[#0070AD]/20 text-[#00A3E0] flex items-center justify-center text-[10px] font-bold">R</span>
+                          <span className="w-5 h-5 rounded-md bg-[#0070AD]/20 text-[#00A3E0] flex items-center justify-center text-[10px] font-bold shrink-0">R</span>
                           <span className="text-white text-[11px] font-semibold">Research Agent</span>
                         </div>
-                        <span className="text-[10px] text-slate-400">10-K & Executive Hook Synthesized</span>
+                        <span className="text-[10px] text-slate-400 pl-7 sm:pl-0">10-K & Hook Synthesized</span>
                       </div>
 
-                      <div className="flex items-center justify-between p-2.5 rounded-lg bg-[#05070D] border border-white/[0.06]">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-2 p-2.5 rounded-lg bg-[#05070D] border border-white/[0.06]">
                         <div className="flex items-center gap-2.5">
-                          <span className="w-5 h-5 rounded-md bg-[#00A3E0]/20 text-[#00A3E0] flex items-center justify-center text-[10px] font-bold">Q</span>
+                          <span className="w-5 h-5 rounded-md bg-[#00A3E0]/20 text-[#00A3E0] flex items-center justify-center text-[10px] font-bold shrink-0">Q</span>
                           <span className="text-white text-[11px] font-semibold">Qualification Agent</span>
                         </div>
-                        <span className="text-[10px] text-emerald-400">99.4% Buying Authority Verified</span>
+                        <span className="text-[10px] text-emerald-400 pl-7 sm:pl-0">99.4% Authority Verified</span>
                       </div>
 
-                      <div className="flex items-center justify-between p-2.5 rounded-lg bg-[#05070D] border border-white/[0.06]">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-2 p-2.5 rounded-lg bg-[#05070D] border border-white/[0.06]">
                         <div className="flex items-center gap-2.5">
-                          <span className="w-5 h-5 rounded-md bg-[#0070AD]/20 text-[#00A3E0] flex items-center justify-center text-[10px] font-bold">M</span>
+                          <span className="w-5 h-5 rounded-md bg-[#0070AD]/20 text-[#00A3E0] flex items-center justify-center text-[10px] font-bold shrink-0">M</span>
                           <span className="text-white text-[11px] font-semibold">Messaging Agent</span>
                         </div>
-                        <span className="text-[10px] text-slate-400">Executive-Tone Value Pitch Calibrated</span>
+                        <span className="text-[10px] text-slate-400 pl-7 sm:pl-0">Value Pitch Calibrated</span>
                       </div>
 
-                      <div className="flex items-center justify-between p-2.5 rounded-lg bg-[#05070D] border border-white/[0.06]">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-2 p-2.5 rounded-lg bg-[#05070D] border border-white/[0.06]">
                         <div className="flex items-center gap-2.5">
-                          <span className="w-5 h-5 rounded-md bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-[10px] font-bold">T</span>
+                          <span className="w-5 h-5 rounded-md bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-[10px] font-bold shrink-0">T</span>
                           <span className="text-white text-[11px] font-semibold">Routing Agent</span>
                         </div>
-                        <span className="text-[10px] text-cyan-300">Optimal Channel & Timezone Dispatched</span>
+                        <span className="text-[10px] text-cyan-300 pl-7 sm:pl-0">Optimal Channel Dispatched</span>
                       </div>
                     </div>
                   </div>
                 </div>
 
                 {/* Right Column (Desktop): Text & Narrative */}
-                <div className="lg:col-span-6 order-1 lg:order-2 pl-14 sm:pl-16 lg:pl-14 text-left space-y-4">
+                <div className="lg:col-span-6 order-1 lg:order-2 pl-10 sm:pl-16 lg:pl-14 text-left space-y-3 sm:space-y-4">
                   <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#00A3E0]/20 border border-[#00A3E0]/40 text-[#00A3E0] text-xs font-mono font-semibold tracking-wider">
                     <Sparkles className="w-3.5 h-3.5" />
                     <span>MILESTONE 02 • INTELLIGENCE</span>
                   </div>
 
-                  <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight leading-tight">
+                  <h3 className="text-xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight leading-tight">
                     Specialized agents. <br className="hidden sm:block" />
                     Working as a team. <br className="hidden sm:block" />
                     Delivering outcomes.
@@ -1043,15 +1042,15 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                     From research and qualification to messaging and routing, agents turn shared context into coordinated action — knowing who to engage, why now, what to say, and when to step back.
                   </p>
 
-                  <div className="pt-2 flex items-center gap-3 text-xs font-mono text-slate-400">
+                  <div className="pt-2 flex flex-wrap items-center gap-2 sm:gap-3 text-xs font-mono text-slate-400">
                     <div className="flex items-center gap-1.5">
                       <CheckCheck className="w-4 h-4 text-emerald-400" />
                       <span>Zero Hallucinations</span>
                     </div>
-                    <span className="text-slate-600">•</span>
+                    <span className="text-slate-600 hidden sm:inline">•</span>
                     <div className="flex items-center gap-1.5">
                       <CheckCheck className="w-4 h-4 text-emerald-400" />
-                      <span>Continuous Coordinated Consensus</span>
+                      <span>Coordinated Consensus</span>
                     </div>
                   </div>
                 </div>
@@ -1062,23 +1061,23 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
               {/* -------------------------------------------------------------------
                   MILESTONE 03: OMNICHANNEL COVERAGE
               ------------------------------------------------------------------- */}
-              <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
+              <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-14 items-center">
                 
                 {/* Roadmap Node Indicator */}
-                <div className="absolute left-5 sm:left-7 lg:left-1/2 -translate-x-1/2 -top-1 lg:top-1/2 lg:-translate-y-1/2 z-20 flex items-center justify-center">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#06080F] border-2 border-emerald-400 shadow-[0_0_25px_rgba(52,211,153,0.7)] flex items-center justify-center text-white font-mono font-bold text-xs sm:text-sm">
+                <div className="absolute left-4 sm:left-6 lg:left-1/2 -translate-x-1/2 -top-1 lg:top-1/2 lg:-translate-y-1/2 z-20 flex items-center justify-center">
+                  <div className="w-8 h-8 sm:w-11 sm:h-11 rounded-full bg-[#06080F] border-2 border-emerald-400 shadow-[0_0_25px_rgba(52,211,153,0.7)] flex items-center justify-center text-white font-mono font-bold text-xs sm:text-sm">
                     03
                   </div>
                 </div>
 
                 {/* Left Column (Desktop): Text & Narrative */}
-                <div className="lg:col-span-6 pl-14 sm:pl-16 lg:pl-0 lg:pr-14 text-left space-y-4">
+                <div className="lg:col-span-6 pl-10 sm:pl-16 lg:pl-0 lg:pr-14 text-left space-y-3 sm:space-y-4">
                   <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 text-xs font-mono font-semibold tracking-wider">
                     <Radio className="w-3.5 h-3.5" />
                     <span>MILESTONE 03 • OMNICHANNEL COVERAGE</span>
                   </div>
 
-                  <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight leading-tight">
+                  <h3 className="text-xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight leading-tight">
                     Drive outcomes on every <br className="hidden sm:block" />
                     channel your prospects are on
                   </h3>
@@ -1101,8 +1100,8 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                 </div>
 
                 {/* Right Column (Desktop): 6-Channel Grid Visual Card */}
-                <div className="lg:col-span-6 pl-14 sm:pl-16 lg:pl-14">
-                  <div className="bg-[#0B0F19]/90 border border-white/10 hover:border-emerald-400/80 rounded-2xl p-6 sm:p-7 shadow-2xl relative overflow-hidden group transition-all">
+                <div className="lg:col-span-6 pl-10 sm:pl-16 lg:pl-14">
+                  <div className="bg-[#0B0F19]/90 border border-white/10 hover:border-emerald-400/80 rounded-2xl p-4 sm:p-7 shadow-2xl relative overflow-hidden group transition-all">
                     <div className="absolute top-0 right-0 w-44 h-44 bg-emerald-500/10 blur-3xl pointer-events-none" />
 
                     <div className="flex items-center justify-between pb-3 mb-4 border-b border-white/[0.08] text-xs font-mono">
@@ -1114,7 +1113,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                     </div>
 
                     {/* 6-Channel Grid */}
-                    <div className="grid grid-cols-2 gap-2.5 font-mono text-xs">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 font-mono text-xs">
                       
                       {/* Voice AI */}
                       <div className="p-3 rounded-xl bg-[#05070D] border border-white/[0.06] hover:border-[#0070AD] transition-all">
@@ -1192,28 +1191,28 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
           </div>
 
           {/* Bottom High-Impact Performance Metrics Bar */}
-          <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-5">
-            <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.08] backdrop-blur-sm flex items-center gap-4">
-              <div className="text-4xl font-extrabold text-[#38BDF8] font-mono tracking-tight">10x</div>
+          <div className="mt-14 sm:mt-20 grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-5">
+            <div className="p-4 sm:p-6 rounded-2xl bg-white/[0.02] border border-white/[0.08] backdrop-blur-sm flex items-center gap-4">
+              <div className="text-3xl sm:text-4xl font-extrabold text-[#38BDF8] font-mono tracking-tight shrink-0">10x</div>
               <div>
-                <div className="text-sm font-bold text-white uppercase tracking-wider">Faster Pipeline Velocity</div>
-                <div className="text-xs text-[#94A3B8]">From weeks of manual search to minutes</div>
+                <div className="text-xs sm:text-sm font-bold text-white uppercase tracking-wider">Faster Pipeline Velocity</div>
+                <div className="text-[11px] sm:text-xs text-[#94A3B8]">From weeks of manual search to minutes</div>
               </div>
             </div>
 
-            <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.08] backdrop-blur-sm flex items-center gap-4">
-              <div className="text-4xl font-extrabold text-[#00A3E0] font-mono tracking-tight">84%</div>
+            <div className="p-4 sm:p-6 rounded-2xl bg-white/[0.02] border border-white/[0.08] backdrop-blur-sm flex items-center gap-4">
+              <div className="text-3xl sm:text-4xl font-extrabold text-[#00A3E0] font-mono tracking-tight shrink-0">84%</div>
               <div>
-                <div className="text-sm font-bold text-white uppercase tracking-wider">Executive Response Rate</div>
-                <div className="text-xs text-[#94A3B8]">Deep personalized value hooks that resonate</div>
+                <div className="text-xs sm:text-sm font-bold text-white uppercase tracking-wider">Executive Response Rate</div>
+                <div className="text-[11px] sm:text-xs text-[#94A3B8]">Deep personalized value hooks that resonate</div>
               </div>
             </div>
 
-            <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.08] backdrop-blur-sm flex items-center gap-4">
-              <div className="text-4xl font-extrabold text-emerald-400 font-mono tracking-tight">0 hrs</div>
+            <div className="p-4 sm:p-6 rounded-2xl bg-white/[0.02] border border-white/[0.08] backdrop-blur-sm flex items-center gap-4">
+              <div className="text-3xl sm:text-4xl font-extrabold text-emerald-400 font-mono tracking-tight shrink-0">0 hrs</div>
               <div>
-                <div className="text-sm font-bold text-white uppercase tracking-wider">Manual SDR Admin</div>
-                <div className="text-xs text-[#94A3B8]">Continuous autonomous pipeline execution</div>
+                <div className="text-xs sm:text-sm font-bold text-white uppercase tracking-wider">Manual SDR Admin</div>
+                <div className="text-[11px] sm:text-xs text-[#94A3B8]">Continuous autonomous pipeline execution</div>
               </div>
             </div>
           </div>
@@ -1426,34 +1425,34 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
             
             <div className="bg-[#10141A] rounded-[14px] border border-white/10 overflow-hidden shadow-xl">
               <div className="overflow-x-auto">
-                <table className="w-full text-left border-collapse text-xs">
+                <table className="w-full min-w-[500px] text-left border-collapse text-xs">
                   <thead>
                     <tr className="border-b border-white/10 bg-[#05070B]">
-                      <th className="p-4 font-mono text-[#737B88] uppercase tracking-wider w-1/4">Feature</th>
-                      <th className="p-4 font-mono text-center text-white">Starter</th>
-                      <th className="p-4 font-mono text-center text-[#00A3E0] bg-[#0070AD]/10">Scale (Pro)</th>
-                      <th className="p-4 font-mono text-center text-white">Enterprise</th>
+                      <th className="p-3.5 sm:p-4 font-mono text-[#737B88] uppercase tracking-wider w-1/4">Feature</th>
+                      <th className="p-3.5 sm:p-4 font-mono text-center text-white">Starter</th>
+                      <th className="p-3.5 sm:p-4 font-mono text-center text-[#00A3E0] bg-[#0070AD]/10">Scale (Pro)</th>
+                      <th className="p-3.5 sm:p-4 font-mono text-center text-white">Enterprise</th>
                     </tr>
                   </thead>
                   <tbody>
                     {comparisonData.map((row: any, i: number) => (
                       <tr key={i} className="border-b border-white/[0.06] hover:bg-white/[0.02]">
-                        <td className="p-4 font-medium text-white">{row.feature}</td>
-                        <td className="p-4 text-center text-[#B4BAC5]">
+                        <td className="p-3.5 sm:p-4 font-medium text-white">{row.feature}</td>
+                        <td className="p-3.5 sm:p-4 text-center text-[#B4BAC5]">
                           {typeof row.starter === 'boolean' ? (
                             row.starter ? <Check className="w-4 h-4 text-emerald-400 mx-auto" /> : <span className="text-[#737B88]">—</span>
                           ) : (
                             row.starter
                           )}
                         </td>
-                        <td className="p-4 text-center font-semibold text-[#00A3E0] bg-[#0070AD]/5">
+                        <td className="p-3.5 sm:p-4 text-center font-semibold text-[#00A3E0] bg-[#0070AD]/5">
                           {typeof row.pro === 'boolean' ? (
                             row.pro ? <Check className="w-4 h-4 text-[#00A3E0] mx-auto" /> : <span className="text-[#737B88]">—</span>
                           ) : (
                             row.pro
                           )}
                         </td>
-                        <td className="p-4 text-center text-white font-medium">
+                        <td className="p-3.5 sm:p-4 text-center text-white font-medium">
                           {typeof row.enterprise === 'boolean' ? (
                             row.enterprise ? <Check className="w-4 h-4 text-emerald-400 mx-auto" /> : <span className="text-[#737B88]">—</span>
                           ) : (
@@ -1475,11 +1474,11 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
       {/* =========================================================================
           09 — FINAL CTA (Background: #020407, Strongest Visual Glow)
       ========================================================================= */}
-      <section className="relative z-10 py-32 bg-[#020407] border-t border-white/[0.06] overflow-hidden text-center">
+      <section className="relative z-10 py-20 sm:py-32 bg-[#020407] border-t border-white/[0.06] overflow-hidden text-center">
         {/* Large Fastigo Blue/Cyan Atmospheric Glow */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(0,112,173,0.30)_0%,_rgba(0,163,224,0.10)_45%,_transparent_75%)] blur-[90px] pointer-events-none" />
         
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-6">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-5 sm:space-y-6">
           <span className="text-xs font-mono uppercase tracking-widest text-[#00A3E0] block">
             GET STARTED
           </span>
@@ -1490,7 +1489,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
               whileInView={{ y: 0, opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7 }}
-              className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white uppercase leading-[1.05]"
+              className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white uppercase leading-[1.08]"
             >
               LET YOUR AI SALES <br />
               AGENT HANDLE <br />
@@ -1498,14 +1497,14 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
             </motion.h2>
           </div>
 
-          <p className="text-base sm:text-lg text-[#B4BAC5] max-w-xl mx-auto">
+          <p className="text-sm sm:text-lg text-[#B4BAC5] max-w-xl mx-auto">
             You focus on the conversation. OmniSell keeps the pipeline moving.
           </p>
 
-          <div className="pt-4 flex flex-wrap items-center justify-center gap-4">
+          <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
             <button
               onClick={() => setDemoModalOpen(true)}
-              className="px-8 py-3.5 rounded-full text-sm font-semibold text-white bg-[#0070AD] hover:bg-[#005a8c] transition-all duration-300 shadow-[0_0_30px_rgba(0,112,173,0.5)] flex items-center gap-2 group cursor-pointer"
+              className="w-full sm:w-auto px-8 py-3.5 rounded-full text-sm font-semibold text-white bg-[#0070AD] hover:bg-[#005a8c] transition-all duration-300 shadow-[0_0_30px_rgba(0,112,173,0.5)] flex items-center justify-center gap-2 group cursor-pointer"
             >
               <span>Book a Demo</span>
               <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
@@ -1513,7 +1512,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
 
             <button
               onClick={() => setDemoModalOpen(true)}
-              className="px-8 py-3.5 rounded-full text-sm font-medium text-[#B4BAC5] hover:text-white bg-[#10141A] border border-white/10 hover:border-white/30 transition-all duration-300"
+              className="w-full sm:w-auto px-8 py-3.5 rounded-full text-sm font-medium text-[#B4BAC5] hover:text-white bg-[#10141A] border border-white/10 hover:border-white/30 transition-all duration-300"
             >
               Talk to Us
             </button>
