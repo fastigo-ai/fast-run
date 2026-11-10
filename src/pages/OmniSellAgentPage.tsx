@@ -297,7 +297,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
           CTA: Or hear it first: Try Voice AI →
           Coordinates: X: -122.39 | Y: 37.78
       ========================================================================= */}
-      <section className="relative z-10 pt-28 sm:pt-36 md:pt-40 pb-20 sm:pb-28 lg:pb-32 min-h-[720px] sm:min-h-[800px] lg:min-h-[860px] flex items-center bg-[#000000] overflow-hidden">
+      <section className="relative z-10 pt-24 xs:pt-28 sm:pt-36 md:pt-40 pb-16 sm:pb-28 lg:pb-32 min-h-[620px] sm:min-h-[800px] lg:min-h-[860px] flex items-center bg-[#000000] overflow-hidden">
         {/* Full-bleed Clean Cybernetic Astronaut Background (100% Text-Free & Logo-Free) */}
         <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">
           <img
@@ -333,7 +333,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                className="text-4xl sm:text-6xl md:text-7xl lg:text-[76px] font-bold text-white tracking-tight leading-[1.05]"
+                className="text-3xl xs:text-4xl sm:text-6xl md:text-7xl lg:text-[76px] font-bold text-white tracking-tight leading-[1.1] sm:leading-[1.05] break-words"
               >
                 <span className="text-[#C8492C] font-mono mr-2">[</span>
                 <span className="inline-block text-white">
@@ -362,7 +362,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.15 }}
-              className="text-base sm:text-lg md:text-xl text-[#C8CED8] font-normal leading-relaxed max-w-xl"
+              className="text-sm xs:text-base sm:text-lg md:text-xl text-[#C8CED8] font-normal leading-relaxed max-w-xl"
             >
               Convert inbound demand. Run your outbound playbooks. <br className="hidden sm:inline" />
               Expand your accounts. Across every channel.
@@ -387,12 +387,12 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                   placeholder="Work email"
                   value={heroEmail}
                   onChange={(e) => setHeroEmail(e.target.value)}
-                  className="flex-1 px-4 sm:px-5 py-2.5 sm:py-3 text-xs sm:text-sm text-[#111111] placeholder-[#777777] bg-transparent outline-none rounded-full"
+                  className="flex-1 min-w-0 px-3 xs:px-4 sm:px-5 py-2 xs:py-2.5 sm:py-3 text-xs sm:text-sm text-[#111111] placeholder-[#777777] bg-transparent outline-none rounded-full"
                   required
                 />
                 <button
                   type="submit"
-                  className="px-5 sm:px-6 py-2.5 sm:py-3 rounded-full text-xs sm:text-sm font-semibold text-white bg-[#C8492C] hover:bg-[#B83E26] transition-colors flex items-center gap-1.5 shrink-0 shadow-md cursor-pointer"
+                  className="px-3.5 xs:px-5 sm:px-6 py-2 xs:py-2.5 sm:py-3 rounded-full text-xs sm:text-sm font-semibold text-white bg-[#C8492C] hover:bg-[#B83E26] transition-colors flex items-center gap-1 shrink-0 shadow-md cursor-pointer"
                 >
                   <span>Get a Demo</span>
                   <ChevronRight className="w-3.5 h-3.5" />
@@ -400,7 +400,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
               </form>
 
               {/* Secondary CTA: Or hear it first: Try Voice AI → */}
-              <div className="flex items-center gap-3 text-xs sm:text-sm text-white/85">
+              <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs sm:text-sm text-white/85">
                 <span className="text-[#A1A8B8]">Or hear it first:</span>
                 <button
                   type="button"
@@ -428,7 +428,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
           Sales agents that turn conversations into revenue
           Theme: Warm Cream BG (#F4EFEB), Terracotta (#C8492C) & Black Pills!
       ========================================================================= */}
-      <section className="relative z-10 py-20 sm:py-28 bg-[#F4EFEB] border-y border-[#E5DFD7] overflow-hidden text-[#1A1A1A]">
+      <section className="relative z-10 py-14 sm:py-28 bg-[#F4EFEB] border-y border-[#E5DFD7] overflow-hidden text-[#1A1A1A]">
         {/* Soft Ambient Warm Glow */}
         <div className="absolute top-1/2 right-[10%] -translate-y-1/2 w-[550px] h-[550px] bg-[radial-gradient(circle,_rgba(200,73,44,0.06)_0%,_transparent_70%)] blur-[90px] pointer-events-none" />
 
@@ -444,7 +444,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5 }}
-                  className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#111111] leading-[1.12]"
+                  className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#111111] leading-[1.15] sm:leading-[1.12]"
                 >
                   <span className="text-[#C8492C]">Sales agents</span> that turn <br />
                   conversations into revenue
@@ -554,7 +554,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
 
             {/* Right Column: Clean White 11x Console with Dotted Terracotta Particle Sphere */}
             <div className="lg:col-span-6">
-              <div className="bg-[#FFFFFF] rounded-2xl sm:rounded-3xl border border-[#E2DBD1] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.08)] p-4 sm:p-8 relative overflow-hidden flex flex-col justify-between min-h-[460px] sm:min-h-[480px]">
+              <div className="bg-[#FFFFFF] rounded-2xl sm:rounded-3xl border border-[#E2DBD1] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.08)] p-3.5 xs:p-5 sm:p-8 relative overflow-hidden flex flex-col justify-between min-h-[400px] sm:min-h-[480px]">
                 
                 {/* Console Header Bar */}
                 <div className="flex items-center justify-between pb-3 sm:pb-4 border-b border-[#F0EBE3] gap-2">
@@ -617,7 +617,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                 </div>
 
                 {/* Console Footer Bar */}
-                <div className="pt-3 sm:pt-4 border-t border-[#F0EBE3] flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+                <div className="pt-3 sm:pt-4 border-t border-[#F0EBE3] flex flex-col sm:flex-row items-center justify-between gap-2.5 sm:gap-3 text-center sm:text-left">
                   <div className="flex items-center gap-1.5 text-[10px] sm:text-[11px] font-mono text-[#777777]">
                     <Volume2 className="w-3.5 h-3.5 text-[#C8492C] shrink-0" />
                     <span>REAL-TIME CONVERSATION • POWERED BY OMNISELL</span>
@@ -677,7 +677,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                     transition: { staggerChildren: 0.15 }
                   }
                 }}
-                className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-[#111111] leading-[1.06]"
+                className="text-2xl xs:text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-[#111111] leading-[1.1] sm:leading-[1.06]"
               >
                 <motion.span
                   variants={{
@@ -730,7 +730,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
               whileHover={{ y: -8, scale: 1.01 }}
-              className="group relative rounded-3xl bg-[#09090D] border border-black/10 hover:border-black/25 p-6 sm:p-8 flex flex-col justify-between transition-all duration-300 shadow-[0_20px_50px_rgba(0,0,0,0.85)] overflow-hidden text-white"
+              className="group relative rounded-2xl sm:rounded-3xl bg-[#09090D] border border-black/10 hover:border-black/25 p-4 xs:p-5 sm:p-8 flex flex-col justify-between transition-all duration-300 shadow-[0_20px_50px_rgba(0,0,0,0.85)] overflow-hidden text-white"
             >
               {/* Subtle Ambient Backlight Glow */}
               <div className="absolute top-0 right-0 w-44 h-44 bg-[#C8492C]/10 rounded-full blur-3xl pointer-events-none group-hover:bg-[#C8492C]/18 transition-all duration-500" />
@@ -756,7 +756,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
 
                 {/* Title & Minimum Text */}
                 <div className="space-y-2">
-                  <h3 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+                  <h3 className="text-xl sm:text-3xl font-bold text-white tracking-tight">
                     Scale outbound
                   </h3>
                   <p className="text-xs sm:text-sm text-white/60 leading-relaxed">
@@ -765,7 +765,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                 </div>
 
                 {/* Premium Micro-UI Box: Minimal Black & White + Orange Icons */}
-                <div className="p-4 rounded-2xl bg-[#000000] border border-white/[0.08] space-y-3 shadow-inner">
+                <div className="p-3 xs:p-4 rounded-xl sm:rounded-2xl bg-[#000000] border border-white/[0.08] space-y-2.5 sm:space-y-3 shadow-inner">
                   <div className="flex items-center justify-between text-[11px]">
                     <div className="flex items-center gap-2 min-w-0">
                       <div className="w-6 h-6 rounded-full bg-white/10 border border-white/15 flex items-center justify-center text-white text-[10px] font-bold shrink-0">
@@ -826,7 +826,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
               whileHover={{ y: -8, scale: 1.01 }}
-              className="group relative rounded-3xl bg-[#09090D] border border-black/10 hover:border-black/25 p-6 sm:p-8 flex flex-col justify-between transition-all duration-300 shadow-[0_20px_50px_rgba(0,0,0,0.85)] overflow-hidden text-white"
+              className="group relative rounded-2xl sm:rounded-3xl bg-[#09090D] border border-black/10 hover:border-black/25 p-4 xs:p-5 sm:p-8 flex flex-col justify-between transition-all duration-300 shadow-[0_20px_50px_rgba(0,0,0,0.85)] overflow-hidden text-white"
             >
               {/* Subtle Ambient Backlight Glow */}
               <div className="absolute top-0 right-0 w-44 h-44 bg-[#C8492C]/10 rounded-full blur-3xl pointer-events-none group-hover:bg-[#C8492C]/18 transition-all duration-500" />
@@ -852,7 +852,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
 
                 {/* Title & Minimum Text */}
                 <div className="space-y-2">
-                  <h3 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+                  <h3 className="text-xl sm:text-3xl font-bold text-white tracking-tight">
                     Capture demand
                   </h3>
                   <p className="text-xs sm:text-sm text-white/60 leading-relaxed">
@@ -861,7 +861,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                 </div>
 
                 {/* Premium Micro-UI Box: Julian Voice Interaction */}
-                <div className="p-4 rounded-2xl bg-[#000000] border border-white/[0.08] space-y-3 shadow-inner">
+                <div className="p-3 xs:p-4 rounded-xl sm:rounded-2xl bg-[#000000] border border-white/[0.08] space-y-2.5 sm:space-y-3 shadow-inner">
                   <div className="flex items-center justify-between text-[11px]">
                     <div className="flex items-center gap-2">
                       <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
@@ -925,7 +925,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
               whileHover={{ y: -8, scale: 1.01 }}
-              className="group relative rounded-3xl bg-[#09090D] border border-black/10 hover:border-black/25 p-6 sm:p-8 flex flex-col justify-between transition-all duration-300 shadow-[0_20px_50px_rgba(0,0,0,0.85)] overflow-hidden text-white"
+              className="group relative rounded-2xl sm:rounded-3xl bg-[#09090D] border border-black/10 hover:border-black/25 p-4 xs:p-5 sm:p-8 flex flex-col justify-between transition-all duration-300 shadow-[0_20px_50px_rgba(0,0,0,0.85)] overflow-hidden text-white"
             >
               {/* Subtle Ambient Backlight Glow */}
               <div className="absolute top-0 right-0 w-44 h-44 bg-[#C8492C]/10 rounded-full blur-3xl pointer-events-none group-hover:bg-[#C8492C]/18 transition-all duration-500" />
@@ -951,7 +951,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
 
                 {/* Title & Minimum Text */}
                 <div className="space-y-2">
-                  <h3 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+                  <h3 className="text-xl sm:text-3xl font-bold text-white tracking-tight">
                     Expand accounts
                   </h3>
                   <p className="text-xs sm:text-sm text-white/60 leading-relaxed">
@@ -960,7 +960,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                 </div>
 
                 {/* Premium Micro-UI Box: Expansion Signal */}
-                <div className="p-4 rounded-2xl bg-[#000000] border border-white/[0.08] space-y-3 shadow-inner">
+                <div className="p-3 xs:p-4 rounded-xl sm:rounded-2xl bg-[#000000] border border-white/[0.08] space-y-2.5 sm:space-y-3 shadow-inner">
                   <div className="flex items-center justify-between text-[11px]">
                     <span className="text-white font-medium">Enterprise Tier Account</span>
                     <span className="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded">
@@ -1017,7 +1017,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
           04 — ROADMAP: ONE AI AGENT. THE ENTIRE SALES MOTION.
           Theme: Monochrome Black & White with Orange Accents (#C8492C)
       ========================================================================= */}
-      <section id="platform" className="relative z-10 py-24 sm:py-32 bg-white border-t border-[#E5DFD7] overflow-hidden text-[#111111]">
+      <section id="platform" className="relative z-10 py-16 sm:py-32 bg-white border-t border-[#E5DFD7] overflow-hidden text-[#111111]">
         {/* Subtle Ambient Warm Glow */}
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[850px] h-[400px] bg-[radial-gradient(ellipse,_rgba(200,73,44,0.05)_0%,_transparent_75%)] blur-[120px] pointer-events-none" />
         <div className="absolute inset-0 bg-[radial-gradient(#0000000d_1px,transparent_1px)] [background-size:28px_28px] opacity-70 pointer-events-none" />
@@ -1082,13 +1082,13 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                 </div>
 
                 {/* Left Column: Text & Narrative */}
-                <div className="lg:col-span-6 pl-10 sm:pl-16 lg:pl-0 lg:pr-14 text-left space-y-3 sm:space-y-4">
+                <div className="lg:col-span-6 pl-7 xs:pl-9 sm:pl-16 lg:pl-0 lg:pr-14 text-left space-y-3 sm:space-y-4">
                   <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#F4EFEB] border border-[#E5DFD7] text-[#111111] text-xs font-mono font-semibold tracking-wider">
                     <Database className="w-3.5 h-3.5 text-[#C8492C]" />
                     <span>MILESTONE 01 • CONTEXT</span>
                   </div>
                   
-                  <h3 className="text-xl sm:text-3xl lg:text-4xl font-bold text-[#111111] tracking-tight leading-tight">
+                  <h3 className="text-lg xs:text-xl sm:text-3xl lg:text-4xl font-bold text-[#111111] tracking-tight leading-tight">
                     Unified customer and <br className="hidden sm:block" />
                     market context
                   </h3>
@@ -1107,7 +1107,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                 </div>
 
                 {/* Right Column: Live Telemetry Context Visual Card */}
-                <div className="lg:col-span-6 pl-10 sm:pl-16 lg:pl-14">
+                <div className="lg:col-span-6 pl-7 xs:pl-9 sm:pl-16 lg:pl-14">
                   <div className="bg-[#09090D] border border-white/10 hover:border-white/20 rounded-2xl p-4 sm:p-7 shadow-2xl relative overflow-hidden group transition-all text-white">
                     <div className="absolute top-0 right-0 w-44 h-44 bg-[#C8492C]/10 blur-3xl pointer-events-none" />
                     
@@ -1164,7 +1164,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                 </div>
 
                 {/* Left Column: Multi-Agent Swarm Visual Card */}
-                <div className="lg:col-span-6 order-2 lg:order-1 pl-10 sm:pl-16 lg:pl-0 lg:pr-14">
+                <div className="lg:col-span-6 order-2 lg:order-1 pl-7 xs:pl-9 sm:pl-16 lg:pl-0 lg:pr-14">
                   <div className="bg-[#09090D] border border-white/10 hover:border-white/20 rounded-2xl p-4 sm:p-7 shadow-2xl relative overflow-hidden group transition-all text-white">
                     <div className="absolute top-0 left-0 w-44 h-44 bg-[#C8492C]/10 blur-3xl pointer-events-none" />
 
@@ -1207,13 +1207,13 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                 </div>
 
                 {/* Right Column: Narrative */}
-                <div className="lg:col-span-6 order-1 lg:order-2 pl-10 sm:pl-16 lg:pl-14 text-left space-y-3 sm:space-y-4">
+                <div className="lg:col-span-6 order-1 lg:order-2 pl-7 xs:pl-9 sm:pl-16 lg:pl-14 text-left space-y-3 sm:space-y-4">
                   <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#F4EFEB] border border-[#E5DFD7] text-[#111111] text-xs font-mono font-semibold tracking-wider">
                     <Workflow className="w-3.5 h-3.5 text-[#C8492C]" />
                     <span>MILESTONE 02 • INTELLIGENCE</span>
                   </div>
 
-                  <h3 className="text-xl sm:text-3xl lg:text-4xl font-bold text-[#111111] tracking-tight leading-tight">
+                  <h3 className="text-lg xs:text-xl sm:text-3xl lg:text-4xl font-bold text-[#111111] tracking-tight leading-tight">
                     Specialized agents, <br className="hidden sm:block" />
                     collaborative intelligence
                   </h3>
@@ -1248,13 +1248,13 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                 </div>
 
                 {/* Left Column: Text & Narrative */}
-                <div className="lg:col-span-6 pl-10 sm:pl-16 lg:pl-0 lg:pr-14 text-left space-y-3 sm:space-y-4">
+                <div className="lg:col-span-6 pl-7 xs:pl-9 sm:pl-16 lg:pl-0 lg:pr-14 text-left space-y-3 sm:space-y-4">
                   <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#F4EFEB] border border-[#E5DFD7] text-[#111111] text-xs font-mono font-semibold tracking-wider">
                     <Radio className="w-3.5 h-3.5 text-[#C8492C]" />
                     <span>MILESTONE 03 • EXECUTION</span>
                   </div>
 
-                  <h3 className="text-xl sm:text-3xl lg:text-4xl font-bold text-[#111111] tracking-tight leading-tight">
+                  <h3 className="text-lg xs:text-xl sm:text-3xl lg:text-4xl font-bold text-[#111111] tracking-tight leading-tight">
                     Frictionless omnichannel <br className="hidden sm:block" />
                     conversation loops
                   </h3>
@@ -1279,7 +1279,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                 </div>
 
                 {/* Right Column: Execution Live Terminal Card */}
-                <div className="lg:col-span-6 pl-10 sm:pl-16 lg:pl-14">
+                <div className="lg:col-span-6 pl-7 xs:pl-9 sm:pl-16 lg:pl-14">
                   <div className="bg-[#09090D] border border-white/10 hover:border-white/20 rounded-2xl p-4 sm:p-7 shadow-2xl relative overflow-hidden group transition-all text-white">
                     <div className="absolute bottom-0 right-0 w-44 h-44 bg-[#C8492C]/10 blur-3xl pointer-events-none" />
 
@@ -1346,7 +1346,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                 whileInView={{ y: 0, opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
-                className="text-3xl sm:text-5xl font-bold tracking-tight text-[#111111] uppercase"
+                className="text-2xl xs:text-3xl sm:text-5xl font-bold tracking-tight text-[#111111] uppercase"
               >
                 REAL IMPACT. <br />
                 SUPERHUMAN REVENUE.
@@ -1466,7 +1466,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                 whileInView={{ y: 0, opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
-                className="text-4xl sm:text-5xl font-bold tracking-tight text-white uppercase"
+                className="text-2xl xs:text-3xl sm:text-5xl font-bold tracking-tight text-white uppercase"
               >
                 SIMPLE, TRANSPARENT PRICING
               </motion.h2>
@@ -1563,8 +1563,9 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
             </h3>
             
             <div className="bg-[#0A0A0E] rounded-[14px] border border-white/10 overflow-hidden shadow-xl">
-              <div className="overflow-x-auto">
-                <table className="w-full min-w-[500px] text-left border-collapse text-xs">
+              <div className="overflow-x-auto no-scrollbar scroll-smooth">
+                <div className="sm:hidden text-right pb-2 text-[10px] font-mono text-[#C8492C] tracking-wider uppercase">← Swipe table to compare →</div>
+                <table className="w-full min-w-[440px] sm:min-w-[500px] text-left border-collapse text-xs">
                   <thead>
                     <tr className="border-b border-white/10 bg-[#050508]">
                       <th className="p-3.5 sm:p-4 font-mono text-[#737B88] uppercase tracking-wider w-1/4">Feature</th>
@@ -1620,7 +1621,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
             <span className="text-xs font-mono uppercase tracking-widest text-[#C8492C] block">
               QUESTIONS & ANSWERS
             </span>
-            <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-white uppercase">
+            <h2 className="text-2xl xs:text-3xl sm:text-5xl font-bold tracking-tight text-white uppercase">
               FREQUENTLY ASKED QUESTIONS
             </h2>
             <p className="text-base text-[#94A3B8]">
@@ -1635,7 +1636,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                 value={`faq-${index}`}
                 className="bg-[#0D0D14] border border-white/10 rounded-2xl px-6 py-2 overflow-hidden hover:border-[#C8492C]/60 transition-colors"
               >
-                <AccordionTrigger className="text-left font-bold text-base sm:text-lg text-white hover:text-[#C8492C] transition-colors py-4">
+                <AccordionTrigger className="text-left font-bold text-sm sm:text-lg text-white hover:text-[#C8492C] transition-colors py-3 sm:py-4">
                   {faq.q}
                 </AccordionTrigger>
                 <AccordionContent className="text-sm sm:text-base text-[#94A3B8] leading-relaxed pb-4">
@@ -1652,7 +1653,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
       {/* =========================================================================
           10 — FINAL HIGH-IMPACT CTA (Theme: Clean White Background with Orange Accents)
       ========================================================================= */}
-      <section className="relative z-10 py-20 sm:py-32 bg-white border-t border-[#E5DFD7] overflow-hidden text-center text-[#111111]">
+      <section className="relative z-10 py-14 sm:py-32 bg-white border-t border-[#E5DFD7] overflow-hidden text-center text-[#111111]">
         {/* Soft Warm Terracotta Atmospheric Glow */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(200,73,44,0.07)_0%,_transparent_70%)] blur-[100px] pointer-events-none" />
         
@@ -1706,7 +1707,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
           DEMO BOOKING DIALOG
       ========================================================================= */}
       <Dialog open={demoModalOpen} onOpenChange={setDemoModalOpen}>
-        <DialogContent className="bg-[#09090F] border border-white/15 text-white max-w-md p-6 sm:p-8 rounded-[14px]">
+        <DialogContent className="bg-[#09090F] border border-white/15 text-white max-w-md w-[92vw] sm:w-full p-5 sm:p-8 rounded-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="text-xl font-bold text-white flex items-center gap-2">
               <Sparkles className="w-5 h-5 text-[#C8492C]" />
