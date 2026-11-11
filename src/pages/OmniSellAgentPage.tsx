@@ -64,11 +64,11 @@ import {
 } from "@/components/ui/dialog";
 
 
-// 11x AUTHENTIC COLOR CODE & THEME SYSTEM
+// FASTIGO OMNISELL COLOR CODE & THEME SYSTEM
 // Hero Background: Deep Obsidian Black (#000000 / #050508)
-// Hero Primary Accent: Authentic 11x Terracotta Orange (#C8492C)
+// Hero Primary Accent: Fastigo Terracotta Orange (#C8492C)
 // Interactive Demo Background: Warm Natural Cream / Eggshell (#F4EFEB / #FAF7F2)
-// Interactive Demo Accent: Authentic 11x Terracotta Red-Orange (#C8492C / #D04B2B)
+// Interactive Demo Accent: Fastigo Terracotta Red-Orange (#C8492C / #D04B2B)
 // Text Dark: #0D0D0D / #1A1A1A
 // Neon Cyan Spark: #00E5FF / #38BDF8
 
@@ -76,7 +76,7 @@ interface OmniSellAgentPageProps {
   product?: any;
 }
 
-// EXACT 11x 3D PARTICLE SPHERE WITH TERRACOTTA & BLACK WAVE BANDS
+// FASTIGO 3D PARTICLE SPHERE WITH TERRACOTTA & BLACK WAVE BANDS
 const ParticleSphere: React.FC<{ isTalking: boolean }> = ({ isTalking }) => {
   const canvasRef = React.useRef<HTMLCanvasElement | null>(null);
 
@@ -170,7 +170,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
   const [isSimulatingCall, setIsSimulatingCall] = useState<boolean>(false);
   const [activeMotionTab, setActiveMotionTab] = useState<'outbound' | 'inbound' | 'expansion'>('outbound');
   
-  // 11x Hero Dynamic Rotating Words & Email State
+  // Fastigo Hero Dynamic Rotating Words & Email State
   const rotatingWords = ['Email', 'Voice', 'Chat', 'Inbound', 'Outbound'];
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [heroEmail, setHeroEmail] = useState('');
@@ -266,7 +266,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
   const faqs = [
     {
       q: "How does OmniSell differ from traditional sales automation tools?",
-      a: "Traditional sales sequencers rely on static templates and human reps doing manual data entry. OmniSell deploys autonomous digital workers (like Alice and Julian) that research accounts in real-time, synthesize 10-K & funding signals, execute personalized 2-way conversations across voice, email, chat, and WhatsApp, and book meetings directly into your CRM."
+      a: "Traditional sales sequencers rely on static templates and human reps doing manual data entry. OmniSell deploys autonomous digital workers (like Fastigo SDR and Fastigo Inbound) that research accounts in real-time, synthesize 10-K & funding signals, execute personalized 2-way conversations across voice, email, chat, and WhatsApp, and book meetings directly into your CRM."
     },
     {
       q: "Will OmniSell replace my existing sales reps?",
@@ -302,7 +302,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
         <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">
           <img
             src={astronautHeroImg}
-            alt="OmniSell Autonomous Revenue Agent Hero"
+            alt="Fastigo OmniSell Autonomous Revenue Agent Hero"
             className="w-full h-full object-cover object-right md:object-[82%_center] filter brightness-[0.92] contrast-[1.08]"
           />
           {/* Crisp gradients ensuring pure contrast on the left for text while keeping astronaut radiant on right */}
@@ -537,7 +537,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                 </div>
               </div>
 
-              {/* Action Button: Black Pill matching 11x image */}
+              {/* Action Button: Fastigo Black Pill */}
               <div className="pt-2">
                 <button
                   type="button"
@@ -552,7 +552,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
               </div>
             </div>
 
-            {/* Right Column: Clean White 11x Console with Dotted Terracotta Particle Sphere */}
+            {/* Right Column: Clean White Fastigo Console with Dotted Terracotta Particle Sphere */}
             <div className="lg:col-span-6">
               <div className="bg-[#FFFFFF] rounded-2xl sm:rounded-3xl border border-[#E2DBD1] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.08)] p-3.5 xs:p-5 sm:p-8 relative overflow-hidden flex flex-col justify-between min-h-[400px] sm:min-h-[480px]">
                 
@@ -563,7 +563,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                       <img src={fastigoLogo} alt="Fastigo" className="h-4 sm:h-4.5 w-auto object-contain" />
                     </div>
                     <span className="text-[11px] sm:text-xs font-mono font-bold tracking-wider text-[#111111] uppercase truncate">
-                      OmniSell Multi-Channel
+                      Fastigo OmniSell Multi-Channel
                     </span>
                   </div>
                   <div className="inline-flex items-center gap-1.5 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-[9px] sm:text-[10px] font-mono font-semibold shrink-0">
@@ -572,7 +572,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                   </div>
                 </div>
 
-                {/* Center Stage: 11x 3D Particle Sphere with Terracotta & Black Dotted Waves */}
+                {/* Center Stage: Fastigo 3D Particle Sphere with Terracotta & Black Dotted Waves */}
                 <div className="my-auto py-3 sm:py-4 relative flex flex-col items-center justify-center">
                   
                   {/* Floating Motion Wrapper */}
@@ -620,7 +620,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                 <div className="pt-3 sm:pt-4 border-t border-[#F0EBE3] flex flex-col sm:flex-row items-center justify-between gap-2.5 sm:gap-3 text-center sm:text-left">
                   <div className="flex items-center gap-1.5 text-[10px] sm:text-[11px] font-mono text-[#777777]">
                     <Volume2 className="w-3.5 h-3.5 text-[#C8492C] shrink-0" />
-                    <span>REAL-TIME CONVERSATION • POWERED BY OMNISELL</span>
+                    <span>REAL-TIME CONVERSATION • POWERED BY FASTIGO OMNISELL</span>
                   </div>
 
                   <button
@@ -723,7 +723,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
           {/* 3 Premium Boxes (Minimalist White Background with Pure Orange Icons) */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
             
-            {/* BOX 1: Scale outbound (Alice · AI SDR) */}
+            {/* BOX 1: Scale outbound (Fastigo SDR · AI Outbound) */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -750,7 +750,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                     </span>
                   </div>
                   <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-semibold bg-white/[0.05] border border-white/10 text-white/80">
-                    Alice · AI SDR
+                    Fastigo SDR · AI Outbound
                   </span>
                 </div>
 
@@ -813,13 +813,13 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                   onClick={() => setDemoModalOpen(true)}
                   className="w-full py-2.5 rounded-xl bg-white/[0.06] hover:bg-white text-white hover:text-black border border-white/10 text-xs font-semibold tracking-wider transition-all duration-300 flex items-center justify-center gap-2 group/btn cursor-pointer shadow-sm"
                 >
-                  <span>Deploy Alice</span>
+                  <span>Deploy Fastigo SDR</span>
                   <ArrowRight className="w-3.5 h-3.5 text-[#C8492C] group-hover/btn:translate-x-1 transition-transform" />
                 </button>
               </div>
             </motion.div>
 
-            {/* BOX 2: Capture demand (Julian · Voice & Chat) */}
+            {/* BOX 2: Capture demand (Fastigo Inbound · Voice & Chat) */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -846,7 +846,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                     </span>
                   </div>
                   <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-semibold bg-white/[0.05] border border-white/10 text-white/80">
-                    Julian · Voice & Chat
+                    Fastigo Inbound · Voice & Chat
                   </span>
                 </div>
 
@@ -860,7 +860,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                   </p>
                 </div>
 
-                {/* Premium Micro-UI Box: Julian Voice Interaction */}
+                {/* Premium Micro-UI Box: Fastigo Voice & Chat Interaction */}
                 <div className="p-3 xs:p-4 rounded-xl sm:rounded-2xl bg-[#000000] border border-white/[0.08] space-y-2.5 sm:space-y-3 shadow-inner">
                   <div className="flex items-center justify-between text-[11px]">
                     <div className="flex items-center gap-2">
@@ -912,13 +912,13 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                   onClick={() => setDemoModalOpen(true)}
                   className="w-full py-2.5 rounded-xl bg-white/[0.06] hover:bg-white text-white hover:text-black border border-white/10 text-xs font-semibold tracking-wider transition-all duration-300 flex items-center justify-center gap-2 group/btn cursor-pointer shadow-sm"
                 >
-                  <span>Deploy Julian</span>
+                  <span>Deploy Fastigo Inbound</span>
                   <ArrowRight className="w-3.5 h-3.5 text-[#C8492C] group-hover/btn:translate-x-1 transition-transform" />
                 </button>
               </div>
             </motion.div>
 
-            {/* BOX 3: Expand accounts (Jordan · Expansion AI) */}
+            {/* BOX 3: Expand accounts (Fastigo Expansion · Account Growth) */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -945,7 +945,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                     </span>
                   </div>
                   <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-semibold bg-white/[0.05] border border-white/10 text-white/80">
-                    Jordan · Expansion AI
+                    Fastigo Expansion · Account Growth
                   </span>
                 </div>
 
@@ -1003,7 +1003,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
                   onClick={() => setDemoModalOpen(true)}
                   className="w-full py-2.5 rounded-xl bg-white/[0.06] hover:bg-white text-white hover:text-black border border-white/10 text-xs font-semibold tracking-wider transition-all duration-300 flex items-center justify-center gap-2 group/btn cursor-pointer shadow-sm"
                 >
-                  <span>Deploy Atlas</span>
+                  <span>Deploy Fastigo Expansion</span>
                   <ArrowRight className="w-3.5 h-3.5 text-[#C8492C] group-hover/btn:translate-x-1 transition-transform" />
                 </button>
               </div>
@@ -1711,7 +1711,7 @@ export const OmniSellAgentPage: React.FC<OmniSellAgentPageProps> = ({ product })
           <DialogHeader>
             <DialogTitle className="text-xl font-bold text-white flex items-center gap-2">
               <Sparkles className="w-5 h-5 text-[#C8492C]" />
-              Schedule an OmniSell Demo
+              Schedule a Fastigo OmniSell Demo
             </DialogTitle>
             <DialogDescription className="text-xs text-[#B4BAC5]">
               See how OmniSell finds prospects, generates personalized messages, and books meetings for your sales team.
